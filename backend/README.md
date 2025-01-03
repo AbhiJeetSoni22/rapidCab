@@ -1,77 +1,121 @@
+# Backend API Documentation
 
-# User Registration Endpoint
+## Authentication Endpoints
 
-## Endpoint: `/users/register`
+### Register User
+Create a new user account.
 
-### Method: POST
+**Endpoint:** `/users/register`  
+**Method:** `POST`  
 
-### Description:
- This endpoint is used to register a new user. It requires the user's first name, last name, email, and password.
 
-## HTTP Method
-`POST`
-
-## Request Body:
- The request body should be a JSON object containing the following fields:
- - fullName :(object)
-   - `firstName` (string, required): The first name of the user. Must be at least 3 characters long.
-
-   - `lastName` (string, optional): The last name of the user.
- - `email` (string, required): The email address of the user. Must be a valid email format.
- - `password` (string, required): The password for the user. Must be at least 5 characters long.
-
-## Example Request:
+#### Request Body
 ```json
 {
   "fullName": {
-    "firstName": "John",
-    "lastName": "Doe"
+    "firstName": "string",   // minimum 3 characters
+    "lastName": "string"     // optional, minimum 3 characters
   },
-  "email": "john.doe@example.com",
-  "password": "password123"
+  "email": "string",         // valid email format
+  "password": "string"       // minimum 5 characters
 }
 ```
 
-#  Responses:
- 
- - fullName :(object)
-   - `firstName` (string): The first name of the user. Must be at least 3 characters long.
+#### Success Response
+**Status Code:** `201 Created`
 
-   - `lastName` (string): The last name of the user.
- - `email` (string): The email address of the user. Must be a valid email format.
- - `password` (string): The password for the user. Must be at least 5 characters long.
- - `token` (string): JWT token for the user
-
-## Success (201):
-### - **Description**: User registered successfully.
-### - **Body**:
 ```json
 {
   "user": {
-    "_id": "60d0fe4f5311236168a109ca",
     "fullName": {
       "firstName": "John",
       "lastName": "Doe"
     },
-    "email": "john.doe@example.com",
-    "createdAt": "2023-10-01T00:00:00.000Z",
-    "updatedAt": "2023-10-01T00:00:00.000Z"
+    "email": "john@example.com",
+    "socketId": null,
+    "_id": "65f1a2b3c4d5e6f7g8h9i0j",
+    "createdAt": "2024-03-15T12:00:00.000Z",
+    "updatedAt": "2024-03-15T12:00:00.000Z"
   },
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
 ```
 
-## Client Error (400):
-### - **Description**: Validation errors or missing required fields.
-### - **Body**:
+#### Error Responses
+**Status Code:** `400 Bad Request`
+
 ```json
 {
   "errors": [
     {
       "msg": "Name must be at least 3 characters long",
-      "param": "fullName.firstName",
-      "location": "body"
+      "path": "fullName.firstName"
+    }
+  ]
+}
+```
+
+#### Common Error Cases
+- Missing required fields
+- Email already exists
+- Invalid email format
+- Password too short (< 5 characters)
+- First name too short (< 3 characters)
+
+#### Security Features
+- Passwords are hashed using bcrypt
+- JWT token expires in 1 day
+- Emails are stored in lowercase
+- Password field is excluded from queries
+
+---
+
+### Login User
+Authenticate an existing user.
+
+**Endpoint:** `/users/login`  
+**Method:** `POST`  
+
+
+#### Request Body
+```json
+{
+  "email": "string",        
+  "password": "string"      
+}
+```
+
+#### Validation Rules
+- `email`: Required, valid email format
+- `password`: Required, minimum 5 characters
+
+#### Success Response
+**Status Code:** `200 OK`
+
+```json
+{
+  "msg": "User login successful",
+  "user": {
+    "fullName": {
+      "firstName": "John",
+      "lastName": "Doe"
     },
+    "email": "john@example.com",
+    "socketId": null,
+    "_id": "65f1a2b3c4d5e6f7g8h9i0j",
+    "createdAt": "2024-03-15T12:00:00.000Z",
+    "updatedAt": "2024-03-15T12:00:00.000Z"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+#### Error Responses
+**Status Code:** `400 Bad Request`
+
+```json
+{
+  "errors": [
     {
       "msg": "Please enter a valid email",
       "param": "email",
@@ -86,15 +130,65 @@
 }
 ```
 
-## Server Error (500):
-### - **Description**: Internal server error.
-### - **Body**:
+**Status Code:** `401 Unauthorized`
+
 ```json
 {
-  "error": "Internal Server Error"
+  "msg": "Invalid email or password"
+}
+```
+
+---
+
+### Change Password
+Change the password for an existing user.
+
+**Endpoint:** `/users/changePassword`  
+**Method:** `PATCH`  
+**Content-Type:** `application/json`
+
+#### Request Body
+```json
+{
+  "email": "string",         
+  "oldPassword": "string",   
+  "newPassword": "string"    
+}
+```
+
+
+
+#### Success Response
+**Status Code:** `200 OK`
+
+```json
+{
+  "success": true,
+  "msg": "Password updated successfully"
+}
+```
+
+#### Error Responses
+
+
+**Status Code:** `401 Unauthorized`
+
+```json
+{
+  "error": "User not found"
+}
+```
+
+**Status Code:** `401 Unauthorized`
+
+```json
+{
+  "error": "Incorrect old password"
 }
 ```
 
 ## Notes:
-### - Ensure that the email provided is unique and not already registered.
-### - Passwords are hashed before being stored in the database.
+- Ensure that the email provided is unique and not already registered.
+- Passwords are hashed before being stored in the database.
+- JWT token is generated with 1 day expiration.
+- Emails are stored in lowercase.
