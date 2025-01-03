@@ -13,11 +13,11 @@ Create a new user account.
 ```json
 {
   "fullName": {
-    "firstName": "string",   // minimum 3 characters
-    "lastName": "string"     // optional, minimum 3 characters
+    "firstName": "string",   
+    "lastName": "string"     
   },
-  "email": "string",         // valid email format
-  "password": "string"       // minimum 5 characters
+  "email": "string",       
+  "password": "string"      
 }
 ```
 
@@ -111,24 +111,6 @@ Authenticate an existing user.
 ```
 
 #### Error Responses
-**Status Code:** `400 Bad Request`
-
-```json
-{
-  "errors": [
-    {
-      "msg": "Please enter a valid email",
-      "param": "email",
-      "location": "body"
-    },
-    {
-      "msg": "Password must be at least 5 characters long",
-      "param": "password",
-      "location": "body"
-    }
-  ]
-}
-```
 
 **Status Code:** `401 Unauthorized`
 
@@ -143,14 +125,13 @@ Change the password for an existing user.
 
 **Endpoint:** `/users/changePassword`  
 **Method:** `PATCH`  
-**Content-Type:** `application/json`
 
 #### Request Body
 ```json
 {
-  "email": "string",         // valid email format
-  "oldPassword": "string",   // minimum 5 characters
-  "newPassword": "string"    // minimum 5 characters
+  "email": "string",         
+  "oldPassword": "string",   
+  "newPassword": "string"    
 }
 ```
 
@@ -170,24 +151,6 @@ Change the password for an existing user.
 ```
 
 #### Error Responses
-**Status Code:** `400 Bad Request`
-
-```json
-{
-  "errors": [
-    {
-      "msg": "Old password must be at least 5 characters long",
-      "param": "oldPassword",
-      "location": "body"
-    },
-    {
-      "msg": "New password must be at least 5 characters long",
-      "param": "newPassword",
-      "location": "body"
-    }
-  ]
-}
-```
 
 **Status Code:** `401 Unauthorized`
 
