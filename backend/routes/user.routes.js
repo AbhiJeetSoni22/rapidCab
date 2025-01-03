@@ -1,7 +1,9 @@
 import express from 'express';
 import { body } from 'express-validator'
-import { registerUser,loginUser,changePassword } from '../controllers/user.controller.js';
+import authUser from '../middleware/auth.middleware.js';
+import { registerUser,loginUser,changePassword,getUserProfile,logoutUser} from '../controllers/user.controller.js';
 const router = express.Router();
+
 
 router.post('/register',[
     body('fullName.firstName').isLength({ min:3 }).withMessage('Name must be at least 3 characters long'),
@@ -14,8 +16,9 @@ router.post('/login',[
     body('password').isLength({ min: 5 }).withMessage('Password must be at least 5 characters long')
 ],loginUser)
 
-router.patch('/changePassword',[
-    body('oldPassword').isLength({ min: 5 }).withMessage('Old password must be at least 5 characters long'),
-    body('newPassword').isLength({ min: 5 }).withMessage('New password must be at least 5 characters long')
-],changePassword)
+router.patch('/changePassword',authUser,changePassword) 
+
+router.get('/profile',authUser,getUserProfile)
+router.get('/logout',authUser,logoutUser)
+
 export default router;

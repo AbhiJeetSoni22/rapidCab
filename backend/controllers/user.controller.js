@@ -1,7 +1,7 @@
 import { User } from "../models/user.model.js";
-
 import { createUser } from "../services/user.service.js";
 import { validationResult } from "express-validator";
+import BlacklistingToken from "../models/blacklistingToken.model.js";
 async function registerUser(req,res){
    try{
      const errors =validationResult(req)
@@ -33,6 +33,7 @@ async function loginUser(req,res){
      const isMatch =await user.comparePassword(password);
      if(!isMatch) return res.status(401).json({ msg: 'Invalid email or password' });
      const token = user.generateAuthToken();
+     res.cookie('token', token)
      res.status(200).json({msg:"User login successful",user,token})
    }catch(error){
     console.log(`Error during login : ${error}`);
@@ -53,5 +54,14 @@ async function changePassword(req,res){
   }
 }
 
+async function getUserProfile(req,res,next){
+  res.status(200).json(req.user)
+}
 
-export { registerUser,loginUser,changePassword }
+async function logoutUser(req,res,next){
+  res.clearCookie('token')
+  const token = req.cookies.token || req.header.authorization?.split(' ')[1]
+  await BlacklistingToken.create({token})
+  res.status(200).json({msg:"User logged out"})
+}
+export { registerUser,loginUser,changePassword,getUserProfile,logoutUser}
