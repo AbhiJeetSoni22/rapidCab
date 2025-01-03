@@ -9,8 +9,5 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use('/users',userRouter)
-app.get('/', (req, res) => {
-    res.json({ message: 'Welcome to the project' });
-  });
 
 export default app;
