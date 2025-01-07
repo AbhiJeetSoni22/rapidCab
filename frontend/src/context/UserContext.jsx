@@ -4,7 +4,7 @@ export const UserDataContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 const UserContext = ({children}) => {
-    const [userData, setUserData] = useState({
+    const [user, setUser] = useState({
         fullName:{
             firstName:'',
             lastName:''
@@ -14,7 +14,7 @@ const UserContext = ({children}) => {
 
   return (
     <div>
-        <UserDataContext.Provider value={[userData,setUserData]}>
+        <UserDataContext.Provider value={{user,setUser}}>
           {children}
         </UserDataContext.Provider>
     </div>

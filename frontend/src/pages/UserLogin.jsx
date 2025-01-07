@@ -1,19 +1,36 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
-const UserLogin = () => {
+import { Link, useNavigate } from "react-router-dom";
+import { useState,useContext } from "react";
+import axios from "axios";
+import { UserDataContext } from "../context/UserContext";
+const UserLogin =  () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [userData, setUserData] = useState({})
-  const handleSubmit = (e)=>{
-     e.preventDefault();
-    setUserData({
-      email: email,
-      password: password
-    })
-    console.log(userData)
+
+  // eslint-disable-next-line no-unused-vars
+  const {user,setUser}=  useContext(UserDataContext)
+  const navigate = useNavigate()
+  const handleSubmit = async (e)=>{
+    e.preventDefault();
+    const userData ={
+        email: email,
+        password: password
+      }
+    
+    const url = import.meta.env.VITE_BASE_URL
+    const response = await axios.post(`${url}/users/login`,userData)
+    if(response.status ===200){
+      setUser(response.data.user)
+      console.log(response)
+      localStorage.setItem('token',response.data.token)
+      navigate('/dashboard')
+    }
+    else{
+      alert('error during login')
+    }
      setEmail('')
      setPassword('');
   }
+
   return (
     <div className="flex flex-col justify-center items-center p-7">
       <div className="mb-5">
@@ -58,5 +75,6 @@ const UserLogin = () => {
     </div>
   );
 };
+
 
 export default UserLogin;

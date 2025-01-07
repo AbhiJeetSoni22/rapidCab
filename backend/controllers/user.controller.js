@@ -59,8 +59,8 @@ async function getUserProfile(req,res,next){
 }
 
 async function logoutUser(req,res,next){
+  const token =  req.headers.authorization?.split(' ')[1]
   res.clearCookie('token')
-  const token = req.cookies.token || req.header.authorization?.split(' ')[1]
   await BlacklistingToken.create({token})
   res.status(200).json({msg:"User logged out"})
 }

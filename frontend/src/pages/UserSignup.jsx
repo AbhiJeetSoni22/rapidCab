@@ -1,23 +1,42 @@
-import { useState } from "react"
+import { useState ,useContext} from "react"
 import { Link } from "react-router-dom"
-
+import { UserDataContext } from "../context/UserContext"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
 const UserSignup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [userData, setUserData] = useState({})
+
   const [firstName,setFristName]=useState('')
   const [lastName,setLastName] = useState('')
-  const handleSubmit = (e)=>{
-     e.preventDefault();
-    setUserData({
+  // eslint-disable-next-line no-unused-vars
+  const {user,setUser}=  useContext(UserDataContext)
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e)=>{
+   e.preventDefault();
+   const newUser = {
       fullName:{
         firstName:firstName,
         lastName:lastName,
       },
       email: email,
       password: password
-    })
-    console.log(userData)
+    }
+   const url = import.meta.env.VITE_BASE_URL;
+   const response = await axios.post(`${url}/users/register`,newUser)
+
+   if(response.status===201){
+    const data = response.data;
+    setUser(data.user);
+    localStorage.setItem('token',data.token)
+    navigate('/dashboard')
+   }else{
+    alert('Failed to create user, please try again')
+   }
+  
+
+
      setEmail('')
      setPassword('');
      setFristName('')
