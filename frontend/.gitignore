@@ -16,7 +16,7 @@ logs/
 
 # Build files
 dist/
-
+DashboardOld.jsx
 
 # Dependency directories
 bower_components/

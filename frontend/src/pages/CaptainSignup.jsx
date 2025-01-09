@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { CaptainDataContext } from "../context/CaptainContext"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import Navbar from "./Navbar"
 const CaptainSignup = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
@@ -54,6 +55,8 @@ const CaptainSignup = () => {
   }
 
   return (
+    <>
+    <Navbar/>
     <div className="flex flex-col justify-between items-center px-5 py-5">
       <div className="mb-5">
         <form action="" className="mt-20" onSubmit={(e)=>{
@@ -155,6 +158,7 @@ const CaptainSignup = () => {
        </p>
       </div>
     </div>
+    </>
   );
 }
 

@@ -1,5 +1,6 @@
 import homeImg from '../assets/Airport-rides.webp';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 const Home = () => {
   const navigate = useNavigate();
 
@@ -10,6 +11,9 @@ const Home = () => {
     navigate('/signup');
   };
   return (
+    <>
+    <Navbar/>
+    
     <div className="h-screen w-full">
       {/* Main Container */}
       <div className="flex flex-col md:flex-row items-center justify-between p-8 bg-gray-50 h-screen relative">
@@ -57,6 +61,7 @@ const Home = () => {
         }}
       ></div>
     </div>
+    </>
   );
 };
 

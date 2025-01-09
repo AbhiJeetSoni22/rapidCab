@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState,useContext } from "react";
 import axios from "axios";
 import { UserDataContext } from "../context/UserContext";
+import Navbar from "./Navbar";
 const UserLogin =  () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -32,6 +33,9 @@ const UserLogin =  () => {
   }
 
   return (
+    <>
+    <Navbar/>
+    
     <div className="flex flex-col justify-center items-center p-7">
       <div className="mb-5">
         <form action="" className="mt-20" onSubmit={(e)=>{
@@ -73,6 +77,7 @@ const UserLogin =  () => {
         </Link>
       </div>
     </div>
+    </>
   );
 };
 

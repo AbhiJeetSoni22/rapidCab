@@ -4,7 +4,6 @@ import UserLogin from './pages/UserLogin'
 import UserSignup from './pages/UserSignup'
 import CaptainSignup from './pages/CaptainSignup'
 import CaptainLogin from './pages/CaptainLogin'
-import Navbar from './pages/Navbar'
 import Dashboard from './pages/Dashboard'
 import UserProtectWrapper from './pages/UserProtectWrapper'
 import CapDashboard from './pages/CapDashboard'
@@ -13,7 +12,6 @@ import CaptainProtectWrapper from './pages/CaptainProtectWrapper'
 const App = () => {
   return (
     <div>
-      <Navbar/>
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<UserLogin/>}/>
