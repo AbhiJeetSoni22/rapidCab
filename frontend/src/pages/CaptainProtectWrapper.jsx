@@ -15,22 +15,22 @@ useEffect(() => {
         navigate('/captain-login')
       }
     
-    const fetchCaptainProfile = async ()=>{
+      const fetchCaptainProfile = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/captains/profile`, {
-              headers: { Authorization: `Bearer ${token}` },
-            });
+          const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/captains/profile`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
       
-            if (response.status === 200) {
-              setCaptain(response.data.user);
-              setIsLoading(false);
-            }
-          // eslint-disable-next-line no-unused-vars
-          } catch (error) {
-            navigate('/login');
-            localStorage.removeItem('token');
-          } 
-    }
+          if (response.status === 200) {
+            setCaptain(response.data); // Make sure response.data contains the captain object
+            setIsLoading(false);
+          }
+        // eslint-disable-next-line no-unused-vars
+        } catch (error) {
+          navigate('/captain-login');
+          localStorage.removeItem('token');
+        }
+      };
     fetchCaptainProfile();
 }, [navigate, token])
 

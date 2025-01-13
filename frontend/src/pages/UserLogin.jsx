@@ -71,7 +71,7 @@ const UserLogin =  () => {
           </Link>
         </p>
       </div>
-      <div className="relative">
+      <div className="relative w-1/3">
         <Link to="/captain-login" className="w-full bg-[#10b461] flex justify-center items-center text-gray-200 font-semibold my-2 rounded px-4 py-3 hover:bg-[#17cd72]">
           Sign in as a Captain
         </Link>

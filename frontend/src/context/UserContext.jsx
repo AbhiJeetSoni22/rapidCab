@@ -1,5 +1,5 @@
 import { createContext , useState} from "react"
-export const UserDataContext = createContext();
+const UserDataContext = createContext();
 
 
 // eslint-disable-next-line react/prop-types
@@ -22,3 +22,4 @@ const UserContext = ({children}) => {
 }
 
 export default UserContext
+export {UserDataContext}

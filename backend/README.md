@@ -456,3 +456,240 @@ Log out the authenticated captain.
 - Passwords are hashed before being stored in the database.
 - JWT token is generated with 1 day expiration.
 - Emails are stored in lowercase.
+
+## Maps Endpoints
+
+### Get Coordinates
+Retrieve the coordinates for a given address.
+
+**Endpoint:** `/maps/get-coordinate`  
+**Method:** `GET`  
+**Authentication:** Required (Bearer token)
+
+#### Query Parameters
+- `address`: Required, string, minimum 3 characters
+
+#### Success Response
+**Status Code:** `200 OK`
+
+```json
+{
+  "lat": 37.7749,
+  "lng": -122.4194
+}
+```
+
+#### Error Responses
+**Status Code:** `400 Bad Request`
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid address",
+      "param": "address"
+    }
+  ]
+}
+```
+
+**Status Code:** `404 Not Found`
+
+```json
+{
+  "error": "Coordinate not found"
+}
+```
+
+### Get Distance and Time
+Retrieve the distance and time between two addresses.
+
+**Endpoint:** `/maps/get-destance-time`  
+**Method:** `GET`  
+**Authentication:** Required (Bearer token)
+
+#### Query Parameters
+- `origin`: Required, string, minimum 3 characters
+- `destination`: Required, string, minimum 3 characters
+
+#### Success Response
+**Status Code:** `200 OK`
+
+```json
+{
+  "distance": "10 km",
+  "time": "15 mins"
+}
+```
+
+#### Error Responses
+**Status Code:** `400 Bad Request`
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid origin or destination",
+      "param": "origin"
+    }
+  ]
+}
+```
+
+**Status Code:** `404 Not Found`
+
+```json
+{
+  "error": "Distance and time not found"
+}
+```
+
+### Get Autocomplete Suggestions
+Retrieve autocomplete suggestions for a given input.
+
+**Endpoint:** `/maps/get-suggestions`  
+**Method:** `GET`  
+**Authentication:** Required (Bearer token)
+
+#### Query Parameters
+- `input`: Required, string, minimum 3 characters
+
+#### Success Response
+**Status Code:** `200 OK`
+
+```json
+[
+  "San Francisco, CA, USA",
+  "San Jose, CA, USA"
+]
+```
+
+#### Error Responses
+**Status Code:** `400 Bad Request`
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid input",
+      "param": "input"
+    }
+  ]
+}
+```
+
+**Status Code:** `404 Not Found`
+
+```json
+{
+  "error": "Suggestions not found"
+}
+```
+
+## Ride Endpoints
+
+### Create Ride
+Create a new ride.
+
+**Endpoint:** `/ride/create`  
+**Method:** `POST`  
+**Authentication:** Required (Bearer token)
+
+#### Request Body
+```json
+{
+  "pickup": "string",        // minimum 3 characters
+  "destination": "string",   // minimum 3 characters
+  "vehicleType": "string"    // one of ['auto', 'car', 'bike']
+}
+```
+
+#### Validation Rules
+- `pickup`: Required, minimum 3 characters
+- `destination`: Required, minimum 3 characters
+- `vehicleType`: Required, one of ['auto', 'car', 'bike']
+
+#### Success Response
+**Status Code:** `201 Created`
+
+```json
+{
+  "message": "Ride created successfully",
+  "ride": {
+    "userId": "65f1a2b3c4d5e6f7g8h9i0j",
+    "pickup": "123 Main St",
+    "destination": "456 Elm St",
+    "otp": "12345",
+    "fare": 100,
+    "_id": "75g2b3c4d5e6f7g8h9i0j1k",
+    "createdAt": "2024-03-15T12:00:00.000Z",
+    "updatedAt": "2024-03-15T12:00:00.000Z"
+  }
+}
+```
+
+#### Error Responses
+**Status Code:** `400 Bad Request`
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid pickup address",
+      "param": "pickup"
+    }
+  ]
+}
+```
+
+**Status Code:** `500 Internal Server Error`
+
+```json
+{
+  "error": "Internal server error"
+}
+```
+
+## Notes:
+- Ensure that the pickup and destination addresses are valid and have a minimum length of 3 characters.
+- The vehicle type must be one of ['auto', 'car', 'bike'].
+
+## API Endpoints
+
+### /get-fare
+
+**Method:** GET
+
+**Description:** Calculates the fare for a ride based on the pickup and destination locations.
+
+**Query Parameters:**
+- `pickup` (string): The pickup location.
+- `destination` (string): The destination location.
+
+**Response:**
+- `200 OK`: Returns the calculated fare for different vehicle types.
+  ```json
+  {
+    "auto": number,
+    "car": number,
+    "bike": number
+  }
+  ```
+ - 400 Bad Request: If the required parameters are missing
+ ```json
+ {
+  "error": "Error calculating fare"
+}
+```
+**Example Request**
+- curl -X GET "http://localhost:3000/get-fare?pickup=LocationA&destination=LocationB"
+
+   **Example Request**
+ ```json
+ {
+   "auto": 150,
+  "car": 250,
+  "bike": 100
+}
+```
+

@@ -8,6 +8,8 @@ import VehiclePanel from "../components/VehiclePanel";
 import ConfirmRide from "../components/ConfirmRide";
 import LookingForDriver from "../components/LookingForDriver";
 import WaitingForDriver from "../components/WaitingForDriver";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [pickupLocation, setPickupLocation] = useState("");
@@ -17,7 +19,10 @@ const Dashboard = () => {
   const [confirmRidePanel, setConfirmRidePanel] = useState(false);
   const [waitForDriver, setWaitForDriver] = useState(false);
   const [vehicleFound, setVehicleFound] = useState(false);
-  
+  const [activeField, setActiveField] = useState('pickup');
+  const [checkfields , setCheckfields] = useState(false);
+  const [vehicleType, setVehicleType] = useState(null);
+  const [fare,setFare] = useState({});
 
   const vehiclePanelRef = useRef(null);
   const panelRef = useRef(null);
@@ -74,7 +79,7 @@ const Dashboard = () => {
     if (vehicleFound) {
       gsap.to(vehicleFoundRef.current, {
         visibility: "visible",
-        height: "23rem",
+        height: "19rem",
       });
     } else {
       gsap.to(vehicleFoundRef.current, {
@@ -96,10 +101,48 @@ const Dashboard = () => {
       });
     }
   }, [waitForDriver]);
+
+  const findTrip = async() => {
+    setPanelOpen(false);
+    setVehiclePanel(true);
+    const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/get-fare`,{
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      params: {
+        pickup:pickupLocation,
+       destination: dropoffLocation,
+      },
+    })
+    setFare(response.data.fare);
+    console.log(response.data.fare)
+  }
+  const createRide = async ()=>{
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`,{
+      pickup:pickupLocation,
+      destination: dropoffLocation,
+      vehicleType:vehicleType,
+    },{
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    console.log(response.data);
+  }
+
   return (
     <>
-      <Navbar />
-      <div className="flex flex-col flex-col-reverse lg:flex-row h-screen overflow-hidden">
+      <div className="hidden md:block">
+        <Navbar />
+      </div>
+      <div className="w-screen fixed z-20 px-2 flex md:hidden justify-between items-center top-4">
+        <h1 className="text-3xl font-bold z-20">RapidCap</h1>
+
+        <Link to="/captain-dashboard" className="z-20">
+          <i className="text-3xl font-bold w-15 h-15 bg-orange-400 rounded-full p-3 ri-logout-box-r-line"></i>
+        </Link>
+      </div>
+      <div className="flex flex-col-reverse lg:flex-row h-screen overflow-hidden">
         <div
           className={`w-full flex mb-8 md:mb-0 flex-col lg:w-1/3 bg-white relative p-6`}
         >
@@ -115,7 +158,7 @@ const Dashboard = () => {
               >
                 <h1 className="text-3xl font-semibold mb-4">Get a ride</h1>
                 <div
-                  className={`absolute h-5 w-5 md:hidden rounded-full top-1 right-2 ${
+                  className={`absolute h-5 w-5 md:hidden rounded-full top-[-6%] right-[45%] ${
                     vehiclePanel || panelOpen ? "block" : "hidden"
                   } `}
                   onClick={() => {
@@ -126,8 +169,8 @@ const Dashboard = () => {
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    width="24"
-                    height="24"
+                    width="34"
+                    height="34"
                     fill="gray"
                   >
                     <path d="M12 15.6315L20.9679 10.8838L20.0321 9.11619L12 13.3685L3.9679 9.11619L3.03212 10.8838L12 15.6315Z"></path>
@@ -139,9 +182,13 @@ const Dashboard = () => {
                     type="text"
                     value={pickupLocation}
                     placeholder="Pickup location"
+                    required
                     className="w-full text-lg px-12 py-3 border bg-[#e7e7e7] rounded-lg focus:ring focus:ring-gray-700 focus:outline-none"
                     onChange={(e) => setPickupLocation(e.target.value)}
-                    onClick={() => setPanelOpen(true)}
+                    onClick={() => {
+                      setPanelOpen(true);
+                      setActiveField('pickup');
+                    }}
                   />
                 </div>
 
@@ -149,12 +196,36 @@ const Dashboard = () => {
                   <input
                     type="text"
                     value={dropoffLocation}
+                    required
                     placeholder="Dropoff location"
                     className="w-full text-lg px-12 py-3 border bg-[#e7e7e7] rounded-lg focus:ring focus:ring-gray-700 focus:outline-none"
                     onChange={(e) => setDropoffLocation(e.target.value)}
-                    onClick={() => setPanelOpen(true)}
+                    onClick={() => {
+                      setPanelOpen(true);
+                      setActiveField('dropoff');
+                    }}
                   />
                 </div>
+                
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (!pickupLocation || !dropoffLocation) {
+                        setCheckfields(true);
+                       setTimeout(() => {
+                        setCheckfields(false);
+                       }, 1500);
+                      }
+                      else{
+                          
+                          await findTrip();        
+                      }
+                    }}
+                    className="w-full bg-yellow-400 text-black py-3 rounded-lg font-semibold hover:bg-yellow-500 transition-colors mt-4"
+                  >
+                    Find Ride
+                  </button>
+                  {checkfields && <p className="text-red-500 mt-3 text-center text-sm">Please fill all fields</p>}
               </form>
             </div>
           )}
@@ -165,8 +236,14 @@ const Dashboard = () => {
             >
               {panelOpen && (
                 <LocationSearchPanle
+                setPickupLocation={setPickupLocation}
+                  setDropoffLocation={setDropoffLocation}
+                  pickupLocation={pickupLocation}
+                  dropoffLocation={dropoffLocation}
                   setPanelOpen={setPanelOpen}
                   setVehiclePanel={setVehiclePanel}
+                  activeField={activeField}  // Add this prop
+                  setActiveField={setActiveField}  // Add this prop
                 />
               )}
             </div>
@@ -179,11 +256,13 @@ const Dashboard = () => {
             } w-full z-10  px-2 bg-white `}
           >
             <VehiclePanel
+              selectVehicle={setVehicleType}
               vehiclePanel={vehiclePanel}
               setConfirmRidePanel={setConfirmRidePanel}
               panelOpen={panelOpen}
               setVehiclePanel={setVehiclePanel}
               setPanelOpen={setPanelOpen}
+              fare={fare}
             />
           </div>
           <div
@@ -195,6 +274,11 @@ const Dashboard = () => {
             } w-full z-10  px-2 bg-white `}
           >
             <ConfirmRide
+            fare={fare}
+            vehicleType={vehicleType}
+            createRide={createRide}
+             pickupLocation={pickupLocation}
+             dropoffLocation={dropoffLocation}
               vehiclePanel={vehiclePanel}
               setVehicleFound={setVehicleFound}
               setConfirmRidePanel={setConfirmRidePanel}
@@ -214,6 +298,10 @@ const Dashboard = () => {
             } w-full z-10  px-2 bg-white `}
           >
             <LookingForDriver
+             fare={fare}
+             vehicleType={vehicleType}
+             pickupLocation={pickupLocation}
+             dropoffLocation={dropoffLocation}
             setConfirmRidePanel={setConfirmRidePanel}
               confirmRidePanel={confirmRidePanel}
               vehicleFound={vehicleFound}

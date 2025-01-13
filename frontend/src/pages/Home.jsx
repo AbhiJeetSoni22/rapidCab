@@ -1,54 +1,47 @@
+import { Link } from 'react-router-dom';
 import homeImg from '../assets/Airport-rides.webp';
-import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 const Home = () => {
-  const navigate = useNavigate();
+  
 
-  const handleLoginNavigate = () => {
-    navigate('/login');
-  };
-  const handleSignupNavigate = () => {
-    navigate('/signup');
-  };
   return (
     <>
-    <Navbar/>
+   <div className="hidden md:block">
+        <Navbar />
+      </div>
+      <div className="w-screen fixed z-20 px-2 flex md:hidden justify-between items-center ">
+        <h1 className="text-4xl absolute top-4 right-3 font-bold z-20">RapidCap</h1>
+      </div>
     
-    <div className="h-screen w-full">
+    <div className="h-full w-full overflow-hidden">
       {/* Main Container */}
-      <div className="flex flex-col md:flex-row items-center justify-between p-8 bg-gray-50 h-screen relative">
+      <div className="flex flex-col md:flex-row w-full items-center justify-center p-8 h-full  relative">
         {/* Left Section */}
-        <div className="relative z-10 md:mx-20 w-full bg-gray-50 bg-opacity-50 p-8 md:p-0 rounded-lg md:rounded-none md:w-1/2 text-left md:text-left flex flex-col justify-center">
+        <div className="fixed md:relative bottom-0 bg-white z-10 md:mx-20 w-full  p-8 md:p-0   md:w-1/2 text-left md:text-left flex flex-col justify-center">
           <h1 className="md:text-2xl text-xl mb-4">
             Request a ride for now or later
           </h1>
-          <h1 className="md:text-4xl text-2xl font-semibold mb-4">
+          <h1 className="md:text-4xl text-3xl font-semibold mb-4">
             Get started with RapidCap
           </h1>
-          <div className="flex space-x-4 justify-left md:justify-start">
-            <button
+          <div className="flex items-center  space-x-4 justify-left md:justify-start">
+            <Link
+              to="/login"
               type="button"
-              className="bg-black text-white text-xl px-6 py-3 rounded-md"
-              onClick={handleLoginNavigate}
+              className="bg-black w-full text-center  mt-2 md:w-4/5 text-white text-xl px-12 py-3 rounded-md"
             >
-              Login
-            </button>
-            <button
-              type="button"
-              className="bg-gray-200 px-6 text-xl py-3 rounded-md"
-              onClick={handleSignupNavigate}
-            >
-              Signup
-            </button>
+              Continue
+            </Link>
+           
           </div>
         </div>
 
         {/* Right Section */}
-        <div className="hidden md:block md:w-1/2">
+        <div className="hidden md:block w-full  relative left-40 "> 
           <img
             src={homeImg}
             alt="Ride illustration"
-            className="rounded-lg shadow-lg bg-cover bg-center"
+            className="rounded-lg w-4/5 shadow-lg bg-cover bg-center"
           />
         </div>
       </div>
