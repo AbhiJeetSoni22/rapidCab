@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Navbar from "./Navbar";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -10,7 +10,8 @@ import LookingForDriver from "../components/LookingForDriver";
 import WaitingForDriver from "../components/WaitingForDriver";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import { SocketContext } from "../context/SocketContext";
+import { UserDataContext } from "../context/UserContext";
 const Dashboard = () => {
   const [pickupLocation, setPickupLocation] = useState("");
   const [dropoffLocation, setDropoffLocation] = useState("");
@@ -23,7 +24,12 @@ const Dashboard = () => {
   const [checkfields , setCheckfields] = useState(false);
   const [vehicleType, setVehicleType] = useState(null);
   const [fare,setFare] = useState({});
-
+  const { socket } =  useContext(SocketContext)
+  const { user } = useContext(UserDataContext)
+  useEffect(()=>{
+    console.log(user)
+  socket.emit('join',{userType:"user",userId:user._id})
+},[user])
   const vehiclePanelRef = useRef(null);
   const panelRef = useRef(null);
   const confirmRidePanelRef = useRef(null);

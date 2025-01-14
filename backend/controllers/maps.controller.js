@@ -1,3 +1,4 @@
+import { Captain } from "../models/captain.model.js";
 import { getAddressCoordinate,getDistanceTime,getAutoCompleteSuggestions } from "../services/maps.service.js";
 import { validationResult } from "express-validator";
 
@@ -41,6 +42,24 @@ const getSuggestions = async (req, res) => {
     res.status(404).json({ error: "Suggestions not found" });
     
    }
+}
+const getCaptainsInTheRadius = async(ltd,lng, radius)=>{
+  try {
+    const captains = await Captain.find({
+      location: {
+      $geoWithin:{
+        $centerSphere: [
+          [ltd, lng],
+          radius / 6371 // Earth radius in kilometers
+        ]
+      }
+      }
+    });
+    return captains;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }
 
 export  { getCoordinates,getAddressesDistanceTime , getSuggestions};
