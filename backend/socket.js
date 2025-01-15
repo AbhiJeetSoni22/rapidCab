@@ -33,18 +33,30 @@ export const initializeSocket = (server) => {
 
         socket.on('update-location-captain', async (data)=>{
             const { userId, location } = data;
-            if(!location || !location.ltd || !location.lng){
+            if(!location || !location.lat || !location.lng){
                 return socket.emit('error',{message: 'Invalid location'})
             }
-             await Captain.findByIdAndUpdate(userId,{location:{
-                ltd:location.ltd,
-                lng:location.lng
-             }})
+            const updatedCaptain = await Captain.findByIdAndUpdate(
+                userId,
+                {
+                    $set: {
+                        location: {
+                            lat: location.lat,
+                            lng: location.lng
+                        }
+                    }
+                },
+                { new: true }
+            );
+    
+           
+           
+           
         })
 
         socket.on('register', (userId) => {
             connectedSockets.set(userId, socket.id);
-            console.log(`User ${userId} registered with socket ${socket.id}`);
+            
         });
 
         socket.on('disconnect', () => {
@@ -52,7 +64,6 @@ export const initializeSocket = (server) => {
             for (let [userId, socketId] of connectedSockets.entries()) {
                 if (socketId === socket.id) {
                     connectedSockets.delete(userId);
-                    console.log(`User ${userId} disconnected`);
                     break;
                 }
             }
@@ -62,16 +73,10 @@ export const initializeSocket = (server) => {
     return io;
 };
 
-export const sendMessageToSocketId = (userId, event, data) => {
-    if (!io) {
-        console.log('Socket.io not initialized');
-        return;
-    }
-
-    const socketId = connectedSockets.get(userId);
-    if (socketId) {
-        io.to(socketId).emit(event, data);
-    } else {
-        console.log(`No socket found for user ${userId}`);
+export const sendMessageToSocketId = (socketId, message) => {
+    try {
+      io.to(socketId).emit(message.event, message.data);
+    } catch (error) {
+      console.error('Error emitting event to socket:', error);
     }
 };

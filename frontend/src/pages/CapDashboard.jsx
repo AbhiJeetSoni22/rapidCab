@@ -9,43 +9,63 @@ import { Link } from "react-router-dom"
 import { CaptainDataContext } from "../context/CaptainContext"
 import { useEffect,useContext } from "react"
 import { SocketContext } from "../context/SocketContext"
-
+import axios from "axios"
 const CapDashboard = () => {
- const [ridePopUpPanel, setridePopUpPanel] = useState(true)
+ const [ridePopUpPanel, setridePopUpPanel] = useState(false)
 
  const [confirmRidePopUpPanel, setConfirmRidePopUpPanel] = useState(false)
+ const [ride,setRide] = useState(null)
 
  const ridePopUpPanelRef = useRef(null)
  const confirmRidePopUpPanelRef = useRef(null)
 
  const { captain } = useContext(CaptainDataContext);
  const { socket } = useContext(SocketContext);
-
+ async function confirmRide(){
+  const resposne = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/confirm`)
+ }
  useEffect(() => {
-    socket.emit('join',{
-      userId: captain._id,
-      userType: 'captain'
-    })
-    const updateLocation = () => {
-      if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(position=>
+  socket.emit('join', {
+    userId: captain._id,
+    userType: 'captain',
+  });
 
-          socket.emit('update-location-captain',{
-         
+  socket.on('new-ride', (data)=>{
+    console.log(data)
+    setRide(data)
+    setridePopUpPanel(true)
+    // setridePopUpPanel(true)
+  })
+  // Function to update location
+  const updateLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+     
+
+          socket.emit('update-location-captain', {
             userId: captain._id,
-            location:{
-              ltd: position.coords.latitude,
-              lng: position.coords.longitude
-            }
-          })
-        
-        )
-      }
+            location: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+          });
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+        }
+      );
     }
-    const locationInterval = setInterval(updateLocation, 1000)
-    updateLocation()
-    // return ()=> clearInterval(locationInterval)
- },[captain])
+  };
+
+  // Call the location update function at intervals
+  const locationInterval = setInterval(updateLocation, 90000);
+  updateLocation();
+
+  // Cleanup on component unmount
+  return () => clearInterval(locationInterval);
+}, [socket, captain._id]); 
+
 
  useGSAP(() => {
     if (ridePopUpPanel) {
@@ -90,10 +110,10 @@ const CapDashboard = () => {
      
       <CaptainDetails />
    
-       <div ref={ridePopUpPanelRef} className="fixed w-full translate-y-full lg:w-1/3 bottom-0  bg-white px-3 py-10 md:mb-24 ">
-         <RidePopUp setConfirmRidePopUpPanel={setConfirmRidePopUpPanel} setridePopUpPanel={setridePopUpPanel}/>
+       <div ref={ridePopUpPanelRef} className="fixed w-full translate-y-full lg:w-1/3 bottom-0  bg-white px-3 py-6 md:mb-24 ">
+         <RidePopUp confirmRide={confirmRide} ride={ride} setConfirmRidePopUpPanel={setConfirmRidePopUpPanel} setridePopUpPanel={setridePopUpPanel}/>
        </div>
-       <div ref={confirmRidePopUpPanelRef} className="fixed w-full z-30 md:h-[85%] h-screen translate-y-full lg:w-1/3 bottom-0  bg-white px-3 py-10  ">
+       <div ref={confirmRidePopUpPanelRef} className="fixed w-full z-30 md:h-[85%] h-screen translate-y-full lg:w-1/3 bottom-0  bg-white px-3 py-8  ">
          <ConfirmRidePopUp setConfirmRidePopUpPanel={setConfirmRidePopUpPanel} setridePopUpPanel={setridePopUpPanel}/>
        </div>
       </div>

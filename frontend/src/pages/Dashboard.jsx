@@ -23,6 +23,7 @@ const Dashboard = () => {
   const [activeField, setActiveField] = useState('pickup');
   const [checkfields , setCheckfields] = useState(false);
   const [vehicleType, setVehicleType] = useState(null);
+
   const [fare,setFare] = useState({});
   const { socket } =  useContext(SocketContext)
   const { user } = useContext(UserDataContext)
@@ -280,6 +281,7 @@ const Dashboard = () => {
             } w-full z-10  px-2 bg-white `}
           >
             <ConfirmRide
+        
             fare={fare}
             vehicleType={vehicleType}
             createRide={createRide}

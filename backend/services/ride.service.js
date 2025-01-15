@@ -48,20 +48,29 @@ function generateOTP(num) {
 }
 
 async function createRide({
-    userId, pickup, destination, vehicleType
+    user, pickup, destination, vehicleType
 }) {
-    if(!userId || !pickup||!destination||!vehicleType){
+    if(!user || !pickup||!destination||!vehicleType){
         throw new Error("userId, pickup, destination, vehicleType are required");
     }
     const fare = await getFare(pickup,destination);
     const ride = new Ride({
-        userId,
+        user,
         pickup,
         destination,
         otp:generateOTP(5),
         fare:fare[vehicleType],
     });
+   await ride.save();
    return ride
 }
 
-export { createRide, getFare, generateOTP };
+async function confirmRideService({rideId}){
+    if(!rideId){
+        throw new Error('Ride not found')
+    }
+    
+}
+
+
+export { createRide, getFare, generateOTP,confirmRideService };

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
 const rideSchema = new Schema({
-    userId:{
+    user :{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
@@ -46,7 +46,6 @@ const rideSchema = new Schema({
     otp:{
         type: String,
         select:false,
-        required: true
     }
 })
 
