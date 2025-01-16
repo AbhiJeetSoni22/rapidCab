@@ -1,3 +1,4 @@
+import { resourceUsage } from "process";
 import { Ride } from "../models/ride.model.js";
 import { getDistanceTime } from "./maps.service.js";
 import crypto from 'crypto';
@@ -65,12 +66,27 @@ async function createRide({
    return ride
 }
 
-async function confirmRideService({rideId}){
-    if(!rideId){
-        throw new Error('Ride not found')
+async function confirmRideService({rideId, captain}) {
+    if (!rideId || !captain || !captain._id) {
+        throw new Error('Ride ID and captain are required');
     }
-    
-}
 
+    // First update the ride with captain info
+   await Ride.findOneAndUpdate({
+    _id:rideId},{
+        status:'accepted',
+        captain:captain._id
+    }
+   )
+   const ride = await Ride.findOne({
+    _id:rideId
+   }).populate('user').populate('captain').select('+otp');
+
+    if (!ride) {
+        throw new Error('Ride not found');
+    }
+
+    return ride;
+}
 
 export { createRide, getFare, generateOTP,confirmRideService };

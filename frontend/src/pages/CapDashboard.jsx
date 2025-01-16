@@ -21,9 +21,29 @@ const CapDashboard = () => {
 
  const { captain } = useContext(CaptainDataContext);
  const { socket } = useContext(SocketContext);
- async function confirmRide(){
-  const resposne = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/confirm`)
- }
+ async function confirmRide() {
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/rides/confirm`,
+      {
+        rideId: ride._id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        }
+      }
+    );
+    console.log(response.status)
+    
+    if (response.status === 200) {
+      setridePopUpPanel(false);
+      setConfirmRidePopUpPanel(true);
+    }
+  } catch (error) {
+    console.error('Error confirming ride:', error);
+  }
+}
  useEffect(() => {
   socket.emit('join', {
     userId: captain._id,

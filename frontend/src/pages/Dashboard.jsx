@@ -23,12 +23,14 @@ const Dashboard = () => {
   const [activeField, setActiveField] = useState('pickup');
   const [checkfields , setCheckfields] = useState(false);
   const [vehicleType, setVehicleType] = useState(null);
+  const [ride,setRide]= useState(null);
 
   const [fare,setFare] = useState({});
   const { socket } =  useContext(SocketContext)
   const { user } = useContext(UserDataContext)
   useEffect(()=>{
     console.log(user)
+    
   socket.emit('join',{userType:"user",userId:user._id})
 },[user])
   const vehiclePanelRef = useRef(null);
@@ -109,6 +111,26 @@ const Dashboard = () => {
     }
   }, [waitForDriver]);
 
+  useEffect(() => {
+    if (!socket) return;
+
+    // Join as user
+    socket.emit('join', { userType: "user", userId: user._id });
+
+    // Listen for ride confirmation
+
+    socket.on('ride-confirmed',  (ride) => {
+      console.log('Ride confirmed:', ride?.captain.fullName.firstName);
+      setVehicleFound(false)
+      setWaitForDriver(true);
+      setRide(ride);
+    });
+
+    // Cleanup function
+    return () => {
+      socket.off('ride-confirmed');
+    };
+  }, [socket, user._id]);
   const findTrip = async() => {
     setPanelOpen(false);
     setVehiclePanel(true);
@@ -310,7 +332,7 @@ const Dashboard = () => {
              vehicleType={vehicleType}
              pickupLocation={pickupLocation}
              dropoffLocation={dropoffLocation}
-            setConfirmRidePanel={setConfirmRidePanel}
+             setConfirmRidePanel={setConfirmRidePanel}
               confirmRidePanel={confirmRidePanel}
               vehicleFound={vehicleFound}
               setVehicleFound={setVehicleFound}
@@ -327,8 +349,8 @@ const Dashboard = () => {
             } w-full z-10  px-2 bg-white `}
           >
             <WaitingForDriver
-              WaitingForDriver={waitForDriver}
-          
+             waitForDriver={waitForDriver}
+              ride={ride}
               setVehicleFound={setVehicleFound}
             
             />

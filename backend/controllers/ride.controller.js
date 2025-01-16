@@ -20,7 +20,6 @@ const createRideController = async (req, res) => {
 
     // Get coordinates
     const pickupCoordinates = await getAddressCoordinate(pickup);
-    console.log('Pickup coordinates:', pickupCoordinates);
 
     if (!pickupCoordinates || !pickupCoordinates.lat || !pickupCoordinates.lng) {
       return res.status(400).json({ error: "Could not get coordinates for pickup location" });
@@ -36,13 +35,13 @@ const createRideController = async (req, res) => {
     const availableCaptains = await getCaptainsInTheRadius(
      pickupCoordinates.lat, 
      pickupCoordinates.lng,
-      2
+      5
     );
-      const rideWithUser = await Ride.findById(ride._id).populate('user')
+
+      const rideWithUser = await Ride.findById(ride._id).populate('user');
       // Notify available captains
       availableCaptains.forEach(captain => {
         if (captain.socketId) {
-            console.log('Sending new ride to captain:', captain.socketId, rideWithUser);
             sendMessageToSocketId(captain.socketId, {
               event: 'new-ride',
               data: rideWithUser,
@@ -76,20 +75,30 @@ const getFareController = async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 }
-const confirmRide = async (req,res)=>{
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors
-            .array() });
-    }
-    const { rideId }= req.body;
-    try{
-        const ride = await confirmRideService(rideId,req.captain._id)
-        return res.status(200).json(ride);
-    }
-    catch(err){
-        return res.status(500).json({message: err.message})
-    }
+const confirmRide = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+  }
+  const { rideId } = req.body;
+  try {
+      // Note: req.cap should be req.captain
+      const ride = await confirmRideService({ rideId, captain: req.cap });
+      console.log('Ride confirmed:', ride);
+
+      // Emit event to user after successful confirmation
+      if (ride.user && ride.user.socketId) {
+          sendMessageToSocketId(ride.user.socketId, {
+              event: 'ride-confirmed',
+              data: ride
+          });
+      }
+
+      return res.status(200).json(ride);
+  } catch (err) {
+      console.error('Error during confirming ride:', err);
+      return res.status(500).json({ message: err.message });
+  }
 }
 
 export {createRideController,getFareController,confirmRide};

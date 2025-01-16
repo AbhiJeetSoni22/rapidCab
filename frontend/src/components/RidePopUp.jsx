@@ -1,7 +1,4 @@
-
-
 import PropTypes from 'prop-types';
-
 const RidePopUp = (props) => {
   return (
     <div className=" md:ml-8">
@@ -62,7 +59,7 @@ const RidePopUp = (props) => {
         </button>
           <button className=" mt-1 px-10 py-4 text-lg md:w-1/2 md:p-3 md:text-2xl md:font-medium  bg-green-500 text-white font-semibold p-2 rounded-lg"
             onClick={()=>{
-              props.rideConfirm();
+              props.confirmRide();
                 props.setConfirmRidePopUpPanel(true)
               }}
               >
@@ -75,11 +72,10 @@ const RidePopUp = (props) => {
   );
 }
 RidePopUp.propTypes = {
-
-  ride: PropTypes.object,
-  rideConfirm: PropTypes.func,
+ride: PropTypes.object,
+confirmRide: PropTypes.func,
 setConfirmRidePopUpPanel: PropTypes.func.isRequired,
-  setridePopUpPanel: PropTypes.func.isRequired
+setridePopUpPanel: PropTypes.func.isRequired
 };
 
 export default RidePopUp;

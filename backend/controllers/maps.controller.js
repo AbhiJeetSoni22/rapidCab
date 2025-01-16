@@ -51,18 +51,14 @@ const getCaptainsInTheRadius = async(lat, lng, radius) => {
       return [];
     }
     const captains = await Captain.find({
-      'location.lat': { 
-        $exists: true,
-        $gte: lat - radius,
-        $lte: lat + radius 
-      },
-      'location.lng': { 
-        $exists: true,
-        $gte: lng - radius,
-        $lte: lng + radius 
-      }
+      'location.lat': { $exists: true },
+      'location.lng': { $exists: true },
+      'location.lat': { $gte: lat - radius, $lte: lat + radius },
+      'location.lng': { $gte: lng - radius, $lte: lng + radius }
     });
- 
+    
+   
+   
     return captains;
   } catch (error) {
     console.error('Error finding captains:', error);

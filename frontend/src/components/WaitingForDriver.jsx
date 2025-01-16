@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 
+
 const WaitingForDriver = (props) => {
+
+
   return (
     <div>
         <h1 className='text-2xl md:text-3xl font-semibold'>Waiting for Driver</h1>
@@ -12,9 +15,10 @@ const WaitingForDriver = (props) => {
             alt=""
           />
          <div className='text-right'>
-            <h2 className='text-lg md:text-2xl font-medium'>abhijeet</h2>
-            <h3 className='text-xl font-semibold md:text-3xl '>MP15CB933</h3>
+            <h2 className='text-lg md:text-2xl font-medium capitalize'>{props.ride?.captain.fullName.firstName} </h2>
+            <h3 className='text-xl font-semibold md:text-3xl '>{props.ride?.captain.vehicle.plate}</h3>
             <p className='text-sm md:text-lg text-gray-600'>Maruti Suzuki Alto</p>
+            <p className='text-xl md:text-2xl text-gray-800'>Your OTP - {props.ride?.otp}</p>
          </div>
         </div>
         <div
@@ -39,29 +43,29 @@ const WaitingForDriver = (props) => {
         <div className="flex gap-2 justify-between items-center flex-col ">
        
           <div className="w-full">
-            <div className="flex items-center gap-5  border-t-2 border-b-2 p-3 border-t-gray-300 border-b-gray-300">
+            <div className="flex items-center gap-5  border-t-2 border-b-2 p-3 ">
               <i className="text-xl md:text-3xl ri-map-pin-2-fill"></i>
               <div>
-                <h3 className="text-lg md:text-2xl font-medium">562/11-A</h3>
+                <h3 className="text-lg md:text-2xl font-medium">Pickup Location</h3>
                 <p className="text-sm md:text-lg  text-gray-600">
-                  kankariya Tanlab, Sagar
+                  {props.ride?.pickup}
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-5   p-3 border-t-gray-300 border-b-gray-300">
               <i className="text-xl md:text-3xl ri-map-pin-user-fill"></i>
               <div>
-                <h3 className="text-lg md:text-2xl font-medium">562/11-A</h3>
+                <h3 className="text-lg md:text-2xl font-medium">Destination Location</h3>
                 <p className="text-sm md:text-lg  text-gray-600">
-                  kankariya Tanlab, Sagar
+                {props.ride?.destination}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-5  border-t-2 border-b-2 p-3 border-t-gray-300 border-b-gray-300">
+            <div className="flex items-center gap-5  border-t-2 border-b-2 p-3">
               <i className="text-xl md:text-3xl ri-wallet-fill"></i>
               <div>
                 <h3 className="text-lg md:text-2xl font-medium">Cash</h3>
-                <p className="text-sm  md:text-lg text-gray-600">₹190</p>
+                <p className="text-sm  md:text-lg text-gray-600">₹{props.ride?.fare}</p>
               </div>
             </div>
           </div>
@@ -72,10 +76,11 @@ const WaitingForDriver = (props) => {
 };
 
 WaitingForDriver.propTypes = {
-  vehicleFound: PropTypes.bool.isRequired,
+  ride:PropTypes.object,
+  vehicleFound: PropTypes.bool,
   waitForDriver: PropTypes.bool,
-  setVehicleFound: PropTypes.func.isRequired,
-  setConfirmRidePanel: PropTypes.func.isRequired
+  setVehicleFound: PropTypes.func,
+  
 };
 
 export default WaitingForDriver;
