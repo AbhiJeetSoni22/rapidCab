@@ -1,7 +1,7 @@
-import { resourceUsage } from "process";
 import { Ride } from "../models/ride.model.js";
 import { getDistanceTime } from "./maps.service.js";
 import crypto from 'crypto';
+import { sendMessageToSocketId } from "../socket.js";
 
 async function getFare(pickup, destination) {
     if (!pickup || !destination) {
@@ -89,4 +89,46 @@ async function confirmRideService({rideId, captain}) {
     return ride;
 }
 
-export { createRide, getFare, generateOTP,confirmRideService };
+async function startRideService({rideId, otp, captain}) {
+    if (!rideId || !otp || !captain) {
+        throw new Error('Ride ID, OTP and captain are required');
+    }
+
+    // First find the ride
+    const ride = await Ride.findById(rideId)
+        .populate('user')
+        .populate('captain')
+        .select('+otp');
+
+    if (!ride) {
+        throw new Error('Ride not found');
+    }
+
+    if (ride.otp !== otp) {
+        throw new Error('Invalid OTP');
+    }
+
+    if (ride.status !== 'accepted') {
+        throw new Error('Ride not confirmed');
+    }
+
+    // Update the ride status separately
+    const updatedRide = await Ride.findByIdAndUpdate(
+        rideId,
+        {
+            status: 'ongoing'
+        },
+        { new: true }
+    ).populate('user').populate('captain');
+
+    if (updatedRide.user.socketId) {
+        sendMessageToSocketId(updatedRide.user.socketId, {
+            event: 'ride-started',
+            data: updatedRide
+        });
+    }
+
+    return updatedRide;
+}
+
+export { createRide, getFare, generateOTP,confirmRideService,startRideService };

@@ -1,11 +1,30 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios"
+import { useNavigate } from 'react-router-dom'
+
 
 const ConfirmRidePopUp = (props) => {
+  const navigate = useNavigate()
   const [OTP,setOTP]= useState("");
-  const SubmitHandler=(e)=>{
+  const SubmitHandler=async (e)=>{
     e.preventDefault();
+    const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/start-ride`,{
+    params:{
+      rideId:props.ride._id,
+      otp:OTP},
+    headers:{
+      Authorization:`Bearer ${localStorage.getItem('token')}`
+    }
+  }
+  )
+  console.log(response.status)
+  if(response.status===200){
+    props.setConfirmRidePopUpPanel(false);
+    props.setridePopUpPanel(false);
+    navigate('/captain-riding')
+  }
+
   }
   return (
     <div className=" md:ml-8 relative h-screen ">
@@ -27,7 +46,7 @@ const ConfirmRidePopUp = (props) => {
             src="https://plus.unsplash.com/premium_photo-1689551670902-19b441a6afde?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww"
             alt=""
           />
-          <h2 className="text-lg md:text-2xl font-medium">Laira Patel</h2>
+          <h2 className="text-lg md:text-2xl font-medium">{props.ride?.user.fullName.firstName}</h2>
         </div>
         <h4 className="text-gray-600 text-lg font-medium md:text-xl mr-2">
           2.2 Km
@@ -40,7 +59,7 @@ const ConfirmRidePopUp = (props) => {
             <div>
               <h3 className="text-lg md:text-2xl font-medium">562/11-A</h3>
               <p className="text-sm md:text-lg  text-gray-600">
-               {props.pickupLocation}
+               {props.ride?.pickup}
               </p>
             </div>
           </div>
@@ -49,7 +68,7 @@ const ConfirmRidePopUp = (props) => {
             <div>
               <h3 className="text-lg md:text-2xl font-medium">562/11-A</h3>
               <p className="text-sm md:text-lg  text-gray-600">
-                {props.dropoffLocation}
+                {props.ride?.destination}
               </p>
             </div>
           </div>
@@ -57,7 +76,7 @@ const ConfirmRidePopUp = (props) => {
             <i className="text-xl md:text-3xl ri-wallet-fill"></i>
             <div>
               <h3 className="text-lg md:text-2xl font-medium">Cash</h3>
-              <p className="text-sm  md:text-lg text-gray-600">₹190</p>
+              <p className="text-sm  md:text-lg text-gray-600">₹{props.ride?.fare}</p>
             </div>
           </div>
         </div>
@@ -71,9 +90,9 @@ const ConfirmRidePopUp = (props) => {
         required
         onChange={(e)=>{ setOTP(e.target.value);}}
          placeholder="Enter OTP" />
-         <Link to="/captain-riding" className="w-2/3 ml-[15%] md:ml-[13%]  mt-1 flex justify-center   md:p-3 md:text-xl md:font-medium  bg-green-500 text-white font-semibold p-3 rounded-lg">
+         <button className="w-2/3 ml-[15%] md:ml-[13%]  mt-1 flex justify-center   md:p-3 md:text-xl md:font-medium  bg-green-500 text-white font-semibold p-3 rounded-lg">
           Confirm
-        </Link>
+        </button>
         <button
           className="w-2/3 ml-[15%] mt-1 md:ml-[13%] mb-2  md:p-3  md:text-xl md:font-medium  bg-red-600 text-white font-semibold p-3 rounded-lg"
           onClick={() => {
@@ -91,10 +110,11 @@ const ConfirmRidePopUp = (props) => {
   );
 };
 ConfirmRidePopUp.propTypes = {
+  ride: PropTypes.object,
   pickupLocation: PropTypes.string,
   dropoffLocation: PropTypes.string,
-  setConfirmRidePopUpPanel: PropTypes.func.isRequired,
-  setridePopUpPanel: PropTypes.func.isRequired,
+  setConfirmRidePopUpPanel: PropTypes.func,
+  setridePopUpPanel: PropTypes.func,
 };
 
 export default ConfirmRidePopUp;

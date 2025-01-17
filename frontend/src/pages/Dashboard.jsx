@@ -9,10 +9,12 @@ import ConfirmRide from "../components/ConfirmRide";
 import LookingForDriver from "../components/LookingForDriver";
 import WaitingForDriver from "../components/WaitingForDriver";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link,useNavigate} from "react-router-dom";
 import { SocketContext } from "../context/SocketContext";
 import { UserDataContext } from "../context/UserContext";
+
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [pickupLocation, setPickupLocation] = useState("");
   const [dropoffLocation, setDropoffLocation] = useState("");
   const [vehiclePanel, setVehiclePanel] = useState(false);
@@ -131,6 +133,12 @@ const Dashboard = () => {
       socket.off('ride-confirmed');
     };
   }, [socket, user._id]);
+
+  // eslint-disable-next-line no-unused-vars
+  socket.on('ride-started',(ride)=>{
+    setWaitForDriver(false);
+    navigate('/riding')
+  })
   const findTrip = async() => {
     setPanelOpen(false);
     setVehiclePanel(true);

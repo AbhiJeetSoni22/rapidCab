@@ -134,7 +134,7 @@ const CapDashboard = () => {
          <RidePopUp confirmRide={confirmRide} ride={ride} setConfirmRidePopUpPanel={setConfirmRidePopUpPanel} setridePopUpPanel={setridePopUpPanel}/>
        </div>
        <div ref={confirmRidePopUpPanelRef} className="fixed w-full z-30 md:h-[85%] h-screen translate-y-full lg:w-1/3 bottom-0  bg-white px-3 py-8  ">
-         <ConfirmRidePopUp setConfirmRidePopUpPanel={setConfirmRidePopUpPanel} setridePopUpPanel={setridePopUpPanel}/>
+         <ConfirmRidePopUp ride={ride} setConfirmRidePopUpPanel={setConfirmRidePopUpPanel} setridePopUpPanel={setridePopUpPanel}/>
        </div>
       </div>
 
