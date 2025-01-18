@@ -1,4 +1,4 @@
-import { createRide, getFare,confirmRideService,startRideService } from "../services/ride.service.js";
+import { createRide, getFare,confirmRideService,startRideService,endRideService } from "../services/ride.service.js";
 import { validationResult } from "express-validator";
 import { getCaptainsInTheRadius} from "./maps.controller.js";
 import { getAddressCoordinate } from "../services/maps.service.js";
@@ -116,4 +116,25 @@ const startRide = async (req,res)=>{
       return res.status(500).json({ message: err.message });
   }
 }
-export { createRideController, getFareController, confirmRide, startRide};
+
+const endRide = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+  }
+  const { rideId } = req.body;
+  try {
+      // Note: req.cap should be req.captain
+      const ride = await endRideService({ rideId, captain: req.cap });
+      sendMessageToSocketId(ride.user.socketId,{
+          event: 'ride-ended',
+          data: ride,
+      })
+      console.log('Ride ended:', ride);
+      return res.status(200).json(ride);
+  } catch (err) {
+      console.error('Error during ending ride:', err);
+      return res.status(500).json({ message: err.message });
+  }
+}
+export { createRideController, getFareController, confirmRide, startRide,endRide};

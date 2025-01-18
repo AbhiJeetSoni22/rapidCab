@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 const RidePopUp = (props) => {
   return (
-    <div className=" md:ml-8">
+    <div className="relative mt-10 md:ml-8 z-30">
     
       <h2 className="text-2xl font-semibold md:text-3xl mb-3 ">
         New Ride Request

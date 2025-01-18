@@ -7,25 +7,30 @@ import { useNavigate } from 'react-router-dom'
 const ConfirmRidePopUp = (props) => {
   const navigate = useNavigate()
   const [OTP,setOTP]= useState("");
-  const SubmitHandler=async (e)=>{
+  const SubmitHandler = async (e) => {
     e.preventDefault();
-    const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/start-ride`,{
-    params:{
-      rideId:props.ride._id,
-      otp:OTP},
-    headers:{
-      Authorization:`Bearer ${localStorage.getItem('token')}`
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/start-ride`, {
+        params: {
+          rideId: props.ride._id,
+          otp: OTP
+        },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+  
+      if (response.status === 200) {
+        props.setConfirmRidePopUpPanel(false);
+        props.setridePopUpPanel(false);
+        navigate('/captain-riding', { 
+          state: { ride: response.data }
+        });
+      }
+    } catch (error) {
+      console.error('Error starting ride:', error);
     }
-  }
-  )
-  console.log(response.status)
-  if(response.status===200){
-    props.setConfirmRidePopUpPanel(false);
-    props.setridePopUpPanel(false);
-    navigate('/captain-riding')
-  }
-
-  }
+  };
   return (
     <div className=" md:ml-8 relative h-screen ">
       <h5

@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useRef, useState } from "react";
 import FinishRide from "../components/FinishRide";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import LiveTracking from "../components/LiveTracking";
 
 const CaptainRiding = () => {
+  const location = useLocation();
+  const ride = location.state?.ride;
   const [finishRidePanel, setFinishRidePanel] = useState(false);
   const finishRidePanelRef = useRef(null);
 
@@ -17,7 +20,7 @@ const CaptainRiding = () => {
     } else {
       gsap.to(finishRidePanelRef.current, {
         height: "0",
-        transform: "translateY(1150%)",
+        transform: "translateY(1500%)",
       });
     }
   }, [finishRidePanel]);
@@ -38,7 +41,7 @@ const CaptainRiding = () => {
       <div className="flex flex-col-reverse relative lg:flex-row h-screen overflow-hidden">
         {/* Left Section */}
         <div
-          className="h-[17%] flex items-center relative justify-between md:h-[20%] md:ml-7 md:w-1/3 bg-yellow-300 p-4 md:mt-[10%]"
+          className="h-[17%]  flex items-center relative justify-between md:h-[20%] md:ml-7 md:w-1/3 bg-yellow-300 p-4 md:mt-[10%]"
           onClick={() => {
             setFinishRidePanel(true);
           }}
@@ -55,17 +58,12 @@ const CaptainRiding = () => {
             ref={finishRidePanelRef}
             className="fixed w-full lg:w-1/3 top-0 left-0 md:top-24 md:left-1 m-0 p-0 bg-white py-10 md:mb-24 translate-y-full"
           >
-            <FinishRide setFinishRidePanel={setFinishRidePanel} />
+            <FinishRide ride={ride} setFinishRidePanel={setFinishRidePanel} />
           </div>
 
         {/* Right Section */}
-        <div className="flex-1 h-[83%] md:w-2/3 md:mx-10 md:my-12 bg-gray-100">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.8354345082766!2d144.9556516153866!3d-37.81627997975145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf5771f4573b3d6b!2sFederation%20Square!5e0!3m2!1sen!2sau!4v1634634920346!5m2!1sen!2sau"
-            className="w-full h-full block"
-            allowFullScreen=""
-            loading="lazy"
-          ></iframe>
+        <div className="flex-1 z-[-1] h-[83%] md:w-2/3 md:mx-10 md:my-12 bg-gray-100">
+          <LiveTracking/>
         </div>
       </div>
     </>

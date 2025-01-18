@@ -12,6 +12,7 @@ import axios from "axios";
 import { Link,useNavigate} from "react-router-dom";
 import { SocketContext } from "../context/SocketContext";
 import { UserDataContext } from "../context/UserContext";
+import LiveTracking from "../components/LiveTracking"
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -137,7 +138,7 @@ const Dashboard = () => {
   // eslint-disable-next-line no-unused-vars
   socket.on('ride-started',(ride)=>{
     setWaitForDriver(false);
-    navigate('/riding')
+    navigate('/riding',{ state: { ride } })
   })
   const findTrip = async() => {
     setPanelOpen(false);
@@ -375,12 +376,7 @@ const Dashboard = () => {
           }}
         >
           <div className="w-full h-full">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.8354345082766!2d144.9556516153866!3d-37.81627997975145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf5771f4573b3d6b!2sFederation%20Square!5e0!3m2!1sen!2sau!4v1634634920346!5m2!1sen!2sau"
-              className="w-full h-full"
-              allowFullScreen=""
-              loading="lazy"
-            ></iframe>
+           <LiveTracking key="userDashboard"/>
           </div>
         </div>
       </div>

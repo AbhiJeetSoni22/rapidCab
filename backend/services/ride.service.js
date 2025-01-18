@@ -131,4 +131,25 @@ async function startRideService({rideId, otp, captain}) {
     return updatedRide;
 }
 
-export { createRide, getFare, generateOTP,confirmRideService,startRideService };
+async function endRideService({rideId, captain}) {
+    if (!rideId ||!captain) {
+        throw new Error('Ride ID and captain are required');
+    }
+    const ride = await Ride.findOne({
+        _id: rideId,
+        captain: captain._id
+    }).populate('user').populate('captain').select('+otp')
+    if (!ride) {
+        throw new Error('Ride not found or not authorized to end');
+    }
+    if (ride.status!== 'ongoing') {
+        throw new Error('Ride is not in progress');
+    }
+    await Ride.findOneAndUpdate({
+        _id: rideId
+    },{
+        status: 'completed'
+    })
+    return ride;
+}
+export { createRide, getFare, generateOTP,confirmRideService,startRideService,endRideService };

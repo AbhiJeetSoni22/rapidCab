@@ -10,6 +10,7 @@ import { CaptainDataContext } from "../context/CaptainContext"
 import { useEffect,useContext } from "react"
 import { SocketContext } from "../context/SocketContext"
 import axios from "axios"
+import LiveTracking from "../components/LiveTracking"
 const CapDashboard = () => {
  const [ridePopUpPanel, setridePopUpPanel] = useState(false)
 
@@ -124,9 +125,9 @@ const CapDashboard = () => {
           <i className="text-3xl font-bold w-15 h-15 bg-orange-400 rounded-full p-3 ri-logout-box-r-line"></i>
         </Link>
       </div>
-    <div className="flex flex-col-reverse lg:flex-row h-screen">
+    <div className="flex flex-col-reverse  lg:flex-row h-screen">
       {/* Left Section */}
-      <div className="w-full lg:w-1/3 p-6 bg-white flex flex-col items-center  justify-center">
+      <div className="w-full lg:w-1/3 z-20  p-6 bg-white flex flex-col items-center  justify-center">
      
       <CaptainDetails />
    
@@ -140,13 +141,9 @@ const CapDashboard = () => {
 
 
       {/* Right Section */}
-      <div className="flex-1 md:mx-10 md:my-12 bg-gray-100">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.8354345082766!2d144.9556516153866!3d-37.81627997975145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf5771f4573b3d6b!2sFederation%20Square!5e0!3m2!1sen!2sau!4v1634634920346!5m2!1sen!2sau"
-          className="w-full h-full"
-          allowFullScreen=""
-          loading="lazy"
-        ></iframe>
+      <div className="flex-1 z-0  md:mx-10 md:my-12 bg-gray-100">
+    
+        <LiveTracking key="dashboardCaptain" />
       </div>
       
     </div>
