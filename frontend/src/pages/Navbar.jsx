@@ -18,23 +18,39 @@ const Navbar = () => {
     checkToken();
   }, []); // Dependency array is empty, so it runs only on mount
 
-  const token = localStorage.getItem('token');
-  const handleLogout =async ()=>{
+  const handleLogout = async () => {
     try {
-    const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/logout`,{
-            headers: {
-                'Authorization': `Bearer ${token}`
+        const token = localStorage.getItem("token");
+        if (!token) {
+            console.error("No token found for logout");
+            return;
+        }
+
+        const response = await axios.get(
+            `${import.meta.env.VITE_BASE_URL}/users/logout`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             }
-        })
-    if(response.status === 200){
-        localStorage.removeItem('token');
-        navigate('/login');
-    }
-        
+        );
+
+        if (response.status === 200) {
+            localStorage.removeItem("token");
+            setHasToken(false);
+            navigate("/login");
+        }
     } catch (error) {
-        console.log('error during logout',error)
+        console.error("Error during logout:", error);
+        // If unauthorized, clear token and redirect anyway
+        if (error.response?.status === 401) {
+            localStorage.removeItem("token");
+            setHasToken(false);
+            navigate("/login");
+        }
     }
-}
+};
+  
 
   const handleLoginNavigate = () => {
     // Simulate login (replace this with actual login logic)

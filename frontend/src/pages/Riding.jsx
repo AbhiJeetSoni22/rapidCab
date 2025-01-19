@@ -1,17 +1,32 @@
-import { useLocation } from 'react-router-dom';
-import Navbar from "./Navbar";
+import { useContext, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { SocketContext } from '../context/SocketContext';
-import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import LiveTracking from '../components/LiveTracking'
+import LiveTracking from '../components/LiveTracking';
+import Navbar from './Navbar';
+
 const Riding = () => {
   const { socket } = useContext(SocketContext);
   const navigate = useNavigate();
   const location = useLocation();
   const ride = location.state?.ride;
-  socket.on('ride-ended',()=>{
-    navigate('/dashboard')
-  })
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleRideEnded = () => {
+      navigate('/dashboard');
+    };
+
+    socket.on('ride-ended', handleRideEnded);
+
+    return () => {
+      socket.off('ride-ended', handleRideEnded);
+    };
+  }, [socket, navigate]);
+
+  if (!socket) {
+    return <div>Connecting...</div>;
+  }
   return (
     <>
       <Navbar />
@@ -71,7 +86,7 @@ const Riding = () => {
 
         {/* Right Section - Map */}
         <div className="flex-1 bg-gray-100">
-       <LiveTracking/>
+       <LiveTracking ride={ride}/>
         </div>
       </div>
     </>

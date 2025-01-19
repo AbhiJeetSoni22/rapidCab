@@ -6,7 +6,7 @@ const ConfirmRide = (props) => {
     <div>
      <h2 className="text-2xl font-semibold md:text-3xl mb-1 ">Confirm You Ride</h2>
             <div
-              className={`absolute cursor-pointer  h-8 w-9 md:bg-[#eee] rounded-full md:top-8 md:left-10   top-5 right-3 ${
+              className={`absolute cursor-pointer  h-8 w-9 md:bg-[#eee] rounded-full md:top-8 md:left-5   top-5 right-3 ${
                 props.confirmRidePanel ? "block" : "hidden"
               } `}
               onClick={() => {
@@ -78,7 +78,7 @@ const ConfirmRide = (props) => {
                     props.setVehicleFound(true)
                     props.setConfirmRidePanel(false)
                     props.createRide()
-                }} className='w-full mt-2  md:w-1/2 bg-green-600 text-white font-semibold p-2 rounded-lg'>Confirm</button>
+                }} className='w-full mt-2 md:w-1/2 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg'>Confirm</button>
               
             </div>
     </div>

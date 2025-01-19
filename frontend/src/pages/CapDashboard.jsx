@@ -115,40 +115,55 @@ const CapDashboard = () => {
 
   return (
     <>
-    <div className="hidden md:block ">
-    <Navbar/>
-    </div>
-    <div className="w-screen fixed px-2 flex md:hidden  justify-between items-center top-4 ">
-        <h1 className="text-3xl font-bold  z-20">RapidCap</h1>
-
-        <Link to="/captain-login" className="z-20">
-          <i className="text-3xl font-bold w-15 h-15 bg-orange-400 rounded-full p-3 ri-logout-box-r-line"></i>
-        </Link>
+      <div className="hidden md:block">
+        <Navbar />
       </div>
-    <div className="flex flex-col-reverse  lg:flex-row h-screen">
-      {/* Left Section */}
-      <div className="w-full lg:w-1/3 z-20  p-6 bg-white flex flex-col items-center  justify-center">
-     
-      <CaptainDetails />
-   
-       <div ref={ridePopUpPanelRef} className="fixed w-full translate-y-full lg:w-1/3 bottom-0  bg-white px-3 py-6 md:mb-24 ">
-         <RidePopUp confirmRide={confirmRide} ride={ride} setConfirmRidePopUpPanel={setConfirmRidePopUpPanel} setridePopUpPanel={setridePopUpPanel}/>
-       </div>
-       <div ref={confirmRidePopUpPanelRef} className="fixed w-full z-30 md:h-[85%] h-screen translate-y-full lg:w-1/3 bottom-0  bg-white px-3 py-8  ">
-         <ConfirmRidePopUp ride={ride} setConfirmRidePopUpPanel={setConfirmRidePopUpPanel} setridePopUpPanel={setridePopUpPanel}/>
-       </div>
+      {/* Conditionally render the RapidCap sign and logout icon */}
+      {!confirmRidePopUpPanel && (
+        <div className="w-screen fixed px-2 flex md:hidden justify-between items-center top-4 z-30">
+          <h1 className="text-3xl font-bold z-30">RapidCap</h1>
+          <Link to="/captain-login" className="z-30">
+            <i className="text-3xl font-bold w-15 h-15 bg-orange-400 rounded-full p-3 ri-logout-box-r-line"></i>
+          </Link>
+        </div>
+      )}
+      <div className="flex flex-col-reverse lg:flex-row h-screen relative">
+        {/* Left Section */}
+        <div className="w-full lg:w-1/3 z-20 p-6 bg-white flex flex-col items-center justify-center">
+          <CaptainDetails />
+  
+          <div
+            ref={ridePopUpPanelRef}
+            className="fixed w-full translate-y-full lg:w-1/3 bottom-0 bg-white px-3 py-6 md:mb-24"
+          >
+            <RidePopUp
+              confirmRide={confirmRide}
+              ride={ride}
+              setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}
+              setridePopUpPanel={setridePopUpPanel}
+            />
+          </div>
+          <div
+            ref={confirmRidePopUpPanelRef}
+            className="fixed w-full z-30 md:h-[85%] h-screen translate-y-full lg:w-1/3 bottom-0 bg-white px-3 py-8"
+          >
+            <ConfirmRidePopUp
+              ride={ride}
+              setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}
+              setridePopUpPanel={setridePopUpPanel}
+            />
+          </div>
+        </div>
+  
+        {/* Right Section */}
+        <div className="flex-1 z-0 md:mx-10 md:my-12 bg-gray-100 relative">
+          <LiveTracking key="dashboardCaptain" />
+        </div>
       </div>
-
-
-      {/* Right Section */}
-      <div className="flex-1 z-0  md:mx-10 md:my-12 bg-gray-100">
-    
-        <LiveTracking key="dashboardCaptain" />
-      </div>
-      
-    </div>
-  </>
-  )
+    </>
+  );
+  
+  
 }
 
 export default CapDashboard

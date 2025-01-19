@@ -48,7 +48,7 @@ const LocationSearchPanle = ({
   };
 
   return (
-    <div className="relative md:mt-0 md:ml-12">
+    <div className="relative sm:w-full sm:text-center text-center md:mt-0 md:ml-3">
       <div className="bg-white rounded-lg shadow-lg z-10 w-full max-w-md md:max-w-lg absolute top-0 left-0">
         {suggestions.map((suggestion, index) => (
           <div

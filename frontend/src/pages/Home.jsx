@@ -13,11 +13,11 @@ const Home = () => {
         <h1 className="text-4xl absolute top-4 right-3 font-bold z-20">RapidCap</h1>
       </div>
     
-    <div className="h-full w-full overflow-hidden">
+    <div className="h-full md:ml-10 w-full flex justify-center items-center overflow-hidden">
       {/* Main Container */}
       <div className="flex flex-col md:flex-row w-full items-center justify-center p-8 h-full  relative">
         {/* Left Section */}
-        <div className="fixed md:relative bottom-0 bg-white z-10 md:mx-20 w-full  p-8 md:p-0   md:w-1/2 text-left md:text-left flex flex-col justify-center">
+        <div className="fixed md:relative bottom-0 bg-white z-10 w-full  p-8 md:p-0   md:w-1/2 text-left md:text-left flex flex-col justify-center">
           <h1 className="md:text-2xl text-xl mb-4">
             Request a ride for now or later
           </h1>
@@ -37,7 +37,7 @@ const Home = () => {
         </div>
 
         {/* Right Section */}
-        <div className="hidden md:block w-full  relative left-40 "> 
+        <div className="md:ml-10 hidden md:block w-[70%]  relative  "> 
           <img
             src={homeImg}
             alt="Ride illustration"

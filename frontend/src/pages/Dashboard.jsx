@@ -78,7 +78,7 @@ const Dashboard = () => {
     if (confirmRidePanel) {
       gsap.to(confirmRidePanelRef.current, {
         visibility: "visible",
-        height: "25rem",
+        height: "27rem",
       });
     } else {
       gsap.to(confirmRidePanelRef.current, {
@@ -91,7 +91,7 @@ const Dashboard = () => {
     if (vehicleFound) {
       gsap.to(vehicleFoundRef.current, {
         visibility: "visible",
-        height: "19rem",
+        height: "25rem",
       });
     } else {
       gsap.to(vehicleFoundRef.current, {
@@ -181,96 +181,75 @@ const Dashboard = () => {
         </Link>
       </div>
       <div className="flex flex-col-reverse lg:flex-row h-screen overflow-hidden">
-        <div
-          className={`w-full flex mb-8 md:mb-0 flex-col lg:w-1/3 bg-white relative p-6`}
-        >
-          {!waitForDriver &&!vehicleFound && !confirmRidePanel && !vehiclePanel && (
-            <div
-              className={`max-w-md w-full md:top-0 relative mx-auto md:m-14 bg-white `}
-            >
-              <form
-                action=""
-                onSubmit={(e) => {
-                  submitHandler(e);
-                }}
-              >
-                <h1 className="text-3xl font-semibold mb-4">Get a ride</h1>
-                <div
-                  className={`absolute h-5 w-5 md:hidden rounded-full top-[-6%] right-[45%] ${
-                    vehiclePanel || panelOpen ? "block" : "hidden"
-                  } `}
-                  onClick={() => {
-                    setPanelOpen(false);
-                    setVehiclePanel(false);
-                  }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width="34"
-                    height="34"
-                    fill="gray"
-                  >
-                    <path d="M12 15.6315L20.9679 10.8838L20.0321 9.11619L12 13.3685L3.9679 9.11619L3.03212 10.8838L12 15.6315Z"></path>
-                  </svg>
-                </div>
-                <div className="mb-4 relative">
-                  <div className="line absolute h-20 w-1 top-5 rounded-full left-5 bg-gray-800"></div>
-                  <input
-                    type="text"
-                    value={pickupLocation}
-                    placeholder="Pickup location"
-                    required
-                    className="w-full text-lg px-12 py-3 border bg-[#e7e7e7] rounded-lg focus:ring focus:ring-gray-700 focus:outline-none"
-                    onChange={(e) => setPickupLocation(e.target.value)}
-                    onClick={() => {
-                      setPanelOpen(true);
-                      setActiveField('pickup');
-                    }}
-                  />
-                </div>
-
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    value={dropoffLocation}
-                    required
-                    placeholder="Dropoff location"
-                    className="w-full text-lg px-12 py-3 border bg-[#e7e7e7] rounded-lg focus:ring focus:ring-gray-700 focus:outline-none"
-                    onChange={(e) => setDropoffLocation(e.target.value)}
-                    onClick={() => {
-                      setPanelOpen(true);
-                      setActiveField('dropoff');
-                    }}
-                  />
-                </div>
-                
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      if (!pickupLocation || !dropoffLocation) {
-                        setCheckfields(true);
-                       setTimeout(() => {
-                        setCheckfields(false);
-                       }, 1500);
-                      }
-                      else{
-                          
-                          await findTrip();        
-                      }
-                    }}
-                    className="w-full bg-yellow-400 text-black py-3 rounded-lg font-semibold hover:bg-yellow-500 transition-colors mt-4"
-                  >
-                    Find Ride
-                  </button>
-                  {checkfields && <p className="text-red-500 mt-3 text-center text-sm">Please fill all fields</p>}
-              </form>
-            </div>
+  {/* Left Panel */}
+  <div
+    className={`w-full flex flex-col lg:w-1/3 sm:mb-4 bg-white relative p-4 lg:p-6 ${
+      panelOpen ? "lg:sticky lg:top-0 lg:h-full" : ""
+    }`}
+  >
+    {/* Form Section */}
+    {!waitForDriver && !vehicleFound && !confirmRidePanel && !vehiclePanel && (
+      <div className="w-full md:mt-[20%] max-w-md mx-auto">
+        <form onSubmit={submitHandler}>
+          <h1 className="text-2xl md:text-3xl font-semibold mb-4">Get a ride</h1>
+          {/* Inputs */}
+          <div className="mb-4 relative">
+            <input
+              type="text"
+              value={pickupLocation}
+              placeholder="Pickup location"
+              required
+              className="w-full text-lg px-4 py-3 border bg-gray-200 rounded-lg focus:ring focus:ring-gray-700 focus:outline-none"
+              onChange={(e) => setPickupLocation(e.target.value)}
+              onClick={() => {
+                setPanelOpen(true);
+                setActiveField("pickup");
+              }}
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              type="text"
+              value={dropoffLocation}
+              required
+              placeholder="Dropoff location"
+              className="w-full text-lg px-4 py-3 border bg-gray-200 rounded-lg focus:ring focus:ring-gray-700 focus:outline-none"
+              onChange={(e) => setDropoffLocation(e.target.value)}
+              onClick={() => {
+                setPanelOpen(true);
+                setActiveField("dropoff");
+              }}
+            />
+          </div>
+          {/* Button */}
+          <button
+            type="button"
+            onClick={async () => {
+              if (!pickupLocation || !dropoffLocation) {
+                setCheckfields(true);
+                setTimeout(() => {
+                  setCheckfields(false);
+                }, 1500);
+              } else {
+                await findTrip();
+              }
+            }}
+            className="w-full mt-4 bg-yellow-400 text-black py-3 rounded-lg font-semibold hover:bg-yellow-500 transition-colors"
+          >
+            Find Ride
+          </button>
+          {checkfields && (
+            <p className="text-red-500 mt-3 text-center text-sm">
+              Please fill all fields
+            </p>
           )}
+        </form>
+      </div>
+    )}
           {!vehiclePanel && (
             <div
               ref={panelRef}
-              className={`bg-white relative md:mt-0 top-2 md:top-0 overflow-hidden`}
+              className={`md:bg-white relative  md:mt-6 items-center text-center justify-center top-2 md:top-0 overflow-hidden`}
             >
               {panelOpen && (
                 <LocationSearchPanle

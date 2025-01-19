@@ -58,10 +58,19 @@ async function getUserProfile(req,res,next){
   res.status(200).json(req.user)
 }
 
-async function logoutUser(req,res,next){
-  const token =  req.headers.authorization?.split(' ')[1]
-  res.clearCookie('token')
-  await BlacklistingToken.create({token})
-  res.status(200).json({msg:"User logged out"})
+async function logoutUser(req, res) {
+  try {
+      const token = req.headers.authorization?.split(' ')[1];
+      if (!token) {
+          return res.status(401).json({ error: 'No token provided' });
+      }
+
+      await BlacklistingToken.create({ token });
+      res.clearCookie('token');
+      return res.status(200).json({ msg: "User logged out successfully" });
+  } catch (error) {
+      console.error('Logout error:', error);
+      return res.status(500).json({ error: 'Error during logout' });
+  }
 }
 export { registerUser,loginUser,changePassword,getUserProfile,logoutUser}

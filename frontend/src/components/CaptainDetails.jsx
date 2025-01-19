@@ -17,7 +17,7 @@ const CaptainDetails = () => {
                 <h4 className="text-xl md:text-2xl font-medium text-gray-700 ">{capname}</h4>
             </div>
             <div>
-                <h4 className="text-xl md:text-2xl font-semibold">$295.20</h4>
+                <h4 className="text-xl md:text-2xl font-semibold">₹295.20</h4>
                 <p className="text-sm md:text-lg text-gray-600">Earned</p>
             </div>
         </div>
@@ -32,10 +32,10 @@ const CaptainDetails = () => {
                 <h5 className="text-lg font-medium">44 </h5>
                 <p className="text-sm text-gray-600">Distance (km)</p>
             </div>
-            <div  className="text-center  bg-gray-100 p-1 rounded-lg ">
-                <i className="text-3xl mb-2 font-thin text-gray-600 ri-booklet-line"></i>
-                <h5 className="text-lg font-medium">8.2</h5>
-                <p className="text-sm text-gray-600">Hours Online</p>
+            <div  className="text-center  bg-gray-100 p-1 px-5 rounded-lg ">
+                <i className="text-3xl mb-2 font-thin text-gray-600 ri-star-line"></i>
+                <h5 className="text-lg font-medium">4.2</h5>
+                <p className="text-sm text-gray-600">Rating</p>
             </div>
         </div>
         </div> 

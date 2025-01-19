@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 const LookingForDriver = (props) => {
   return (
     <div>
-    <h2 className="text-2xl font-semibold md:text-3xl mb-1 ">Looking for a Driver</h2>
+    <h2 className="text-2xl font-semibold md:text-3xl mb-1 ">Wait... Looking for a Driver</h2>
            <div
              className={`absolute cursor-pointer  h-8 w-9 md:bg-[#eee] rounded-full md:top-8 md:left-10   top-5 right-3 ${
               props.vehicleFound ? "block" : "hidden"
