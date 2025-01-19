@@ -35,6 +35,7 @@ const ConfirmRidePopUp = (props) => {
         // Clear the message after 1.5 seconds
         setTimeout(() => setErrorMessage(""), 1500);
       } else {
+        setErrorMessage("Invalid OTP. Please try again.");
         console.error("Error starting ride:", error);
       }
     }

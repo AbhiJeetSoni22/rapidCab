@@ -61,6 +61,7 @@ async function createRide({
         destination,
         otp:generateOTP(5),
         fare:fare[vehicleType],
+        vehicleType,
     });
    await ride.save();
    return ride

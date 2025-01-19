@@ -17,7 +17,7 @@ const createRideController = async (req, res) => {
       destination, 
       vehicleType 
     });
-
+   console.log(vehicleType)
     // Get coordinates
     const pickupCoordinates = await getAddressCoordinate(pickup);
 
@@ -35,7 +35,8 @@ const createRideController = async (req, res) => {
     const availableCaptains = await getCaptainsInTheRadius(
      pickupCoordinates.lat, 
      pickupCoordinates.lng,
-      5
+      5,
+      vehicleType
     );
 
       const rideWithUser = await Ride.findById(ride._id).populate('user');

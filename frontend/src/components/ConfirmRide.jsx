@@ -78,7 +78,7 @@ const ConfirmRide = (props) => {
                     props.setVehicleFound(true)
                     props.setConfirmRidePanel(false)
                     props.createRide()
-                }} className='w-full mt-2 md:w-1/2 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg'>Confirm</button>
+                }} className='w-full mt-2 mb-2 md:w-1/2 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg'>Confirm</button>
               
             </div>
     </div>

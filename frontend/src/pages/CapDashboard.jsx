@@ -80,7 +80,7 @@ const CapDashboard = () => {
   };
 
   // Call the location update function at intervals
-  const locationInterval = setInterval(updateLocation, 90000);
+  const locationInterval = setInterval(updateLocation, 30000);
   updateLocation();
 
   // Cleanup on component unmount

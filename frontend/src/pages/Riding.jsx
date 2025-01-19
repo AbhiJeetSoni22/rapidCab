@@ -36,11 +36,30 @@ const Riding = () => {
           <div className="w-full p-4">
             <div>
               <div className="flex items-center justify-between mb-3">
+              {
+              ride?.vehicleType === 'car' &&
+              <img
+                className="h-22 md:h-25 mt-1"
+                src="https://www.pngplay.com/wp-content/uploads/8/Uber-PNG-Photos.png"
+                alt=""
+              />
+              }
+              {
+              ride?.vehicleType === 'bike' &&
                 <img
-                  className="h-12 md:h-28"
-                  src="https://www.pngplay.com/wp-content/uploads/8/Uber-PNG-Photos.png"
+                className="h-20 md:h-25 mt-5"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQTJw6dzEo1MYXOAbONCG1oL82rxU_Bitb-g&s"
+                alt=""
+              />
+                }
+                {
+                ride?.vehicleType === 'auto' &&
+                  <img
+                  className="h-20 md:h-25 mt-3"
+                  src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1648431773/assets/1d/db8c56-0204-4ce4-81ce-56a11a07fe98/original/Uber_Auto_558x372_pixels_Desktop.png"
                   alt=""
                 />
+                }
                 <div className="text-right">
                   <h2 className="text-lg md:text-2xl font-medium">
                     {ride?.captain?.fullName?.firstName || 'Captain'}
@@ -49,7 +68,7 @@ const Riding = () => {
                     {ride?.captain?.vehicle?.plate || 'Vehicle Number'}
                   </h3>
                   <p className="text-sm md:text-lg text-gray-600">
-                    {ride?.captain?.vehicle?.model || 'Maruti Suzuki Alto'}
+                    {ride?.vehicleType || 'Maruti Suzi'}
                   </p>
                 </div>
               </div>

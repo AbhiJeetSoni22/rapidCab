@@ -17,7 +17,7 @@ const endRide = async()=>{
   return (
     <div className="z-200 md:ml-8 p-6 relative h-screen w-full bg-white ">
       <h5
-        className="fixed z-[100] top-0 left-0 text-center w-full  bg-gray-800 md:hidden"
+        className="fixed z-[100] top-0 left-0 text-center w-full  bg-gray-700 md:hidden"
         onClick={() => {
           props.setFinishRidePanel(false);
          
@@ -26,7 +26,7 @@ const endRide = async()=>{
         <i className="text-4xl h-10 w-10 text-gray-400 ri-arrow-down-wide-line"></i>
       </h5>
       <h2 className="text-2xl font-semibold md:text-3xl mb-3 mt-5 ">
-      Fisnish this ride
+      Finish Ride
       </h2>
       <div className="flex  items-center w-full p-4 justify-between border border-yellow-400 bg-yellow-200 rounded-lg ">
         <div className="flex my-2  items-center gap-4">
@@ -76,7 +76,7 @@ const endRide = async()=>{
         </button>
        </div>
 
-       <p className='text-xs md:lg text-gray-700 mt-6'>Click on finish ride button if you have completed the ride</p>
+       <p className='text-xs md:lg text-gray-700 mt-6'>Click on finish ride button if you get the Payment</p>
       </div>
     </div>
   )

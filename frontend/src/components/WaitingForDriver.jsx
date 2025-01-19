@@ -9,6 +9,7 @@ const WaitingForDriver = (props) => {
         <h1 className='text-2xl md:text-3xl font-semibold'>Waiting for Driver</h1>
       <div>
          <div className='flex items-center justify-between mb-3 '>
+         
         <img
             className="h-12 md:h-28"
             src="https://www.pngplay.com/wp-content/uploads/8/Uber-PNG-Photos.png"
@@ -17,7 +18,7 @@ const WaitingForDriver = (props) => {
          <div className='text-right'>
             <h2 className='text-lg md:text-2xl font-medium capitalize'>{props.ride?.captain.fullName.firstName} </h2>
             <h3 className='text-xl font-semibold md:text-3xl '>{props.ride?.captain.vehicle.plate}</h3>
-            <p className='text-sm md:text-lg text-gray-600'>Maruti Suzuki Alto</p>
+            <p className='text-sm md:text-lg text-gray-600'>12s</p>
             <p className='text-xl md:text-2xl text-gray-800'>Your OTP - {props.ride?.otp}</p>
          </div>
         </div>

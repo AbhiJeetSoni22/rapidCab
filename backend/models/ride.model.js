@@ -23,6 +23,11 @@ const rideSchema = new Schema({
         type: Number,
         required: true
     },
+    vehicleType:{
+        type: String,
+        enum: ['auto','car','bike'],
+       
+       },
     status:{
         type: String,
         enum: ['pending','accepted','ongoing','started','completed','cancelled'],

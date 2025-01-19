@@ -43,27 +43,34 @@ const getSuggestions = async (req, res) => {
     
    }
 }
-const getCaptainsInTheRadius = async(lat, lng, radius) => {
+const getCaptainsInTheRadius = async(lat, lng, radius, vehicleType) => {
   try {
-    // Validate coordinates
-    if ( !lat || !lng) {
-      console.error('Invalid coordinates:', { lat, lng });
+    // Validate coordinates and vehicleType
+    if (!lat || !lng || !vehicleType) {
+      console.error('Invalid parameters:', { lat, lng, vehicleType });
       return [];
     }
+
     const captains = await Captain.find({
-      'location.lat': { $exists: true },
-      'location.lng': { $exists: true },
-      'location.lat': { $gte: lat - radius, $lte: lat + radius },
-      'location.lng': { $gte: lng - radius, $lte: lng + radius }
+      'location.lat': { 
+        $exists: true,
+        $gte: lat - radius, 
+        $lte: lat + radius 
+      },
+      'location.lng': { 
+        $exists: true,
+        $gte: lng - radius, 
+        $lte: lng + radius 
+      },
+      'vehicle.vehicleType': vehicleType,
     });
-    
-   
-   
+
+    console.log(`Found ${captains.length} captains with ${vehicleType}`);
     return captains;
   } catch (error) {
     console.error('Error finding captains:', error);
     return [];
   }
-}
+};
 
 export  { getCoordinates,getAddressesDistanceTime , getSuggestions,getCaptainsInTheRadius};

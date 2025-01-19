@@ -121,25 +121,37 @@ const Dashboard = () => {
     socket.emit('join', { userType: "user", userId: user._id });
 
     // Listen for ride confirmation
-
-    socket.on('ride-confirmed',  (ride) => {
-      console.log('Ride confirmed:', ride?.captain.fullName.firstName);
-      setVehicleFound(false)
+    const handleRideConfirmed = (ride) => {
+      console.log('Ride confirmed:', ride);
+      setVehicleFound(false);
       setWaitForDriver(true);
       setRide(ride);
-    });
+    };
+
+    socket.on('ride-confirmed', handleRideConfirmed);
 
     // Cleanup function
     return () => {
-      socket.off('ride-confirmed');
+      socket.off('ride-confirmed', handleRideConfirmed);
     };
   }, [socket, user._id]);
 
-  // eslint-disable-next-line no-unused-vars
-  socket.on('ride-started',(ride)=>{
-    setWaitForDriver(false);
-    navigate('/riding',{ state: { ride } })
-  })
+  // Move ride-started event listener inside useEffect
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleRideStarted = (ride) => {
+      setWaitForDriver(false);
+      navigate('/riding', { state: { ride } });
+    };
+
+    socket.on('ride-started', handleRideStarted);
+
+    return () => {
+      socket.off('ride-started', handleRideStarted);
+    };
+  }, [socket, navigate]);
+
   const findTrip = async() => {
     setPanelOpen(false);
     setVehiclePanel(true);
