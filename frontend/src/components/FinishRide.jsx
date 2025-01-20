@@ -15,7 +15,7 @@ const endRide = async()=>{
   }
 }
   return (
-    <div className="z-200 md:ml-8 p-6 relative h-screen w-full bg-white ">
+    <div className="z-200 md:ml-6 p-6 relative h-screen w-full bg-white ">
       <h5
         className="fixed z-[100] top-0 left-0 text-center w-full  bg-gray-700 md:hidden"
         onClick={() => {

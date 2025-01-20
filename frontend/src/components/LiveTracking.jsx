@@ -156,7 +156,7 @@ const LiveTracking = (props) => {
   return (
     <div
       ref={mapElement}
-      className="h-[100vh] sm:h-[50%] w-[100%] rounded-lg shadow-lg border-2 border-gray-300"
+      className="h-[100vh]  w-[100%] rounded-lg shadow-lg border-2 border-gray-300"
     />
   );
 };

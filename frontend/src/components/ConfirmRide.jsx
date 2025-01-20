@@ -37,7 +37,7 @@ const ConfirmRide = (props) => {
               {
                 props.vehicleType === 'bike' &&
                 <img
-                className="h-24 md:h-28 mt-5"
+                className="h-20 md:h-24 mt-5"
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQTJw6dzEo1MYXOAbONCG1oL82rxU_Bitb-g&s"
                 alt=""
               />
@@ -45,7 +45,7 @@ const ConfirmRide = (props) => {
                 {
                   props.vehicleType === 'auto' &&
                   <img
-                  className="h-24 md:h-28 mt-3"
+                  className="h-20 md:h-24 mt-3"
                   src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1648431773/assets/1d/db8c56-0204-4ce4-81ce-56a11a07fe98/original/Uber_Auto_558x372_pixels_Desktop.png"
                   alt=""
                 />
@@ -78,7 +78,7 @@ const ConfirmRide = (props) => {
                     props.setVehicleFound(true)
                     props.setConfirmRidePanel(false)
                     props.createRide()
-                }} className='w-full mt-2 mb-2 md:w-1/2 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg'>Confirm</button>
+                }} className='w-full mt-2 mb-2 md:py-3 md:px-4 md:w-1/2 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg'>Confirm</button>
               
             </div>
     </div>

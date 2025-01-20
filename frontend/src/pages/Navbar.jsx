@@ -114,15 +114,10 @@ const Navbar = () => {
         <div className="hidden lg:flex space-x-4">
           {hasToken ? (
             <>
-              <button
-                onClick={handleUserNavigate}
-                className="text-white px-4 py-2 hover:text-black hover:bg-gray-200"
-              >
-                User
-              </button>
+             
               <button
                 onClick={handleLogout}
-                className="text-white px-4 py-2 hover:text-black hover:bg-gray-200"
+                className="text-white rounded-lg px-4 py-2 bg-red-700 hover:bg-red-500"
               >
                 Logout
               </button>

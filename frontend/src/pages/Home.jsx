@@ -1,10 +1,18 @@
 import { Link } from 'react-router-dom';
 import homeImg from '../assets/Airport-rides.webp';
 import Navbar from './Navbar';
+import { useEffect } from 'react';
 const Home = () => {
   
+useEffect(()=>{
+  const token = localStorage.getItem('token');
+  if(token){
+    localStorage.removeItem('token')
+  }
 
+})
   return (
+
     <>
    <div className="hidden md:block">
         <Navbar />

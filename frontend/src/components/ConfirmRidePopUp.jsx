@@ -42,9 +42,9 @@ const ConfirmRidePopUp = (props) => {
   };
 
   return (
-    <div className="md:ml-8 z-50 relative h-screen">
+    <div className="md:ml-8 z-50 relative h-screen ">
       <h5
-        className="absolute left-[50%] top-[-30px] z-50 md:hidden"
+        className="absolute left-[50%] top-0 z-50 md:hidden"
         onClick={() => {
           props.setConfirmRidePopUpPanel(false);
         }}
