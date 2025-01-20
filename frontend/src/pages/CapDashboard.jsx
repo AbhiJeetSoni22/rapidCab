@@ -11,12 +11,13 @@ import { useEffect,useContext } from "react"
 import { SocketContext } from "../context/SocketContext"
 import axios from "axios"
 import LiveTracking from "../components/LiveTracking"
+import captainImg from "../assets/captain.png"
 const CapDashboard = () => {
  const [ridePopUpPanel, setridePopUpPanel] = useState(false)
 
  const [confirmRidePopUpPanel, setConfirmRidePopUpPanel] = useState(false)
  const [ride,setRide] = useState(null)
-
+ const [accept, setAccept] = useState(false)
  const ridePopUpPanelRef = useRef(null)
  const confirmRidePopUpPanelRef = useRef(null)
 
@@ -40,6 +41,7 @@ const CapDashboard = () => {
     if (response.status === 200) {
       setridePopUpPanel(false);
       setConfirmRidePopUpPanel(true);
+      setAccept(true)
     }
   } catch (error) {
     console.error('Error confirming ride:', error);
@@ -121,7 +123,10 @@ const CapDashboard = () => {
       {/* Conditionally render the RapidCap sign and logout icon */}
       {!confirmRidePopUpPanel && (
         <div className="w-screen fixed px-2 flex md:hidden justify-between items-center top-4 z-30">
-          <h1 className="text-3xl font-bold z-30">RapidCap</h1>
+          <h1 className="text-3xl flex  font-bold z-30">RapidCap 
+             <img  className="w-10" src={captainImg} alt="" />
+
+          </h1>
           <Link to="/captain-login" className="z-30">
             <i className="text-3xl font-bold w-15 h-15 bg-orange-400 rounded-full p-3 ri-logout-box-r-line"></i>
           </Link>
@@ -130,13 +135,15 @@ const CapDashboard = () => {
       <div className="flex flex-col-reverse lg:flex-row h-screen relative">
         {/* Left Section */}
         <div className="w-full lg:w-1/3 z-20 p-6 bg-white flex flex-col items-center justify-center">
-          <CaptainDetails />
+          <CaptainDetails setConfirmRidePopUpPanel={setConfirmRidePopUpPanel} accept={accept} ride={ride} />
   
           <div
             ref={ridePopUpPanelRef}
             className="fixed w-full translate-y-full lg:w-1/3 bottom-0 bg-white px-3 py-6 md:mb-24"
           >
             <RidePopUp
+              setAccept={setAccept}
+              accept={accept}
               confirmRide={confirmRide}
               ride={ride}
               setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}

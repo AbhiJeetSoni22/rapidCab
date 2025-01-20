@@ -44,14 +44,14 @@ const ConfirmRidePopUp = (props) => {
   return (
     <div className="md:ml-8 z-50 relative h-screen ">
       <h5
-        className="absolute left-[50%] top-0 z-50 md:hidden"
+        className="absolute  left-[44%] top-[-5%] z-50 md:hidden"
         onClick={() => {
           props.setConfirmRidePopUpPanel(false);
         }}
       >
         <i className="text-4xl text-gray-400 ri-arrow-down-wide-line"></i>
       </h5>
-      <h2 className="text-2xl font-semibold md:text-3xl mb-3">
+      <h2 className="text-2xl mt-10 font-semibold md:text-3xl mb-3">
         Confirm this ride to Start
       </h2>
       <div className="flex items-center justify-between bg-yellow-300 rounded-lg">
@@ -119,16 +119,7 @@ const ConfirmRidePopUp = (props) => {
             <button className="w-2/3 ml-[15%] md:ml-[13%] mt-1 flex justify-center md:p-3 md:text-xl md:font-medium bg-green-500 text-white font-semibold p-3 rounded-lg">
               Confirm
             </button>
-            <button
-              type="button"
-              className="w-2/3 ml-[15%] mt-2 md:ml-[13%] mb-2 md:p-3 md:text-xl md:font-medium bg-red-600 text-white font-semibold p-3 rounded-lg"
-              onClick={() => {
-                props.setConfirmRidePopUpPanel(false);
-                props.setridePopUpPanel(false);
-              }}
-            >
-              Cancel
-            </button>
+          
           </form>
         </div>
       </div>

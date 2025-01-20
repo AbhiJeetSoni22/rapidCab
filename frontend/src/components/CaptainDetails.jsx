@@ -1,16 +1,25 @@
 import { useContext } from "react"
 import { CaptainDataContext} from "../context/CaptainContext.jsx"
+import PropTypes from 'prop-types'
 
-const CaptainDetails = () => {
+const CaptainDetails = (props) => {
 
  const { captain }= useContext(CaptainDataContext)
  const capname = captain.fullName.firstName + " " + captain.fullName.lastName
  if (!captain) {
     return <div>Loading captain details...</div>;
   }
+
+const handleBackToAccept = ()=>{
+  props.setConfirmRidePopUpPanel(true)
+}
  
   return (
     <div className="w-full md:mt-[-25%]">
+
+  { props.ride &&  <h5 onClick={handleBackToAccept} className="md:hidden fixed px-[40%]  w-full ">
+    <i className="text-4xl text-gray-600  ri-arrow-up-wide-line"></i>
+    </h5>}
     <div className="flex p-6 mb-6 w-full items-center gap-10 justify-between">
             <div className="flex -ml-6 items-center gap-2  justify-start">
                 <img className="h-20 w-20 md:h-26 md:w-26 rounded-full object-cover" src="https://t3.ftcdn.net/jpg/08/53/07/36/360_F_853073692_dwxqJ0LYe3SZ7xkEaT8XKb5zfS2BvxUv.jpg" alt="" />
@@ -41,5 +50,10 @@ const CaptainDetails = () => {
         </div> 
   )
 }
+CaptainDetails.propTypes = {
+  ride: PropTypes.object,
+  setConfirmRidePopUpPanel: PropTypes.func
+}
+
 
 export default CaptainDetails

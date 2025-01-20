@@ -53,6 +53,7 @@ const RidePopUp = (props) => {
           className=" mt-1 px-10 py-4 text-lg md:w-1/2 md:p-3 md:text-2xl md:font-medium  bg-gray-300 text-gray-700 font-semibold p-2 rounded-lg"
           onClick={() => {
             props.setridePopUpPanel(false);
+            props.setAccept(false)
           }}
           >
           Ignore
@@ -61,6 +62,7 @@ const RidePopUp = (props) => {
             onClick={()=>{
               props.confirmRide();
                 props.setConfirmRidePopUpPanel(true)
+                props.setAccept(true)
               }}
               >
           Accept
@@ -72,8 +74,10 @@ const RidePopUp = (props) => {
   );
 }
 RidePopUp.propTypes = {
+accept:PropTypes.bool,
 ride: PropTypes.object,
 confirmRide: PropTypes.func,
+setAccept: PropTypes.func,
 setConfirmRidePopUpPanel: PropTypes.func.isRequired,
 setridePopUpPanel: PropTypes.func.isRequired
 };

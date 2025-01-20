@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { SocketContext } from '../context/SocketContext';
 import LiveTracking from '../components/LiveTracking';
@@ -9,6 +9,10 @@ const Riding = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const ride = location.state?.ride;
+
+  // State for modal visibility and payment status
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   useEffect(() => {
     if (!socket) return;
@@ -23,6 +27,14 @@ const Riding = () => {
       socket.off('ride-ended', handleRideEnded);
     };
   }, [socket, navigate]);
+
+  const handlePayment = () => {
+    setPaymentSuccess(true);
+    setTimeout(() => {
+      setShowPaymentModal(false);
+      setPaymentSuccess(false);
+    }, 2000); // Close modal and reset success status after 2 seconds
+  };
 
   if (!socket) {
     return <div>Connecting...</div>;
@@ -113,7 +125,10 @@ const Riding = () => {
                 </div>
               </div>
               {/* Payment Button */}
-              <button className="w-full md:ml-10 mt-2 md:w-1/2 bg-green-600 text-white font-semibold p-2 rounded-lg">
+              <button
+                className="w-full md:ml-10 mt-2 md:w-1/2 bg-green-600 text-white font-semibold p-2 rounded-lg"
+                onClick={() => setShowPaymentModal(true)}
+              >
                 Make a Payment
               </button>
             </div>
@@ -125,6 +140,43 @@ const Riding = () => {
           <LiveTracking ride={ride} />
         </div>
       </div>
+
+      {/* Payment Modal */}
+      {showPaymentModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+            <h2 className="text-xl font-semibold mb-4">Payment</h2>
+            <p className="text-gray-600 mb-2">
+              Payment Amount: <span className="font-bold">₹{ride?.fare || '0'}</span>
+            </p>
+            <p className="text-gray-600 mb-2">Enter your UPI ID:</p>
+            <input
+              type="text"
+              placeholder="Enter your Dummy UPI ID"
+              className="w-full p-2 mb-4 border rounded-md"
+            />
+            {paymentSuccess ? (
+              <p className="text-green-600 font-semibold mb-4">
+                Payment Successful!
+              </p>
+            ) : null}
+            <div className="flex justify-end gap-2">
+              <button
+                className="bg-gray-500 text-white px-4 py-2 rounded-lg"
+                onClick={() => setShowPaymentModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="bg-green-600 text-white px-4 py-2 rounded-lg"
+                onClick={handlePayment}
+              >
+                Pay
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
