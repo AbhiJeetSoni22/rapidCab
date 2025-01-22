@@ -1,56 +1,57 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import axios from "axios";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for toggling menu
   const [hasToken, setHasToken] = useState(false); // State to check token presence
   const navigate = useNavigate();
-  
+  const [help, setHelp] = useState(false);
   // Function to check token presence
   const checkToken = () => {
-    const token =  localStorage.getItem("token");
+    const token = localStorage.getItem("token");
     setHasToken(!!token); // Set true if token exists, false otherwise
   };
-
+  
   // Run on component mount and whenever login/logout triggers
   useEffect(() => {
+    setHelp(true);
     checkToken();
   }, []); // Dependency array is empty, so it runs only on mount
 
   const handleLogout = async () => {
     try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-            console.error("No token found for logout");
-            return;
-        }
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("No token found for logout");
+        return;
+      }
 
-        const response = await axios.get(
-            `${import.meta.env.VITE_BASE_URL}/users/logout`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
-        );
-
-        if (response.status === 200) {
-            localStorage.removeItem("token");
-            setHasToken(false);
-            navigate("/login");
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/users/logout`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
+      );
+
+      if (response.status === 200) {
+        localStorage.removeItem("token");
+        setHasToken(false);
+        navigate("/login");
+      }
     } catch (error) {
-        console.error("Error during logout:", error);
-        // If unauthorized, clear token and redirect anyway
-        if (error.response?.status === 401) {
-            localStorage.removeItem("token");
-            setHasToken(false);
-            navigate("/login");
-        }
+      console.error("Error during logout:", error);
+      // If unauthorized, clear token and redirect anyway
+      if (error.response?.status === 401) {
+        localStorage.removeItem("token");
+        setHasToken(false);
+        navigate("/login");
+      }
     }
-};
-  
+  };
 
   const handleLoginNavigate = () => {
     // Simulate login (replace this with actual login logic)
@@ -62,9 +63,19 @@ const Navbar = () => {
     navigate("/signup");
     setIsMenuOpen(false); // Close the menu after navigation
   };
-
-  const handleUserNavigate = () => {
-    navigate("/profile"); // Navigate to user profile
+  const handleHome = () => {
+    const user = props.user;
+    console.log(user)
+    if (user === "user") {
+      console.log("dashboard");
+      navigate("/dashboard");
+    } else {
+      navigate("/captain-dashboard");
+    }
+  };
+  const handleUserHelp = () => {
+    const user = props.user;
+    navigate("/help", { state: { user } }); // Navigate to user profile
     setIsMenuOpen(false); // Close the menu
   };
 
@@ -114,7 +125,20 @@ const Navbar = () => {
         <div className="hidden lg:flex space-x-4">
           {hasToken ? (
             <>
-             
+              <button
+                onClick={handleHome}
+                className="text-white rounded-full px-6 py-2  hover:bg-gray-800"
+              >
+                Home
+              </button>
+              {help && (
+                <button
+                  onClick={handleUserHelp}
+                  className="block text-white rounded-full px-6 py-2 text-left hover:bg-gray-800"
+                >
+                  help?
+                </button>
+              )}
               <button
                 onClick={handleLogout}
                 className="text-white rounded-lg px-4 py-2 bg-red-700 hover:bg-red-500"
@@ -144,17 +168,27 @@ const Navbar = () => {
       {/* Mobile Menu with Animation */}
       <div
         className={`lg:hidden mt-2 bg-black p-4 rounded-md shadow-md transform transition-transform duration-300 ease-in-out ${
-          isMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0 pointer-events-none"
+          isMenuOpen
+            ? "translate-y-0 opacity-100"
+            : "-translate-y-4 opacity-0 pointer-events-none"
         }`}
       >
         {hasToken ? (
           <>
             <button
-              onClick={handleUserNavigate}
-              className="block bg-gray-600 text-white rounded-full px-6 py-2 text-left my-2 hover:bg-gray-800"
+              onClick={handleHome}
+              className="text-white rounded-full px-6 py-2  hover:bg-gray-800"
             >
-              User
+              Home
             </button>
+            {help && (
+              <button
+                onClick={handleUserHelp}
+                className="block  text-white rounded-full px-6 py-2 text-left hover:bg-gray-800"
+              >
+                help?
+              </button>
+            )}
             <button
               onClick={handleLogout}
               className="block bg-gray-600 text-white rounded-full px-6 py-2 text-left hover:bg-gray-800"
@@ -181,6 +215,9 @@ const Navbar = () => {
       </div>
     </nav>
   );
+};
+Navbar.propTypes = {
+  user: PropTypes.string,
 };
 
 export default Navbar;

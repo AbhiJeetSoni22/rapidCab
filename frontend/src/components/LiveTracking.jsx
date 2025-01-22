@@ -22,12 +22,23 @@ const LiveTracking = (props) => {
 
   const drawRoute = async (pickup, destination) => {
     try {
+      // Remove existing route if it exists
+      if (map.current.getSource('route')) {
+        // Remove all layers that use this source first
+        if (map.current.getLayer('route-line')) {
+          map.current.removeLayer('route-line');
+        }
+        // Then remove the source
+        map.current.removeSource('route');
+      }
+
       const response = await fetch(
         `https://api.tomtom.com/routing/1/calculateRoute/${pickup[1]},${pickup[0]}:${destination[1]},${destination[0]}/json?key=${apiKey}`
       );
       const data = await response.json();
       const coordinates = data.routes[0].legs[0].points.map(point => [point.longitude, point.latitude]);
 
+      // Add new source
       map.current.addSource('route', {
         type: 'geojson',
         data: {
@@ -40,11 +51,15 @@ const LiveTracking = (props) => {
         },
       });
 
+      // Add new layer
       map.current.addLayer({
         id: 'route-line',
         type: 'line',
         source: 'route',
-        layout: {},
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round'
+        },
         paint: {
           'line-color': '#000',
           'line-width': 3,
@@ -54,7 +69,8 @@ const LiveTracking = (props) => {
       // Adjust map to fit the route
       const bounds = new tt.LngLatBounds();
       coordinates.forEach(coord => bounds.extend(coord));
-      map.current.fitBounds(bounds, { padding: 20 });
+      map.current.fitBounds(bounds, { padding: 50 });
+
     } catch (error) {
       console.error('Error drawing route:', error);
     }

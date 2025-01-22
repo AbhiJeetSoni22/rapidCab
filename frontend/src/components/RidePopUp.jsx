@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 const RidePopUp = (props) => {
   return (
-    <div className="relative mt-10 md:ml-8 z-30">
+    <div className="relative  md:ml-8 z-30">
     
       <h2 className="text-2xl font-semibold md:text-3xl mb-3 ">
         New Ride Request
@@ -10,7 +10,7 @@ const RidePopUp = (props) => {
         <div className="flex my-2  items-center gap-4">
           <img
             className="h-12 md:h-16 ml-2 md:w-16 w-12 rounded-full object-cover"
-            src="https://plus.unsplash.com/premium_photo-1689551670902-19b441a6afde?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRvnCAL58JHR2UOR_kIDLd0YICJKqBVMtIjeTfJ6nUk7iZhrVuVGaB90bsmsJ04gRvLAk&usqp=CAU"
             alt=""
           />
           <h2 className="text-lg md:text-2xl font-medium">{props.ride?.user.fullName.firstName + " " + props.ride?.user.fullName.lastName}</h2>
@@ -52,8 +52,8 @@ const RidePopUp = (props) => {
       <button
           className=" mt-1 px-10 py-4 text-lg md:w-1/2 md:p-3 md:text-2xl md:font-medium  bg-gray-300 text-gray-700 font-semibold p-2 rounded-lg"
           onClick={() => {
-            props.setridePopUpPanel(false);
             props.setAccept(false)
+            props.setridePopUpPanel(false);
           }}
           >
           Ignore

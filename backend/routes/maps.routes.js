@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/get-coordinate',query('address').isString().isLength({min: 3}),authUser ,getCoordinates);
 
-router.get('/get-destance-time',query('origin').isString().isLength({min: 3}),query('destination').isString().isLength({min: 3}),authUser ,getAddressesDistanceTime);
+router.get('/get-destance-time',query('origin').isString().isLength({min: 3}),query('destination').isString().isLength({min: 3}),authCap ,getAddressesDistanceTime);
 
 router.get('/get-suggestions',query('input').isString().isLength({min: 3}),authUser ,getSuggestions);
 

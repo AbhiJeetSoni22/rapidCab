@@ -27,12 +27,13 @@ const Dashboard = () => {
   const [checkfields , setCheckfields] = useState(false);
   const [vehicleType, setVehicleType] = useState(null);
   const [ride,setRide]= useState(null);
+  const userType = "user"
 
   const [fare,setFare] = useState({});
   const { socket } =  useContext(SocketContext)
   const { user } = useContext(UserDataContext)
   useEffect(()=>{
-    console.log(user)
+   
     
   socket.emit('join',{userType:"user",userId:user._id})
 },[user])
@@ -180,17 +181,27 @@ const Dashboard = () => {
     console.log(response.data);
   }
 
+  const handleHelp = () => {
+
+    navigate('/help',{state:{userType}})
+  }
+
   return (
     <>
       <div className="hidden md:block">
-        <Navbar />
+        <Navbar user={userType} />
       </div>
-      <div className="w-screen fixed z-20 px-2 flex md:hidden justify-between items-center top-4">
+      <div className="w-screen fixed z-20 px-2 flex md:hidden justify-between items-center top-0 pt-4">
         <h1 className="text-3xl font-bold z-20">RapidCap</h1>
+        <div>
 
-        <Link to="/captain-dashboard" className="z-20">
-          <i className="text-3xl font-bold w-15 h-15 bg-orange-400 rounded-full p-3 ri-logout-box-r-line"></i>
+        <button onClick={handleHelp} className="mr-2 z-20">
+          <i className="text-3xl font-bold w-15 h-15 bg-green-400 rounded-full p-3 ri-question-line"></i>
+        </button>
+        <Link to="/login" className="z-20">
+          <i className="text-3xl font-bold w-15 h-15 bg-yellow-400 rounded-full p-3 ri-logout-box-r-line"></i>
         </Link>
+        </div>
       </div>
       <div className="flex flex-col-reverse lg:flex-row h-screen overflow-hidden">
   {/* Left Panel */}
@@ -342,7 +353,7 @@ const Dashboard = () => {
           </div>
           <div
              ref={waitForDriverRef}
-            className={`md:ml-0 transition-all ease-linear md:mt-20 ${
+            className={`md:ml-0 transition-all ease-linear  ${
             waitForDriver&&  !confirmRidePanel && !vehiclePanel && !panelOpen
                 ? `visible`
                 : `hidden`
@@ -352,7 +363,6 @@ const Dashboard = () => {
              waitForDriver={waitForDriver}
               ride={ride}
               setVehicleFound={setVehicleFound}
-            
             />
           </div>
         </div>

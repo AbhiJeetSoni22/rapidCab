@@ -13,7 +13,7 @@ const WaitingForDriver = (props) => {
          {
               props.ride?.vehicleType === 'car' &&
               <img
-                className="h-22 md:h-25 mt-1"
+                className="h-20 md:h-25 mt-1"
                 src="https://www.pngplay.com/wp-content/uploads/8/Uber-PNG-Photos.png"
                 alt=""
               />

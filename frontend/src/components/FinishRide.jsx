@@ -15,7 +15,7 @@ const endRide = async()=>{
   }
 }
   return (
-    <div className="z-200 md:ml-6 p-6 relative h-screen w-full bg-white ">
+    <div className="z-200 md:ml-6 md:mt-[-10%] p-6 relative h-screen w-full bg-white ">
       <h5
         className="fixed z-[100] top-0 left-0 text-center w-full  bg-gray-700 md:hidden"
         onClick={() => {
@@ -32,7 +32,7 @@ const endRide = async()=>{
         <div className="flex my-2  items-center gap-4">
           <img
             className="h-12 md:h-16 ml-2 md:w-16 w-12 rounded-full object-cover"
-            src="https://plus.unsplash.com/premium_photo-1689551670902-19b441a6afde?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRvnCAL58JHR2UOR_kIDLd0YICJKqBVMtIjeTfJ6nUk7iZhrVuVGaB90bsmsJ04gRvLAk&usqp=CAU"
             alt=""
           />
           <h2 className="text-lg md:text-2xl font-medium">{props.ride?.user?.fullName?.firstName}  {props.ride?.user?.fullName?.lastName} </h2>

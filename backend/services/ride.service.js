@@ -143,9 +143,7 @@ async function endRideService({rideId, captain}) {
     if (!ride) {
         throw new Error('Ride not found or not authorized to end');
     }
-    if (ride.status!== 'ongoing') {
-        throw new Error('Ride is not in progress');
-    }
+    console.log('Current ride status:', ride.status); // Debug log
     await Ride.findOneAndUpdate({
         _id: rideId
     },{

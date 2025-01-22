@@ -63,9 +63,10 @@ const Riding = () => {
             <div>
               {/* Vehicle Information */}
               <div className="flex items-center justify-between mb-3">
+               
                 {ride?.vehicleType === 'car' && (
                   <img
-                    className="h-22 md:h-25 mt-1"
+                    className="h-20 md:h-25 mt-1"
                     src="https://www.pngplay.com/wp-content/uploads/8/Uber-PNG-Photos.png"
                     alt="Car"
                   />
@@ -86,13 +87,13 @@ const Riding = () => {
                 )}
                 <div className="text-right">
                   <h2 className="text-lg md:text-2xl font-medium">
-                    {ride?.captain?.fullName?.firstName || 'Captain'}
+                    {ride?.captain?.fullName?.firstName || 'No Captain'}
                   </h2>
                   <h3 className="text-xl font-semibold md:text-3xl">
-                    {ride?.captain?.vehicle?.plate || 'Vehicle Number'}
+                    {ride?.captain?.vehicle?.plate}
                   </h3>
                   <p className="text-sm md:text-lg text-gray-600">
-                    {ride?.vehicleType || 'Maruti Suzuki'}
+                    {ride?.vehicleType || 'No vehicle'}
                   </p>
                 </div>
               </div>
@@ -107,7 +108,7 @@ const Riding = () => {
                       <h3 className="text-lg md:text-xl font-medium">
                         Destination
                         <p className="text-sm text-gray-700">
-                          {ride?.destination || 'Destination'}
+                          {ride?.destination || 'No Destination'}
                         </p>
                       </h3>
                     </div>

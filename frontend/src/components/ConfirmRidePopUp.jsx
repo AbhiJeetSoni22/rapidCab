@@ -42,7 +42,7 @@ const ConfirmRidePopUp = (props) => {
   };
 
   return (
-    <div className="md:ml-8 z-50 relative h-screen ">
+    <div className="md:ml-8 md:mt-[-10%] z-50 relative h-screen ">
       <h5
         className="absolute  left-[44%] top-[-5%] z-50 md:hidden"
         onClick={() => {
@@ -58,7 +58,7 @@ const ConfirmRidePopUp = (props) => {
         <div className="flex my-2 items-center gap-4">
           <img
             className="h-12 md:h-16 ml-2 md:w-16 w-12 rounded-full object-cover"
-            src="https://plus.unsplash.com/premium_photo-1689551670902-19b441a6afde?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRvnCAL58JHR2UOR_kIDLd0YICJKqBVMtIjeTfJ6nUk7iZhrVuVGaB90bsmsJ04gRvLAk&usqp=CAU"
             alt=""
           />
           <h2 className="text-lg md:text-2xl font-medium">
