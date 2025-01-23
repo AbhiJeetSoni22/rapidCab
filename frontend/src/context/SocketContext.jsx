@@ -9,36 +9,42 @@ export const SocketProvider = ({ children }) => {
     const [isConnected, setIsConnected] = useState(false);
 
     useEffect(() => {
-        // Initialize socket connection
         const socketInstance = io(import.meta.env.VITE_BASE_URL, {
-            transports: ['websocket'],
+            transports: ['websocket', 'polling'],
             reconnection: true,
+            reconnectionAttempts: 5,
             reconnectionDelay: 1000,
             reconnectionDelayMax: 5000,
-            reconnectionAttempts: 5,
-            withCredentials: true
+            timeout: 20000,
+            withCredentials: true,
+            auth: {
+                token: localStorage.getItem('token')
+            }
         });
 
-        // Connection event handlers
         socketInstance.on('connect', () => {
+            console.log('Socket connected with ID:', socketInstance.id);
             setIsConnected(true);
-            console.log('Socket connected');
         });
 
-        socketInstance.on('disconnect', () => {
+        socketInstance.on('connect_error', (error) => {
+            console.error('Socket connection error:', error);
+        });
+
+        socketInstance.on('disconnect', (reason) => {
+            console.log('Socket disconnected:', reason);
             setIsConnected(false);
-            console.log('Socket disconnected');
         });
 
         setSocket(socketInstance);
 
-    
+        return () => {
+            socketInstance.disconnect();
+        };
     }, []);
 
-  
-
     return (
-        <SocketContext.Provider value={{ isConnected,socket }}>
+        <SocketContext.Provider value={{ isConnected, socket }}>
             {children}
         </SocketContext.Provider>
     );

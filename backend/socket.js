@@ -9,13 +9,15 @@ const connectedSockets = new Map();
 export const initializeSocket = (server) => {
     io = new Server(server, {
         cors: {
-            origin: process.env.NODE_ENV === 'production' 
-                ? ['https://rapidcab-frontend.onrender.com']
-                : ['http://localhost:5173'],
-            methods: ['GET', 'POST'],
-            credentials: true
+            origin: process.env.FRONTEND_URL,
+            methods: ["GET", "POST", "PUT", "DELETE"],
+            credentials: true,
+            allowedHeaders: ["Content-Type", "Authorization"]
         },
-        transports: ['websocket', 'polling']
+        transports: ["websocket", "polling"],
+        path: "/socket.io/",
+        pingTimeout: 60000,
+        pingInterval: 25000
     });
 
     io.on('connection', (socket) => {
@@ -26,8 +28,10 @@ export const initializeSocket = (server) => {
             try {
                 if (data.userType === 'captain') {
                     await Captain.findByIdAndUpdate(data.userId, { socketId: socket.id });
+                    console.log('Captain socket ID updated');
                 } else {
                     await User.findByIdAndUpdate(data.userId, { socketId: socket.id });
+                    console.log('User socket ID updated');
                 }
             } catch (error) {
                 console.error('Error updating socket ID:', error);
