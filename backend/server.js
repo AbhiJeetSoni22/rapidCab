@@ -26,34 +26,36 @@ if (cluster.isPrimary) {
 
   // Handle worker exits
   cluster.on('exit', (worker, code, signal) => {
-    console.log(`Worker ${worker.process.pid} exited. Code: ${code}, Signal: ${signal}`);
-    console.log('Starting a new worker...');
-    cluster.fork(); // Restart a new worker
+    console.log(`Worker ${worker.process.pid} died`);
+    cluster.fork();
   });
 } else {
   // Workers will run the server
   console.log(`Worker process started (PID: ${process.pid})`);
 
-  // Connect to MongoDB
-  dbConnection();
-
   // Create server
   const server = http.createServer(app);
+
+  // Initialize Socket.io first
+  const io = initializeSocket(server);
 
   // Redis setup for socket.io
   const pubClient = createClient({ url: process.env.REDIS_URL });
   const subClient = pubClient.duplicate();
 
   Promise.all([pubClient.connect(), subClient.connect()]).then(() => {
-    io.adapter(createAdapter(pubClient, subClient));
-    console.log('Socket.IO Redis adapter connected');
+    if (io) {
+      io.adapter(createAdapter(pubClient, subClient));
+      console.log('Socket.IO Redis adapter connected');
+    }
+  }).catch(error => {
+    console.error('Redis connection error:', error);
   });
 
-  // Initialize Socket.io
-  initializeSocket(server);
-
-  // Start the server
-  server.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT} (PID: ${process.pid})`);
+  // Connect to MongoDB and start the server
+  dbConnection().then(() => {
+    server.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT} (PID: ${process.pid})`);
+    });
   });
 }
