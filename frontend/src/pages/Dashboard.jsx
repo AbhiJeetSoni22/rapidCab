@@ -9,7 +9,7 @@ import ConfirmRide from "../components/ConfirmRide";
 import LookingForDriver from "../components/LookingForDriver";
 import WaitingForDriver from "../components/WaitingForDriver";
 import axios from "axios";
-import { Link,useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { SocketContext } from "../context/SocketContext";
 import { UserDataContext } from "../context/UserContext";
 import LiveTracking from "../components/LiveTracking"
@@ -122,11 +122,11 @@ const Dashboard = () => {
     socket.emit('join', { userType: "user", userId: user._id });
 
     // Listen for ride confirmation
-    const handleRideConfirmed = (ride) => {
-      console.log('Ride confirmed:', ride);
+    const handleRideConfirmed = (confirmRide) => {
+      console.log('Ride confirmed:', confirmRide);
       setVehicleFound(false);
       setWaitForDriver(true);
-      setRide(ride);
+      setRide(confirmRide);
     };
 
     socket.on('ride-confirmed', handleRideConfirmed);
@@ -185,7 +185,10 @@ const Dashboard = () => {
 
     navigate('/help',{state:{userType}})
   }
-
+ const handleLogout = ()=>{
+    localStorage.removeItem('token');
+    navigate('/login')
+ }
   return (
     <>
       <div className="hidden md:block">
@@ -198,9 +201,9 @@ const Dashboard = () => {
         <button onClick={handleHelp} className="mr-2 z-20">
           <i className="text-3xl font-bold w-15 h-15 bg-green-400 rounded-full p-3 ri-question-line"></i>
         </button>
-        <Link to="/login" className="z-20">
+        <button onClick = {handleLogout} className="z-20">
           <i className="text-3xl font-bold w-15 h-15 bg-yellow-400 rounded-full p-3 ri-logout-box-r-line"></i>
-        </Link>
+        </button>
         </div>
       </div>
       <div className="flex flex-col-reverse lg:flex-row h-screen overflow-hidden">

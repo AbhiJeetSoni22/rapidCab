@@ -1,5 +1,5 @@
 import Navbar from './Navbar'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import {  useLocation, useNavigate } from 'react-router-dom'
 
 const Help = () => {
   const location = useLocation();
@@ -8,12 +8,23 @@ const Help = () => {
   
   const handleHome = () => {
     if (user === "user") {
+
       navigate('/dashboard');
     } else {
+    
       navigate('/captain-dashboard');
     }
   }
-
+ const handleLogout = ()=>{
+  if(user === "user"){
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
+  else{
+    localStorage.removeItem('token')
+    navigate('/captain-login')
+  }
+ }
   return (
     <div>
       <div className="hidden md:block">
@@ -26,9 +37,9 @@ const Help = () => {
         <button onClick={handleHome} className="mr-2 z-20">
           <i className="text-3xl font-bold w-15 h-15 bg-green-400 rounded-full p-3 ri-home-3-line"></i>
         </button>
-        <Link to="/login" className="z-20">
+        <button onClick={handleLogout} className="z-20">
           <i className="text-3xl font-bold w-15 h-15 bg-yellow-400 rounded-full p-3 ri-logout-box-r-line"></i>
-        </Link>
+        </button>
         </div>
       </div>
       <div className="max-w-4xl mt-32 md:mt-0 mx-auto p-6">

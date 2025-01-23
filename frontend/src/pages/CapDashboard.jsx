@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 import gsap from "gsap";
 import { useRef, useState } from "react";
 import ConfirmRidePopUp from "../components/ConfirmRidePopUp";
-import { Link ,useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { CaptainDataContext } from "../context/CaptainContext";
 import { useEffect, useContext } from "react";
 import { SocketContext } from "../context/SocketContext";
@@ -41,7 +41,7 @@ const CapDashboard = () => {
       if (response.status === 200) {
         setridePopUpPanel(false);
         setConfirmRidePopUpPanel(true);
-        
+        console.log('Ride confirmed:', response.data);
       }
     } catch (error) {
       console.error("Error confirming ride:", error);
@@ -113,7 +113,10 @@ const handleHelp=()=>{
   const user = "captain"
   navigate('/help',{state: {user}})
 }
-
+const handleLogout = ()=>{
+  localStorage.removeItem('token');
+  navigate('/captain-login')
+}
   return (
     <>
       <div className="hidden md:block">
@@ -130,9 +133,9 @@ const handleHelp=()=>{
             <button onClick={handleHelp} className="mr-2 z-20">
               <i className="text-3xl font-bold w-15 h-15 bg-green-400 rounded-full p-3 ri-question-line"></i>
             </button>
-            <Link to="/captain-login" className="z-20">
+            <button onClick = {handleLogout} className="z-20">
               <i className="text-3xl font-bold w-15 h-15 bg-yellow-400 rounded-full p-3 ri-logout-box-r-line"></i>
-            </Link>
+            </button>
           </div>
         </div>
       )}
