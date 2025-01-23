@@ -7,59 +7,54 @@ import { Ride } from "../models/ride.model.js";
 
 
 const createRideController = async (req, res) => {
-  try {
-    const { pickup, destination, vehicleType } = req.body;
-    
-    // Create ride first
-    const ride = await createRide({ 
-      user: req.user._id, 
-      pickup, 
-      destination, 
-      vehicleType 
-    });
-   console.log(vehicleType)
-    // Get coordinates
-    const pickupCoordinates = await getAddressCoordinate(pickup);
+    try {
+        const { pickup, destination, vehicleType } = req.body;
+        
+        // Create ride first
+        const ride = await createRide({ 
+            user: req.user._id, 
+            pickup, 
+            destination, 
+            vehicleType 
+        });
 
-    if (!pickupCoordinates || !pickupCoordinates.lat || !pickupCoordinates.lng) {
-      return res.status(400).json({ error: "Could not get coordinates for pickup location" });
+        // Get coordinates
+        const pickupCoordinates = await getAddressCoordinate(pickup);
+        if (!pickupCoordinates) {
+            return res.status(400).json({ error: "Could not get coordinates for pickup location" });
+        }
+
+        // Send response first
+        res.status(201).json({ message: "Ride created successfully", ride });
+
+        // Find and notify available captains
+        const availableCaptains = await getCaptainsInTheRadius(
+            pickupCoordinates.lat,
+            pickupCoordinates.lng,
+            5,
+            vehicleType
+        );
+
+        console.log('Available captains:', availableCaptains.length);
+
+        const rideWithUser = await Ride.findById(ride._id).populate('user');
+
+        for (const captain of availableCaptains) {
+            if (captain.socketId) {
+                console.log('Sending ride request to captain:', captain._id);
+                sendMessageToSocketId(captain.socketId, {
+                    event: 'new-ride',
+                    data: rideWithUser
+                });
+            }
+        }
+    } catch (error) {
+        console.error('Error creating ride:', error);
+        if (!res.headersSent) {
+            res.status(500).json({ error: "Internal server error" });
+        }
     }
-
-    // Send response first
-    res.status(201).json({ 
-      message: "Ride created successfully", 
-      ride 
-    });
-
-    // Find available captains
-    const availableCaptains = await getCaptainsInTheRadius(
-     pickupCoordinates.lat, 
-     pickupCoordinates.lng,
-      5,
-      vehicleType
-    );
-
-      const rideWithUser = await Ride.findById(ride._id).populate('user');
-      // Notify available captains
-      availableCaptains.forEach(captain => {
-        if (captain.socketId) {
-            sendMessageToSocketId(captain.socketId, {
-              event: 'new-ride',
-              data: rideWithUser,
-            });
-          }
-          else{
-            console.log('error in the captain socketid')
-          }
-      });
-   
-  } catch (error) {
-    console.error('Error creating ride:', error);
-    if (!res.headersSent) {
-      res.status(500).json({ error: "Internal server error" });
-    }
-  }
-}
+};
 
 const getFareController = async (req, res) => {
     const errors = validationResult(req);

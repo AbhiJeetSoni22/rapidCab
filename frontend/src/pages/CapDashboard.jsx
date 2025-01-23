@@ -71,31 +71,8 @@ const CapDashboard = () => {
       console.error('Socket connection error:', error);
     });
 
-    // Location update function
-    const updateLocation = () => {
-      if (!navigator.geolocation) return;
-      
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          console.log('Updating captain location...');
-          socket.emit("update-location-captain", {
-            userId: captain._id,
-            location: {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            },
-          });
-        },
-        (error) => console.error("Location error:", error)
-      );
-    };
-
-    const locationInterval = setInterval(updateLocation, 30000);
-    updateLocation(); // Initial location update
-
     return () => {
       socket.off("new-ride", handleNewRide);
-      clearInterval(locationInterval);
     };
   }, [socket, captain?._id]);
 
