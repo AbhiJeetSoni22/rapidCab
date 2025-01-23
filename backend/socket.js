@@ -4,6 +4,15 @@ import { Captain } from './models/captain.model.js';
 
 let io;
 
+export const sendMessageToSocketId = (socketId, { event, data }) => {
+    if (!io) {
+        console.error('Socket.io not initialized');
+        return;
+    }
+    console.log(`Emitting ${event} to socket ${socketId}:`, data);
+    io.to(socketId).emit(event, data);
+};
+
 export const initializeSocket = (server) => {
     io = new Server(server, {
         cors: {
