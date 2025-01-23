@@ -52,9 +52,13 @@ const CapDashboard = () => {
 
     console.log('Connecting captain to socket...', captain._id);
 
+    // Clear any existing socket connection
+    socket.disconnect();
+    socket.connect();
+
     socket.emit("join", {
       userId: captain._id,
-      userType: "captain",
+      userType: "captain"
     });
 
     const handleNewRide = (data) => {
@@ -65,7 +69,7 @@ const CapDashboard = () => {
 
     socket.on("new-ride", handleNewRide);
     socket.on("connect", () => {
-      console.log('Socket connected');
+      console.log('Socket connected with ID:', socket.id);
     });
     socket.on("connect_error", (error) => {
       console.error('Socket connection error:', error);

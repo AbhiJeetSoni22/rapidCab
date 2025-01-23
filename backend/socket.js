@@ -81,6 +81,13 @@ export const sendMessageToSocketId = (socketId, { event, data }) => {
         console.error('Socket.io not initialized');
         return;
     }
-    console.log(`Emitting ${event} to socket ${socketId}:`, data);
-    io.to(socketId).emit(event, data);
+    
+    const socket = io.sockets.sockets.get(socketId);
+    if (!socket) {
+        console.error('Socket not found:', socketId);
+        return;
+    }
+
+    console.log(`Emitting ${event} to socket ${socketId}`);
+    socket.emit(event, data);
 };
