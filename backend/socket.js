@@ -10,7 +10,7 @@ export const initializeSocket = (server) => {
     io = new Server(server, {
         cors: {
             origin: process.env.NODE_ENV === 'production' 
-                ? ['https://your-frontend-url.onrender.com']
+                ? ['https://rapidcab-frontend.onrender.com']
                 : ['http://localhost:5173'],
             methods: ['GET', 'POST'],
             credentials: true
