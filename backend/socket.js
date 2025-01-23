@@ -16,13 +16,12 @@ export const sendMessageToSocketId = (socketId, { event, data }) => {
 export const initializeSocket = (server) => {
     io = new Server(server, {
         cors: {
-            origin: ['https://rapidcab-frontend.onrender.com'],
+            origin: ['https://rapidcab-frontend.onrender.com', 'http://localhost:5173'],
             methods: ["GET", "POST", "PUT", "DELETE"],
             credentials: true,
             allowedHeaders: ["Content-Type", "Authorization"]
         },
         transports: ["websocket", "polling"],
-        path: "/socket.io/",
         pingTimeout: 60000,
         pingInterval: 25000
     });

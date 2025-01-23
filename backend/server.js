@@ -10,7 +10,7 @@ import { initializeSocket } from './socket.js';
 import { createAdapter } from '@socket.io/redis-adapter';
 import { createClient } from 'redis';
 
-const PORT = process.env.PORT || 8001;
+const PORT = process.env.PORT || 4000;
 
 // Check if the current process is the master process
 if (cluster.isPrimary) {
@@ -38,19 +38,6 @@ if (cluster.isPrimary) {
 
   // Initialize Socket.io first
   const io = initializeSocket(server);
-
-  // Redis setup for socket.io
-  const pubClient = createClient({ url: process.env.REDIS_URL });
-  const subClient = pubClient.duplicate();
-
-  Promise.all([pubClient.connect(), subClient.connect()]).then(() => {
-    if (io) {
-      io.adapter(createAdapter(pubClient, subClient));
-      console.log('Socket.IO Redis adapter connected');
-    }
-  }).catch(error => {
-    console.error('Redis connection error:', error);
-  });
 
   // Connect to MongoDB and start the server
   dbConnection().then(() => {
