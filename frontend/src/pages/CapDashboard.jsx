@@ -48,43 +48,56 @@ const CapDashboard = () => {
     }
   }
   useEffect(() => {
+    if (!socket || !captain?._id) return;
+
+    console.log('Connecting captain to socket...', captain._id);
+
     socket.emit("join", {
       userId: captain._id,
       userType: "captain",
     });
 
-    socket.on("new-ride", (data) => {
+    const handleNewRide = (data) => {
+      console.log('New ride received:', data);
       setRide(data);
       setridePopUpPanel(true);
-      // setridePopUpPanel(true)
-    });
-    // Function to update location
-    const updateLocation = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            socket.emit("update-location-captain", {
-              userId: captain._id,
-              location: {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              },
-            });
-          },
-          (error) => {
-            console.error("Error getting location:", error);
-          }
-        );
-      }
     };
 
-    // Call the location update function at intervals
-    const locationInterval = setInterval(updateLocation, 30000);
-    updateLocation();
+    socket.on("new-ride", handleNewRide);
+    socket.on("connect", () => {
+      console.log('Socket connected');
+    });
+    socket.on("connect_error", (error) => {
+      console.error('Socket connection error:', error);
+    });
 
-    // Cleanup on component unmount
-    return () => clearInterval(locationInterval);
-  }, [socket, captain._id]);
+    // Location update function
+    const updateLocation = () => {
+      if (!navigator.geolocation) return;
+      
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          console.log('Updating captain location...');
+          socket.emit("update-location-captain", {
+            userId: captain._id,
+            location: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+          });
+        },
+        (error) => console.error("Location error:", error)
+      );
+    };
+
+    const locationInterval = setInterval(updateLocation, 30000);
+    updateLocation(); // Initial location update
+
+    return () => {
+      socket.off("new-ride", handleNewRide);
+      clearInterval(locationInterval);
+    };
+  }, [socket, captain?._id]);
 
   useGSAP(() => {
     if (ridePopUpPanel) {

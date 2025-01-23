@@ -12,6 +12,11 @@ export const SocketProvider = ({ children }) => {
         // Initialize socket connection
         const socketInstance = io(import.meta.env.VITE_BASE_URL, {
             transports: ['websocket'],
+            reconnection: true,
+            reconnectionDelay: 1000,
+            reconnectionDelayMax: 5000,
+            reconnectionAttempts: 5,
+            withCredentials: true
         });
 
         // Connection event handlers

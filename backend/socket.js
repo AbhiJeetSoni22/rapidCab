@@ -9,27 +9,30 @@ const connectedSockets = new Map();
 export const initializeSocket = (server) => {
     io = new Server(server, {
         cors: {
-            origin: "*",
-            methods: ["GET", "POST"]
-        }
+            origin: process.env.NODE_ENV === 'production' 
+                ? ['https://your-frontend-url.onrender.com']
+                : ['http://localhost:5173'],
+            methods: ['GET', 'POST'],
+            credentials: true
+        },
+        transports: ['websocket', 'polling']
     });
 
     io.on('connection', (socket) => {
-        console.log('A user connected:', socket.id);
+        console.log('Client connected:', socket.id);
 
-        socket.on('join',async (data)=>{
-            const {userId, userType}= data;
-            if(userType === 'user'){
-
-                await User.findByIdAndUpdate(userId,{socketId:socket.id
-                })
+        socket.on('join', async (data) => {
+            console.log('Join event:', data);
+            try {
+                if (data.userType === 'captain') {
+                    await Captain.findByIdAndUpdate(data.userId, { socketId: socket.id });
+                } else {
+                    await User.findByIdAndUpdate(data.userId, { socketId: socket.id });
+                }
+            } catch (error) {
+                console.error('Error updating socket ID:', error);
             }
-            else if(userType === 'captain'){
-                await Captain.findByIdAndUpdate(userId,{
-                    socketId:socket.id
-                })
-            }
-        })
+        });
 
         socket.on('update-location-captain', async (data)=>{
             const { userId, location } = data;
