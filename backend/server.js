@@ -7,6 +7,8 @@ import os from 'os';
 import dbConnection from './connection.js';
 import app from './app.js';
 import { initializeSocket } from './socket.js';
+import { createAdapter } from '@socket.io/redis-adapter';
+import { createClient } from 'redis';
 
 const PORT = process.env.PORT || 8001;
 
@@ -37,6 +39,15 @@ if (cluster.isPrimary) {
 
   // Create server
   const server = http.createServer(app);
+
+  // Redis setup for socket.io
+  const pubClient = createClient({ url: process.env.REDIS_URL });
+  const subClient = pubClient.duplicate();
+
+  Promise.all([pubClient.connect(), subClient.connect()]).then(() => {
+    io.adapter(createAdapter(pubClient, subClient));
+    console.log('Socket.IO Redis adapter connected');
+  });
 
   // Initialize Socket.io
   initializeSocket(server);
