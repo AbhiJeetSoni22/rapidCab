@@ -51,7 +51,7 @@ const Dashboard = () => {
     if (panelOpen) {
       gsap.to(panelRef.current, {
         visibility: "visible",
-        height: "24rem",
+        height: "22rem",
       });
     } else {
       gsap.to(panelRef.current, {
@@ -65,7 +65,7 @@ const Dashboard = () => {
     if (vehiclePanel) {
       gsap.to(vehiclePanelRef.current, {
         visibility: "visible",
-        height: "22rem",
+        height: "20rem",
       });
     } else {
       gsap.to(vehiclePanelRef.current, {
@@ -79,7 +79,7 @@ const Dashboard = () => {
     if (confirmRidePanel) {
       gsap.to(confirmRidePanelRef.current, {
         visibility: "visible",
-        height: "27rem",
+        height: "22rem",
       });
     } else {
       gsap.to(confirmRidePanelRef.current, {
@@ -92,7 +92,7 @@ const Dashboard = () => {
     if (vehicleFound) {
       gsap.to(vehicleFoundRef.current, {
         visibility: "visible",
-        height: "25rem",
+        height: "22rem",
       });
     } else {
       gsap.to(vehicleFoundRef.current, {
@@ -105,7 +105,7 @@ const Dashboard = () => {
     if (waitForDriver) {
       gsap.to(waitForDriverRef.current, {
         visibility: "visible",
-        height: "23rem",
+        height: "19rem",
       });
     } else {
       gsap.to(waitForDriverRef.current, {
@@ -195,15 +195,16 @@ const Dashboard = () => {
         <Navbar user={userType} />
       </div>
       <div className="w-screen fixed z-20 px-2 flex md:hidden justify-between items-center top-0 pt-4">
-        <h1 className="text-3xl font-bold z-20">RapidCap</h1>
+        <h1 className="text-2xl   font-bold z-20">RapidCap</h1>
         <div>
-
+       
         <button onClick={handleHelp} className="mr-2 z-20">
-          <i className="text-3xl font-bold w-15 h-15 bg-green-400 rounded-full p-3 ri-question-line"></i>
+          <i className="text-xl font-bold w-15 h-15 bg-green-400 rounded-full p-2 ri-question-line"></i>
         </button>
         <button onClick = {handleLogout} className="z-20">
-          <i className="text-3xl font-bold w-15 h-15 bg-yellow-400 rounded-full p-3 ri-logout-box-r-line"></i>
+          <i className="text-xl font-bold w-15 h-15 bg-yellow-400 rounded-full p-2 ri-logout-box-r-line"></i>
         </button>
+
         </div>
       </div>
       <div className="flex flex-col-reverse lg:flex-row h-screen overflow-hidden">
@@ -217,15 +218,16 @@ const Dashboard = () => {
     {!waitForDriver && !vehicleFound && !confirmRidePanel && !vehiclePanel && (
       <div className="w-full md:mt-[20%] max-w-md mx-auto">
         <form onSubmit={submitHandler}>
-          <h1 className="text-2xl md:text-3xl font-semibold mb-4">Get a ride</h1>
+          <h1 className="text-xl md:text-2xl font-semibold mb-4">Get a ride</h1>
           {/* Inputs */}
           <div className="mb-4 relative">
+          <div className="line absolute md:h-20 h-16 w-1 top-[117%] -translate-y-1/2 left-5 bg-gray-700 rounded-full"></div>
             <input
               type="text"
               value={pickupLocation}
               placeholder="Pickup location"
               required
-              className="w-full text-lg px-4 py-3 border bg-gray-200 rounded-lg focus:ring focus:ring-gray-700 focus:outline-none"
+              className="w-full text-sm md:text-lg py-2 px-8 md:py-3 border bg-gray-200 rounded-lg focus:ring focus:ring-gray-700 focus:outline-none"
               onChange={(e) => setPickupLocation(e.target.value)}
               onClick={() => {
                 setPanelOpen(true);
@@ -239,7 +241,7 @@ const Dashboard = () => {
               value={dropoffLocation}
               required
               placeholder="Dropoff location"
-              className="w-full text-lg px-4 py-3 border bg-gray-200 rounded-lg focus:ring focus:ring-gray-700 focus:outline-none"
+              className="w-full text-sm md:text-lg py-2 px-8 md:py-3 border bg-gray-200 rounded-lg focus:ring focus:ring-gray-700 focus:outline-none"
               onChange={(e) => setDropoffLocation(e.target.value)}
               onClick={() => {
                 setPanelOpen(true);
@@ -260,7 +262,7 @@ const Dashboard = () => {
                 await findTrip();
               }
             }}
-            className="w-full mt-4 bg-yellow-400 text-black py-3 rounded-lg font-semibold hover:bg-yellow-500 transition-colors"
+            className="w-full mt-2 bg-yellow-400 text-black py-2 md:py-3 rounded-lg font-semibold hover:bg-yellow-500 transition-colors"
           >
             Find Ride
           </button>

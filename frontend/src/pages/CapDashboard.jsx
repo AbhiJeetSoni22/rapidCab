@@ -119,23 +119,23 @@ const handleLogout = ()=>{
       {/* Conditionally render the RapidCap sign and logout icon */}
       {!confirmRidePopUpPanel && (
         <div className="w-screen fixed px-2 flex md:hidden justify-between items-center top-4 z-30">
-          <h1 className="text-3xl flex  font-bold z-30">
+          <h1 className="text-xl md:text-3xl flex  font-bold z-30">
             RapidCap
-            <img className="w-10" src={captainImg} alt="" />
+            <img className="w-6" src={captainImg} alt="" />
           </h1>
           <div>
             <button onClick={handleHelp} className="mr-2 z-20">
-              <i className="text-3xl font-bold w-15 h-15 bg-green-400 rounded-full p-3 ri-question-line"></i>
+              <i className="text-xl md:text-3xl font-bold w-15 h-15 bg-green-400 rounded-full p-2  ri-question-line"></i>
             </button>
             <button onClick = {handleLogout} className="z-20">
-              <i className="text-3xl font-bold w-15 h-15 bg-yellow-400 rounded-full p-3 ri-logout-box-r-line"></i>
+              <i className="text-xl md:text-3xl  font-bold w-15 h-15 bg-yellow-400 rounded-full p-2  ri-logout-box-r-line"></i>
             </button>
           </div>
         </div>
       )}
       <div className="flex flex-col-reverse lg:flex-row h-screen relative">
         {/* Left Section */}
-        <div className="w-full lg:w-1/3 z-20 p-6 bg-white flex flex-col items-center justify-center">
+        <div className="w-full lg:w-1/3 z-20 md:p-6 p-4 bg-white flex flex-col items-center justify-center">
           <CaptainDetails
             setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}
             accept={accept}

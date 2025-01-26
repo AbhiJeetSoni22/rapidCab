@@ -77,32 +77,32 @@ const CaptainRiding = () => {
         <Navbar />
       </div>
       <div className="w-screen z-30 fixed px-2 flex md:hidden justify-between items-center top-4">
-           <h1 className="text-3xl flex  font-bold z-30">RapidCap 
-                     <img  className="w-10" src={captainImg} alt="" />
+           <h1 className="text-xl flex  font-bold z-30">RapidCap 
+                     <img  className="w-8" src={captainImg} alt="" />
         
                   </h1>
 
         <Link to="/captain-dashboard" className="z-30">
-          <i className="text-3xl font-bold w-15 h-15 bg-orange-400 rounded-full p-3 ri-home-3-line"></i>
+          <i className="text-xl font-bold w-15 h-15 bg-orange-400 rounded-full p-2 ri-home-3-line"></i>
         </Link>
       </div>
 
       <div className="flex flex-col-reverse relative lg:flex-row h-screen overflow-hidden">
         {/* Left Section */}
         <div
-          className="h-[17%] z-10  flex items-center relative justify-between md:h-[20%] md:ml-7 md:w-1/3 bg-yellow-300 p-4 md:mt-[10%]"
+          className="h-[20%] z-10  flex items-center relative justify-between md:h-[20%] md:ml-7 md:w-1/3 bg-yellow-300 p-4 md:mt-[10%]"
           onClick={() => {
             setFinishRidePanel(true);
           }}
         >
           <h5 className="absolute w-[85%] top-0 left-[45%] md:hidden">
-            <i className="text-4xl text-gray-600 ri-arrow-up-wide-line"></i>
+            <i className="text-3xl text-gray-600 ri-arrow-up-wide-line"></i>
           </h5>
           <div>
             <h1 className="text-xl font-semibold">{tripDetails.distance || '0 km'}</h1>
             <p className="text-sm text-gray-600">{tripDetails.time || '0 mins'}</p>
           </div>
-          <button className="mt-1 px-10 py-4 text-lg md:w-1/2 md:p-3 md:text-2xl md:font-medium bg-green-500 text-white font-semibold rounded-lg">
+          <button className="mt-1 md:px-10 px-4 py-2 md:py-4 text-lg md:w-1/2 md:p-3 md:text-2xl md:font-medium bg-green-500 text-white font-semibold rounded-lg">
             Complete Ride
           </button>
         </div>

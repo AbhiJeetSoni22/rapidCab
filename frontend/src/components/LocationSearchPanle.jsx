@@ -8,52 +8,65 @@ const LocationSearchPanle = ({
   setDropoffLocation, 
   pickupLocation, 
   dropoffLocation, 
-  activeField,  // Add this prop // Add this prop
+  activeField 
 }) => {
   const [suggestions, setSuggestions] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchSuggestions = async () => {
       try {
         const searchText = activeField === 'pickup' ? pickupLocation : dropoffLocation;
         if (searchText.length >= 3) {
-          const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions?input=${searchText}`,
+          const response = await axios.get(
+            `${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, 
             {
+              params: { input: searchText },
               headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-              }
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+              },
+              timeout: 5000
             }
           );
           setSuggestions(response.data);
+          setError(null);
         } else {
           setSuggestions([]);
         }
       } catch (error) {
         console.error('Error fetching suggestions:', error);
         setSuggestions([]);
+        setError('Could not fetch suggestions');
+        
+        // Handle specific error cases
+        if (error.code === 'ERR_NETWORK') {
+          setError('Network error - please check your connection');
+        }
       }
     };
 
+    // Debounce the API calls
     const debounceTimer = setTimeout(fetchSuggestions, 300);
     return () => clearTimeout(debounceTimer);
   }, [pickupLocation, dropoffLocation, activeField]);
 
-  const handleSuggestionClick = (suggestion) => {
-    if (activeField === 'pickup') {
-      setPickupLocation(suggestion);
-    } else {
-      setDropoffLocation(suggestion);
-    }
-    
-  };
-
   return (
-    <div className="relative sm:w-full sm:text-center text-center md:mt-0 ">
+    <div className="relative sm:w-full sm:text-center text-center md:mt-0">
       <div className="bg-white rounded-lg shadow-lg z-10 w-full max-w-md md:max-w-lg absolute top-0 left-0">
+        {error && (
+          <div className="text-red-500 p-2 text-sm">{error}</div>
+        )}
         {suggestions.map((suggestion, index) => (
           <div
             key={index}
-            onClick={() => handleSuggestionClick(suggestion)}
+            onClick={() => {
+              if (activeField === 'pickup') {
+                setPickupLocation(suggestion);
+              } else {
+                setDropoffLocation(suggestion);
+              }
+            }}
             className="flex gap-4 items-center p-3 active:border-black my-2 rounded-lg border-2 hover:bg-gray-200 cursor-pointer"
           >
             <h2 className="bg-[#eee] h-10 w-10 flex items-center justify-center rounded-full">
@@ -78,15 +91,11 @@ const LocationSearchPanle = ({
 };
 
 LocationSearchPanle.propTypes = {
-  setVehiclePanel: PropTypes.func.isRequired,
-  setPanelOpen: PropTypes.func.isRequired,
   setPickupLocation: PropTypes.func.isRequired,
   setDropoffLocation: PropTypes.func.isRequired,
   pickupLocation: PropTypes.string.isRequired,
   dropoffLocation: PropTypes.string.isRequired,
-  activeField: PropTypes.string.isRequired,  // Add this prop type
-  setActiveField: PropTypes.func.isRequired  // Add this prop type
+  activeField: PropTypes.string.isRequired
 };
 
 export default LocationSearchPanle;
-

@@ -42,7 +42,7 @@ const ConfirmRidePopUp = (props) => {
   };
 
   return (
-    <div className="md:ml-8 md:mt-[-10%] z-50 relative h-screen ">
+    <div className="md:ml-8 md:mt-[-10%] top-0 z-50 relative h-screen ">
       <h5
         className="absolute  left-[44%] top-[-5%] z-50 md:hidden"
         onClick={() => {
@@ -51,7 +51,7 @@ const ConfirmRidePopUp = (props) => {
       >
         <i className="text-4xl text-gray-400 ri-arrow-down-wide-line"></i>
       </h5>
-      <h2 className="text-2xl mt-10 font-semibold md:text-3xl mb-3">
+      <h2 className="text-xl  mt-10 font-semibold md:text-3xl mb-3">
         Confirm this ride to Start
       </h2>
       <div className="flex items-center justify-between bg-yellow-300 rounded-lg">
@@ -103,7 +103,7 @@ const ConfirmRidePopUp = (props) => {
           <form onSubmit={(e) => SubmitHandler(e)}>
             <input
               type="text"
-              className="w-full md:w-full mb-4 text-lg font-mono px-6 py-4 border bg-[#e7e7e7] rounded-lg focus:ring focus:ring-gray-700 focus:outline-none"
+              className="w-full md:w-full mb-4 text-sm font-mono px-6 py-2 md:py-4 border bg-[#e7e7e7] rounded-lg focus:ring focus:ring-gray-700 focus:outline-none"
               value={OTP}
               required
               onChange={(e) => {
@@ -116,7 +116,7 @@ const ConfirmRidePopUp = (props) => {
                 {errorMessage}
               </p>
             )}
-            <button className="w-2/3 ml-[15%] md:ml-[13%] mt-1 flex justify-center md:p-3 md:text-xl md:font-medium bg-green-500 text-white font-semibold p-3 rounded-lg">
+            <button className="w-2/3 ml-[15%] md:ml-[13%] text-sm mt-1 flex justify-center md:p-3 md:text-xl md:font-medium bg-green-500 text-white font-semibold p-2 rounded-lg">
               Confirm
             </button>
           

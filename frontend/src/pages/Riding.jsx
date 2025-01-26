@@ -48,39 +48,39 @@ const Riding = () => {
       </div>
 
       <div className="w-screen fixed px-2 flex md:hidden justify-between z-50 items-center top-4">
-        <h1 className="text-3xl font-bold z-50">RapidCap</h1>
+        <h1 className="text-xl font-bold z-50">RapidCap</h1>
 
         <Link to="/dashboard" className="z-50">
-          <i className="text-3xl font-bold w-15 h-15 bg-orange-400 rounded-full p-3 ri-home-3-line"></i>
+          <i className="text-xl font-bold w-15 h-15 bg-orange-400 rounded-full p-2 ri-home-3-line"></i>
         </Link>
       </div>
 
       {/* Main Content */}
       <div className="flex flex-col-reverse lg:flex-row h-screen">
         {/* Left Section */}
-        <div className="w-full lg:w-1/3 p-6 bg-white flex flex-col items-center justify-center">
-          <div className="w-full p-4">
+        <div className="w-full lg:w-1/3 px-3  bg-white flex flex-col items-center justify-center">
+          <div className="w-full px-4 py-2">
             <div>
               {/* Vehicle Information */}
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-0 md:mb-3">
                
                 {ride?.vehicleType === 'car' && (
                   <img
-                    className="h-20 md:h-25 mt-1"
+                    className="h-20 md:h-24 mt-1"
                     src="https://www.pngplay.com/wp-content/uploads/8/Uber-PNG-Photos.png"
                     alt="Car"
                   />
                 )}
                 {ride?.vehicleType === 'bike' && (
                   <img
-                    className="h-20 md:h-25 mt-5"
+                    className="h-16 md:h-20 mt-2"
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQTJw6dzEo1MYXOAbONCG1oL82rxU_Bitb-g&s"
                     alt="Bike"
                   />
                 )}
                 {ride?.vehicleType === 'auto' && (
                   <img
-                    className="h-20 md:h-25 mt-3"
+                    className="h-16 md:h-20 mt-2"
                     src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1648431773/assets/1d/db8c56-0204-4ce4-81ce-56a11a07fe98/original/Uber_Auto_558x372_pixels_Desktop.png"
                     alt="Auto"
                   />
@@ -89,7 +89,7 @@ const Riding = () => {
                   <h2 className="text-lg md:text-2xl font-medium">
                     {ride?.captain?.fullName?.firstName || 'No Captain'}
                   </h2>
-                  <h3 className="text-xl font-semibold md:text-3xl">
+                  <h3 className="text-sm font-semibold md:text-3xl">
                     {ride?.captain?.vehicle?.plate}
                   </h3>
                   <p className="text-sm md:text-lg text-gray-600">
@@ -99,13 +99,13 @@ const Riding = () => {
               </div>
 
               {/* Ride Details */}
-              <div className="flex gap-2 justify-between items-center mb-3 flex-col">
+              <div className="flex gap-2 justify-between items-center md:mb-3 flex-col">
                 <div className="w-full">
                   {/* Destination */}
                   <div className="flex items-center gap-5 p-3 border-t-gray-300 border-b-gray-300">
-                    <i className="text-xl md:text-3xl ri-map-pin-user-fill"></i>
+                    <i className="text-lg md:text-3xl ri-map-pin-user-fill"></i>
                     <div>
-                      <h3 className="text-lg md:text-xl font-medium">
+                      <h3 className="text-sm md:text-xl font-medium">
                         Destination
                         <p className="text-sm text-gray-700">
                           {ride?.destination || 'No Destination'}
@@ -114,10 +114,10 @@ const Riding = () => {
                     </div>
                   </div>
                   {/* Payment Info */}
-                  <div className="flex items-center gap-5 border-t-2 border-b-2 p-3 border-t-gray-300 border-b-gray-300">
+                  <div className="flex items-center gap-5 border-t-2 p-3 border-t-gray-300 ">
                     <i className="text-xl md:text-3xl ri-wallet-fill"></i>
                     <div>
-                      <h3 className="text-lg md:text-2xl font-medium">Cash</h3>
+                      <h3 className="text-sm md:text-2xl font-medium">Cash</h3>
                       <p className="text-sm md:text-lg text-gray-600">
                         ₹{ride?.fare || '0'}
                       </p>
@@ -127,7 +127,7 @@ const Riding = () => {
               </div>
               {/* Payment Button */}
               <button
-                className="w-full md:ml-10 mt-2 md:w-1/2 bg-green-600 text-white font-semibold p-2 rounded-lg"
+                className="w-full md:ml-10 mt-0 md:mt-2 md:w-1/2 bg-green-600 text-white font-semibold p-2 rounded-lg"
                 onClick={() => setShowPaymentModal(true)}
               >
                 Make a Payment

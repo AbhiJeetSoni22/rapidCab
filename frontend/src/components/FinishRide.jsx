@@ -25,10 +25,10 @@ const endRide = async()=>{
       >
         <i className="text-4xl h-10 w-10 text-gray-400 ri-arrow-down-wide-line"></i>
       </h5>
-      <h2 className="text-2xl font-semibold md:text-3xl mb-3 mt-5 ">
+      <h2 className="text-xl font-semibold md:text-3xl mb-2  md:mt-4 ">
       Finish Ride
       </h2>
-      <div className="flex  items-center w-full p-4 justify-between border border-yellow-400 bg-yellow-200 rounded-lg ">
+      <div className="flex  items-center w-full p-2 md:p-4 justify-between border border-yellow-400 bg-yellow-200 rounded-lg ">
         <div className="flex my-2  items-center gap-4">
           <img
             className="h-12 md:h-16 ml-2 md:w-16 w-12 rounded-full object-cover"
@@ -46,8 +46,8 @@ const endRide = async()=>{
           <div className="flex items-center gap-5  p-3 border-t-gray-300 border-b-gray-300">
             <i className="text-xl md:text-3xl ri-map-pin-2-fill"></i>
             <div>
-              <h3 className="text-lg md:text-2xl font-medium">Pickup Location</h3>
-              <p className="text-sm md:text-lg  text-gray-600">
+              <h3 className="text-sm md:text-2xl font-medium">Pickup Location</h3>
+              <p className="text-xs md:text-lg  text-gray-600">
                {props.ride?.pickup}
               </p>
             </div>
@@ -55,8 +55,8 @@ const endRide = async()=>{
           <div className="flex items-center gap-5 border-t-2 border-b-2  p-3 border-t-gray-300 border-b-gray-300">
             <i className="text-xl md:text-3xl ri-map-pin-user-fill"></i>
             <div>
-              <h3 className="text-lg md:text-2xl font-medium">Destination Location</h3>
-              <p className="text-sm md:text-lg  text-gray-600">
+              <h3 className="text-sm md:text-2xl font-medium">Destination Location</h3>
+              <p className="text-xs md:text-lg  text-gray-600">
                {props.ride?.destination}
               </p>
             </div>
@@ -64,13 +64,13 @@ const endRide = async()=>{
           <div className="flex items-center gap-5   p-3 border-t-gray-300 border-b-gray-300">
             <i className="text-xl md:text-3xl ri-wallet-fill"></i>
             <div>
-              <h3 className="text-lg md:text-2xl font-medium">Cash</h3>
-              <p className="text-sm  md:text-lg text-gray-600">₹{props.ride?.fare}</p>
+              <h3 className="text-sm md:text-2xl font-medium">Cash</h3>
+              <p className="text-xs  md:text-lg text-gray-600">₹{props.ride?.fare}</p>
             </div>
           </div>
         </div>
 
-       <div className="mt-6 w-full items-center">
+       <div className="md:mt-4 mt-2 w-full items-center">
          <button onClick={endRide} className="w-2/3 ml-[15%] md:ml-[13%]  mt-1 flex justify-center   md:p-3 md:text-xl md:font-medium  bg-green-500 text-white font-semibold p-3 rounded-lg">
           Finish Ride
         </button>

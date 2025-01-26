@@ -31,24 +31,24 @@ const Help = () => {
         <Navbar user={user} />
       </div>
       <div className="w-screen bg-white  border-b-2 border-b-gray-600  pb-5 fixed z-20 px-2 flex md:hidden justify-between items-center pt-5 top-0">
-        <h1 className="text-3xl font-bold z-20">RapidCap</h1>
+        <h1 className="text-xl md:text-3xl font-bold z-20">RapidCap</h1>
         <div>
 
         <button onClick={handleHome} className="mr-2 z-20">
-          <i className="text-3xl font-bold w-15 h-15 bg-green-400 rounded-full p-3 ri-home-3-line"></i>
+          <i className="text-xl md:text3xl font-bold w-15 h-15 bg-green-400 rounded-full p-3 ri-home-3-line"></i>
         </button>
         <button onClick={handleLogout} className="z-20">
-          <i className="text-3xl font-bold w-15 h-15 bg-yellow-400 rounded-full p-3 ri-logout-box-r-line"></i>
+          <i className="text-xl md:text3xl font-bold w-15 h-15 bg-yellow-400 rounded-full p-3 ri-logout-box-r-line"></i>
         </button>
         </div>
       </div>
-      <div className="max-w-4xl mt-32 md:mt-0 mx-auto p-6">
-        <h1 className="text-3xl font-bold mb-8">How to Use RapidCap</h1>
+      <div className="max-w-4xl mt-20 md:mt-0 mx-auto p-5">
+        <h1 className="text-xl md:text-3xl font-bold mb-8">How to Use RapidCap</h1>
         
         {user === "user" ? (
           // User Instructions
           <div className="space-y-6">
-            <h2 className="text-2xl font-semibold mb-4">For Passengers</h2>
+            <h2 className="text-lg md:text-2xl font-semibold mb-4">For Passengers</h2>
             
             <div className="bg-yellow-50 p-6 rounded-lg">
               <h3 className="text-xl font-medium mb-3">How to Book a Ride</h3>

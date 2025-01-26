@@ -14,13 +14,13 @@ const Home = () => {
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-black to-gray-800 text-white py-20">
         <div className="container mx-auto px-6">
-          <h1 className="text-5xl font-bold mb-4 animate-[slideDown_1s_ease-out] opacity-0 [animation-fill-mode:forwards]">
+          <h1 className="md:text-5xl text-4xl  font-bold mb-4 animate-[slideDown_1s_ease-out] opacity-0 [animation-fill-mode:forwards]">
             Your Ride, Your Way
           </h1>
           <p className="text-xl mb-8 animate-[slideUp_1s_ease-out_0.5s] opacity-0 [animation-fill-mode:forwards]">
             Book rides instantly with RapidCab - The smart way to travel
           </p>
-          <Link to="/login" className="bg-yellow-400 border-yellow-400 border-4 hover:border-yellow-500 text-black px-8 py-3 rounded-lg font-bold  hover:bg-gray-900 hover:text-white transition-all duration-300">
+          <Link to="/login" className="bg-yellow-400   border-yellow-400 border-4 hover:border-yellow-500 text-black px-8 py-3 rounded-lg font-bold  hover:bg-gray-900 hover:text-white transition-all duration-300">
             Get Started
           </Link>
         </div>
@@ -66,14 +66,14 @@ const Home = () => {
       <div className="bg-black text-white py-16">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold mb-8 animate-[fadeIn_1s_ease-out]">Ready to Get Started?</h2>
-          <div className="space-x-4">
+          <div className="md:space-x-4 space-x-2">
             <Link to="/login" 
-              className="bg-yellow-400 text-black px-8 py-3 rounded-lg font-bold hover:bg-yellow-500 
+              className="bg-yellow-400 text-black mb-3 px-6 md:px-8 py-3 rounded-lg font-bold hover:bg-yellow-500 
               transform hover:scale-110 transition-all duration-300 inline-block animate-pulse">
               Book a Ride
             </Link>
             <Link to="/captain-login" 
-              className="bg-transparent border-2 border-yellow-400 text-yellow-400 px-8 py-3 rounded-lg font-bold 
+              className="bg-transparent border-2 border-yellow-400 text-yellow-400  px-6 md:px-8 py-3 rounded-lg font-bold 
               hover:bg-yellow-400 hover:text-black transform hover:scale-110 transition-all duration-300 inline-block">
               Become a Driver
             </Link>

@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 const VehiclePanel = (props) => {
   return (
     <div>
-        <h2 className="text-2xl md:text-3xl font-semibold  mb-4">Choose a Vehicle</h2>
+        <h2 className="text-xl md:text-3xl font-medium mb-2 md:mb-4">Choose a Vehicle</h2>
             <div
-              className={`absolute cursor-pointer md:h-10 md:w-11  h-8 w-9 md:bg-[#eee] rounded-full md:top-8 md:left-10   top-5 right-3 ${
+              className={`absolute cursor-pointer md:h-10 md:w-11  h-8 w-9 md:bg-[#eee] rounded-full md:top-8 md:left-10   top-3 right-3 ${
                 props.vehiclePanel ||  props.panelOpen ? "block" : "hidden"
               } `}
               onClick={() => {
@@ -35,11 +35,11 @@ const VehiclePanel = (props) => {
                 src="https://www.pngplay.com/wp-content/uploads/8/Uber-PNG-Photos.png"
                 alt=""
               />
-              <div className=" w-1/2 p-2">
+              <div className=" w-1/2 md:p-2 p-1">
                 <h4 className="font-medium text-sm md:text-lg  ">
                   Uber Go{" "}
                   <span>
-                    <i className="ri-user-3-line"></i>
+                    <i className="text-sm md:text-xl ri-user-3-line"></i>
                   </span>{" "}
                   4{" "}
                 </h4>
@@ -48,7 +48,7 @@ const VehiclePanel = (props) => {
                   Affordable, compact car
                 </p>
               </div>
-              <h2 className="text-lg md:text-xl font-semibold ">₹{props.fare.car || 'wait'}</h2>
+              <h2 className="text-sm md:text-xl font-semibold ">₹{props.fare.car || 'wait'}</h2>
             </div>
             <div  onClick={()=>{props.setConfirmRidePanel(true)
                 props.selectVehicle('bike')
@@ -59,20 +59,20 @@ const VehiclePanel = (props) => {
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQTJw6dzEo1MYXOAbONCG1oL82rxU_Bitb-g&s"
                 alt=""
               />
-              <div className=" w-1/2 p-2">
+              <div className=" w-1/2 p-1 md:p-2">
                 <h4 className="font-medium text-sm md:text-lg ">
                   Uber Go{" "}
                   <span>
-                    <i className="text-lg ri-user-3-line"></i>
+                    <i className="text-sm md:text-lg ri-user-3-line"></i>
                   </span>{" "}
                   1{" "}
                 </h4>
-                <p className="font-medium text-sm  ">3 mins away</p>
+                <p className="font-medium text-xs  ">3 mins away</p>
                 <p className="font-normal text-xs md:text-lg text-gray-700">
                   Affordable, bike
                 </p>
               </div>
-              <h2 className="text-lg font-semibold md:text-xl ">₹{props.fare.bike || 'wait'}</h2>
+              <h2 className="text-sm font-semibold md:text-xl ">₹{props.fare.bike || 'wait'}</h2>
             </div>
             <div onClick={()=>{props.setConfirmRidePanel(true)
                 props.selectVehicle('auto')
@@ -83,20 +83,20 @@ const VehiclePanel = (props) => {
                 src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1648431773/assets/1d/db8c56-0204-4ce4-81ce-56a11a07fe98/original/Uber_Auto_558x372_pixels_Desktop.png"
                 alt=""
               />
-              <div className=" w-1/2 p-2">
+              <div className=" w-1/2 p-1 md:p-2">
                 <h4 className="font-medium text-sm md:text-lg">
                   Uber Go{" "}
                   <span>
-                    <i className="ri-user-3-line"></i>
+                    <i className="md:text-lg text-sm ri-user-3-line"></i>
                   </span>{" "}
                   4{" "}
                 </h4>
-                <p className="font-medium text-sm  ">1 mins away</p>
+                <p className="font-medium text-xs  ">1 mins away</p>
                 <p className="font-normal text-xs md:text-lg text-gray-700">
                   Affordable, auto
                 </p>
               </div>
-              <h2 className="text-lg font-semibold md:text-xl">₹{props.fare.auto || 'wait'}</h2>
+              <h2 className="text-sm font-semibold md:text-xl">₹{props.fare.auto || 'wait'}</h2>
             </div>
     </div>
   );

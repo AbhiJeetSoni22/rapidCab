@@ -3,7 +3,7 @@ const RidePopUp = (props) => {
   return (
     <div className="relative  md:ml-8 z-30">
     
-      <h2 className="text-2xl font-semibold md:text-3xl mb-3 ">
+      <h2 className="text-xl  font-semibold md:text-3xl mb-3 ">
         New Ride Request
       </h2>
       <div className="flex  items-center justify-between bg-yellow-400 rounded-lg ">
@@ -24,8 +24,8 @@ const RidePopUp = (props) => {
           <div className="flex items-center gap-5  p-3 border-t-gray-300 border-b-gray-300">
             <i className="text-xl md:text-3xl ri-map-pin-2-fill"></i>
             <div>
-              <h3 className="text-lg md:text-2xl font-medium">Pickup Location</h3>
-              <p className="text-sm md:text-lg  text-gray-600">
+              <h3 className="text-sm md:text-2xl font-medium">Pickup Location</h3>
+              <p className="text-xs md:text-lg  text-gray-600">
                 {props.ride?.pickup}
               </p>
             </div>
@@ -33,8 +33,8 @@ const RidePopUp = (props) => {
           <div className="flex items-center gap-5 border-t-2 border-b-2  p-3 border-t-gray-300 border-b-gray-300">
             <i className="text-xl md:text-3xl ri-map-pin-user-fill"></i>
             <div>
-              <h3 className="text-lg md:text-2xl font-medium">Destination Location</h3>
-              <p className="text-sm md:text-lg  text-gray-600">
+              <h3 className="text-sm md:text-2xl font-medium">Destination Location</h3>
+              <p className="text-xs md:text-lg  text-gray-600">
                 {props.ride?.destination}
               </p>
             </div>
@@ -42,15 +42,15 @@ const RidePopUp = (props) => {
           <div className="flex items-center gap-5   p-3 border-t-gray-300 border-b-gray-300">
             <i className="text-xl md:text-3xl ri-wallet-fill"></i>
             <div>
-              <h3 className="text-lg md:text-2xl font-medium">Cash</h3>
-              <p className="text-sm  md:text-lg text-gray-600">₹{props.ride?.fare}</p>
+              <h3 className="text-sm md:text-2xl font-medium">Cash</h3>
+              <p className="text-xs  md:text-lg text-gray-600">₹{props.ride?.fare}</p>
             </div>
           </div>
         </div>
 
       <div className='flex w-full items-center justify-between gap-2 px-5'>
       <button
-          className=" mt-1 px-10 py-4 text-lg md:w-1/2 md:p-3 md:text-2xl md:font-medium  bg-gray-300 text-gray-700 font-semibold p-2 rounded-lg"
+          className=" mt-1 py-2 px-10 md:py-4 text-sm md:w-1/2 md:p-3 md:text-2xl md:font-medium  bg-gray-300 text-gray-700 font-semibold p-2 rounded-lg"
           onClick={() => {
             props.setAccept(false)
             props.setridePopUpPanel(false);
@@ -58,7 +58,7 @@ const RidePopUp = (props) => {
           >
           Ignore
         </button>
-          <button className=" mt-1 px-10 py-4 text-lg md:w-1/2 md:p-3 md:text-2xl md:font-medium  bg-green-500 text-white font-semibold p-2 rounded-lg"
+          <button className=" mt-1 px-10 py-2 md:py-4 text-sm md:w-1/2 md:p-3 md:text-2xl md:font-medium  bg-green-500 text-white font-semibold p-2 rounded-lg"
             onClick={()=>{
               props.confirmRide();
                 props.setConfirmRidePopUpPanel(true)

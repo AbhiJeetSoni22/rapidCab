@@ -23,32 +23,32 @@ const handleBackToAccept = ()=>{
   { props.accept &&  <h5 onClick={handleBackToAccept} className="md:hidden fixed px-[40%]  w-full ">
     <i className="text-4xl text-gray-600  ri-arrow-up-wide-line"></i>
     </h5>}
-    <div className="flex p-6 mb-6 w-full items-center gap-10 justify-between">
+    <div className="flex p-6 md:mb-6 w-full items-center gap-10 justify-between">
             <div className="flex -ml-6 items-center gap-2  justify-start">
-                <img className="h-20 w-20 md:h-26 md:w-26 rounded-full object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeQjcWR08VdmycDnWSEu8hC5qrduR62zNIhg&s" alt="" />
-                <h4 className="text-xl md:text-2xl font-medium text-gray-700 ">{capname}</h4>
+                <img className="h-14 w-14 md:h-24 md:w-24 rounded-full object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeQjcWR08VdmycDnWSEu8hC5qrduR62zNIhg&s" alt="" />
+                <h4 className="text-lg  md:text-2xl font-medium text-gray-700 ">{capname}</h4>
             </div>
             <div>
-                <h4 className="text-xl md:text-2xl font-semibold">₹295.20</h4>
-                <p className="text-sm md:text-lg text-gray-600">Earned</p>
+                <h4 className="text-sm md:text-2xl font-semibold">₹295.20</h4>
+                <p className="text-xs md:text-lg text-gray-600">Earned</p>
             </div>
         </div>
-        <div className="flex p-6 md:p-9 bg-yellow-300 rounded-xl justify-center gap-4 items-start">
+        <div className="flex p-4 md:p-9 bg-yellow-300 rounded-xl justify-center gap-4 items-start">
             <div className="text-center bg-gray-100 p-2 rounded-lg">
-                <i className="text-3xl mb-2 font-thin text-gray-600 ri-timer-2-line"></i>
-                <h5 className="text-lg font-medium">8.2</h5>
+                <i className="text-2xl md:text-3xl mb-2 font-thin text-gray-600 ri-timer-2-line"></i>
+                <h5 className="md:text-lg text-sm font-medium">8.2</h5>
                 <p className="md:text-lg text-[10px] text-gray-600">Hours Online</p>
             </div>
             <div  className="text-center  bg-gray-100 p-2 rounded-lg ">
-                <i className="text-3xl mb-2 font-thin text-gray-600 ri-speed-up-line"></i>
-                <h5 className="text-lg font-medium">44 </h5>
+                <i className="text-2xl md:text-3xl mb-2 font-thin text-gray-600 ri-speed-up-line"></i>
+                <h5 className="text-sm md:text-lg font-medium">44 </h5>
                 <p className="md:text-lg text-[10px] text-gray-600">Distance (km)</p>
             </div>
             <div  className="text-center  bg-gray-100 p-1 md:py-3 md:px-7 px-5 rounded-lg ">
               {
                 vehicleType === "auto" && (
                   <div className="p-0">
-                    <img src={autoImg} className="h-14" alt="" />
+                    <img src={autoImg} className="h-10 md:h-14" alt="" />
                     <h5 className="text-sm md:text-lg font-medium">vehicle</h5>
                     <p className="text-xs md:text-lg text-gray-600">auto</p>
                   </div>
@@ -66,7 +66,7 @@ const handleBackToAccept = ()=>{
               {
                 vehicleType === "car" && (
                   <>
-                    <img src={car} className="h-12" alt="" />
+                    <img src={car} className="h-12 md:h-16" alt="" />
                     <h5 className="text-sm font-medium">vehicle</h5>
                     <p className="text-xs text-gray-600">Car</p>
                   </>
