@@ -48,7 +48,7 @@ const handleBackToAccept = ()=>{
               {
                 vehicleType === "auto" && (
                   <div className="p-0">
-                    <img src={autoImg} className="h-10 md:h-14" alt="" />
+                    <img src={autoImg} className="h-8 md:h-14" alt="" />
                     <h5 className="text-sm md:text-lg font-medium">vehicle</h5>
                     <p className="text-xs md:text-lg text-gray-600">auto</p>
                   </div>
@@ -57,7 +57,7 @@ const handleBackToAccept = ()=>{
               {
                 vehicleType === "bike" && (
                   <>
-                    <img src={bike} className="md:h-14 h-10 " alt="" />
+                    <img src={bike} className="md:h-14 h-8 " alt="" />
                     <h5 className="text-sm md:text-lg font-medium md:p-0 p-1 ">vehicle</h5>
                     <p className="text-xs md:text-lg text-gray-600">Bike</p>
                   </>

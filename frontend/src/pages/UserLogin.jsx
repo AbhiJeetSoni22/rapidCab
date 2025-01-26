@@ -52,12 +52,12 @@ const UserLogin = () => {
         <div className="mb-5">
           <form
             action=""
-            className="mt-20"
+            className="md:mt-20 mt-4"
             onSubmit={(e) => {
               handleSubmit(e);
             }}
           >
-            <h1 className="text-3xl font-bold text-center mb-6">User Login</h1>
+            <h1 className="text-3xl font-bold text-center mb-4 md:mb-6">User Login</h1>
             <h3 className="text-lg font-medium mb-2">What&apos;s your email</h3>
             <input
               className="bg-[#eeeeee] px-4 border w-full rounded text-lg placeholder:text-base py-2 mb-5"

@@ -61,20 +61,20 @@ const UserSignup = () => {
     <>
       <Navbar />
 
-      <div className="flex flex-col justify-between items-center p-7">
+      <div className="flex flex-col justify-between items-center p-8">
         <div className="mb-5">
           <form
             action=""
-            className="mt-20"
+            className="md:mt-20 mt-2  "
             onSubmit={(e) => {
               handleSubmit(e);
             }}
           >
-            <h1 className="text-3xl font-bold text-center mb-6">
+            <h1 className="text-3xl font-bold text-center md:mb-4 mb-3">
               Create User Account
             </h1>
             <h3 className="text-lg font-medium mb-2">What&apos;s your name</h3>
-            <div className="flex gap-4 mb-5">
+            <div className="flex gap-4 mb-4 md:mb-6">
               <input
                 className="bg-[#eeeeee] px-4 border w-1/2 rounded text-base placeholder:text-base py-2 "
                 type="text"

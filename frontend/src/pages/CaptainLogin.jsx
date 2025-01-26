@@ -57,7 +57,7 @@ const CaptainLogin = () => {
         <div className="mb-5">
           <form
             action=""
-            className="mt-20"
+            className="md:mt-20 mt-2"
             onSubmit={(e) => {
               handleSubmit(e);
             }}
