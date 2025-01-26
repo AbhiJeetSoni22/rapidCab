@@ -92,7 +92,7 @@ const Dashboard = () => {
     if (vehicleFound) {
       gsap.to(vehicleFoundRef.current, {
         visibility: "visible",
-        height: "22rem",
+        height: "18rem",
       });
     } else {
       gsap.to(vehicleFoundRef.current, {
@@ -123,7 +123,6 @@ const Dashboard = () => {
 
     // Listen for ride confirmation
     const handleRideConfirmed = (confirmRide) => {
-      console.log('Ride confirmed:', confirmRide);
       setVehicleFound(false);
       setWaitForDriver(true);
       setRide(confirmRide);
@@ -166,10 +165,9 @@ const Dashboard = () => {
       },
     })
     setFare(response.data.fare);
-    console.log(response.data.fare)
   }
   const createRide = async ()=>{
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`,{
+   await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`,{
       pickup:pickupLocation,
       destination: dropoffLocation,
       vehicleType:vehicleType,
@@ -178,7 +176,6 @@ const Dashboard = () => {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     });
-    console.log(response.data);
   }
 
   const handleHelp = () => {

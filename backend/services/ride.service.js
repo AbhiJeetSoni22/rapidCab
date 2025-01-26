@@ -9,7 +9,6 @@ async function getFare(pickup, destination) {
     }
 
     const distanceTime = await getDistanceTime(pickup, destination);
-    console.log(distanceTime);  // Log to check the distanceTime object
 
     // Extract numeric values from the distance and time strings
     const distance = parseFloat(distanceTime?.distance?.replace(' km', '')) || 0;  // Remove ' km' and convert to number
@@ -39,7 +38,7 @@ async function getFare(pickup, destination) {
         bike: baseFare.bike + perKmRate.bike * distance + perMinRate.bike * time,
     };
 
-    console.log(fare);  // Log the calculated fare
+   
     return fare;
 }
 

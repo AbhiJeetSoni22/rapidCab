@@ -6,10 +6,7 @@ const getAddressCoordinate = async (address) => {
   const url = `https://maps.gomaps.pro/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
 
   try {
-    console.log('Encoded Address URL:', url);
     const response = await axios.get(url);
-    console.log('Response Data:', response.data);
-
     if (response.data.status === 'OK' && response.data.results.length > 0) {
       const location = response.data.results[0].geometry.location;
       return {

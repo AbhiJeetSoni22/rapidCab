@@ -21,7 +21,7 @@ const WaitingForDriver = (props) => {
               {
               props.ride?.vehicleType === 'bike' &&
                 <img
-                className="h-16 md:h-24 mt-5"
+                className="h-16 md:h-24 mt-3"
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQTJw6dzEo1MYXOAbONCG1oL82rxU_Bitb-g&s"
                 alt=""
               />

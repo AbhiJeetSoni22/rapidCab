@@ -23,7 +23,7 @@ export const SocketProvider = ({ children }) => {
         });
 
         socketInstance.on('connect', () => {
-            console.log('Socket connected with ID:', socketInstance.id);
+   
             setIsConnected(true);
         });
 
@@ -31,8 +31,8 @@ export const SocketProvider = ({ children }) => {
             console.error('Socket connection error:', error);
         });
 
-        socketInstance.on('disconnect', (reason) => {
-            console.log('Socket disconnected:', reason);
+        socketInstance.on('disconnect', () => {
+         
             setIsConnected(false);
         });
 

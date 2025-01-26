@@ -26,7 +26,7 @@ const LocationSearchPanle = ({
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json'
               },
-              timeout: 5000
+              timeout: 8000
             }
           );
           setSuggestions(response.data);
@@ -35,7 +35,7 @@ const LocationSearchPanle = ({
           setSuggestions([]);
         }
       } catch (error) {
-        console.error('Error fetching suggestions:', error);
+       
         setSuggestions([]);
         setError('Could not fetch suggestions');
         

@@ -41,7 +41,7 @@ const CapDashboard = () => {
       if (response.status === 200) {
         setridePopUpPanel(false);
         setConfirmRidePopUpPanel(true);
-        console.log('Ride confirmed:', response.data);
+       
       }
     } catch (error) {
       console.error("Error confirming ride:", error);
@@ -50,7 +50,6 @@ const CapDashboard = () => {
   useEffect(() => {
     if (!socket || !captain?._id) return;
 
-    console.log('Connecting captain to socket...', captain._id);
 
     // Clear any existing socket connection
     socket.disconnect();
@@ -62,14 +61,14 @@ const CapDashboard = () => {
     });
 
     const handleNewRide = (data) => {
-      console.log('New ride received:', data);
+  
       setRide(data);
       setridePopUpPanel(true);
     };
 
     socket.on("new-ride", handleNewRide);
     socket.on("connect", () => {
-      console.log('Socket connected with ID:', socket.id);
+
     });
     socket.on("connect_error", (error) => {
       console.error('Socket connection error:', error);

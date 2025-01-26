@@ -36,7 +36,7 @@ const getSuggestions = async (req, res) => {
        }
 
        const input = req.query.input;
-       console.log('Getting suggestions for:', input);
+
 
        const suggestions = await getAutoCompleteSuggestions(input);
        
@@ -70,8 +70,6 @@ const getCaptainsInTheRadius = async(lat, lng, radius, vehicleType) => {
       },
       'vehicle.vehicleType': vehicleType,
     });
-
-    console.log(`Found ${captains.length} captains with ${vehicleType}`);
     return captains;
   } catch (error) {
     console.error('Error finding captains:', error);
