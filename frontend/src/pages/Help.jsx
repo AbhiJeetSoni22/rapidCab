@@ -43,7 +43,7 @@ const Help = () => {
         </div>
       </div>
       <div className="max-w-4xl mt-20 md:mt-0 mx-auto p-5">
-        <h1 className="text-xl md:text-3xl font-bold mb-8">How to Use Maargi</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-8">How to Use Maargi ?</h1>
         
         {user === "user" ? (
           // User Instructions
@@ -78,7 +78,7 @@ const Help = () => {
         ) : (
           // Captain Instructions
           <div className="space-y-6">
-            <h2 className="text-2xl font-semibold mb-4">For Captains </h2>
+            <h2 className="text-xl font-semibold mb-4">For Captains </h2>
             
             <div className="bg-yellow-50 p-6 rounded-lg">
               <h3 className="text-xl font-medium mb-3">How to Accept Rides</h3>
