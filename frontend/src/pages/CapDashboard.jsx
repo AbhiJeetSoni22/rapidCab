@@ -115,11 +115,11 @@ const handleLogout = ()=>{
       <div className="hidden md:block">
         <Navbar user={user} />
       </div>
-      {/* Conditionally render the RapidCap sign and logout icon */}
+      {/* Conditionally render the Maargi sign and logout icon */}
       {!confirmRidePopUpPanel && (
         <div className="w-screen fixed px-2 flex md:hidden justify-between items-center top-4 z-30">
           <h1 className="text-xl md:text-3xl flex  font-bold z-30">
-            RapidCap
+            Maargi
             <img className="w-6" src={captainImg} alt="" />
           </h1>
           <div>

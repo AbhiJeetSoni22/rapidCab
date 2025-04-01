@@ -192,7 +192,7 @@ const Dashboard = () => {
         <Navbar user={userType} />
       </div>
       <div className="w-screen fixed z-20 px-2 flex md:hidden justify-between items-center top-0 pt-4">
-        <h1 className="text-2xl   font-bold z-20">RapidCap</h1>
+        <h1 className="text-2xl   font-bold z-20">Maargi</h1>
         <div>
        
         <button onClick={handleHelp} className="mr-2 z-20">

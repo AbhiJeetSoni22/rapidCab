@@ -18,7 +18,7 @@ const Home = () => {
             Your Ride, Your Way
           </h1>
           <p className="text-xl mb-8 animate-[slideUp_1s_ease-out_0.5s] opacity-0 [animation-fill-mode:forwards]">
-            Book rides instantly with RapidCab - The smart way to travel
+            Book rides instantly with Maargi - The smart way to travel
           </p>
           <Link to="/login" className="bg-yellow-400   border-yellow-400 border-4 hover:border-yellow-500 text-black px-8 py-3 rounded-lg font-bold  hover:bg-gray-900 hover:text-white transition-all duration-300">
             Get Started
@@ -29,7 +29,7 @@ const Home = () => {
       {/* Features Section */}
       <div className="py-16 bg-gray-100">
         <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-12">Why Choose RapidCab?</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">Why Choose Maargi?</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[1, 2, 3].map((_, index) => (
               <div key={index} 
@@ -84,7 +84,7 @@ const Home = () => {
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-8">
         <div className="container mx-auto px-6">
-          <p className="text-center">&copy; 2025 RapidCab. All rights reserved.</p>
+          <p className="text-center">&copy; 2025 Maargi. All rights reserved.</p>
         </div>
       </footer>
     </>

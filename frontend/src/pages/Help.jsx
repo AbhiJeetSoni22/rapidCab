@@ -31,7 +31,7 @@ const Help = () => {
         <Navbar user={user} />
       </div>
       <div className="w-screen bg-white  border-b-2 border-b-gray-600  pb-5 fixed z-20 px-2 flex md:hidden justify-between items-center pt-5 top-0">
-        <h1 className="text-xl md:text-3xl font-bold z-20">RapidCap</h1>
+        <h1 className="text-xl md:text-3xl font-bold z-20">Maargi</h1>
         <div>
 
         <button onClick={handleHome} className="mr-2 z-20">
@@ -43,7 +43,7 @@ const Help = () => {
         </div>
       </div>
       <div className="max-w-4xl mt-20 md:mt-0 mx-auto p-5">
-        <h1 className="text-xl md:text-3xl font-bold mb-8">How to Use RapidCap</h1>
+        <h1 className="text-xl md:text-3xl font-bold mb-8">How to Use Maargi</h1>
         
         {user === "user" ? (
           // User Instructions

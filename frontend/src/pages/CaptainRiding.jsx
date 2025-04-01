@@ -77,7 +77,7 @@ const CaptainRiding = () => {
         <Navbar />
       </div>
       <div className="w-screen z-30 fixed px-2 flex md:hidden justify-between items-center top-4">
-           <h1 className="text-xl flex  font-bold z-30">RapidCap 
+           <h1 className="text-xl flex  font-bold z-30">Maargi 
                      <img  className="w-8" src={captainImg} alt="" />
         
                   </h1>

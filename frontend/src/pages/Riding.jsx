@@ -48,7 +48,7 @@ const Riding = () => {
       </div>
 
       <div className="w-screen fixed px-2 flex md:hidden justify-between z-50 items-center top-4">
-        <h1 className="text-xl font-bold z-50">RapidCap</h1>
+        <h1 className="text-xl font-bold z-50">Maargi</h1>
 
         <Link to="/dashboard" className="z-50">
           <i className="text-xl font-bold w-15 h-15 bg-orange-400 rounded-full p-2 ri-home-3-line"></i>

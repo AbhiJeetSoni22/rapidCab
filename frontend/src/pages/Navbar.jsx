@@ -87,7 +87,7 @@ const Navbar = (props) => {
     >
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
-        <div className="text-xl font-semibold">RapidCap</div>
+        <div className="text-xl font-semibold">Maargi</div>
 
         {/* Hamburger Icon */}
         <div className="lg:hidden">
