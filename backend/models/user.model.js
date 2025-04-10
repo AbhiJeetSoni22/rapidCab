@@ -28,6 +28,10 @@ const userSchema = new Schema({
     },
     socketId:{
         type:String
+    },
+    completedRides: {
+        type: Number,
+        default: 0,
     }
 },{timestamps: true});
 

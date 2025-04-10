@@ -79,7 +79,7 @@ const Dashboard = () => {
     if (confirmRidePanel) {
       gsap.to(confirmRidePanelRef.current, {
         visibility: "visible",
-        height: "22rem",
+        height: "24rem",
       });
     } else {
       gsap.to(confirmRidePanelRef.current, {

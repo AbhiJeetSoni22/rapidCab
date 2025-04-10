@@ -2,7 +2,7 @@ import { Ride } from "../models/ride.model.js";
 import { getDistanceTime } from "./maps.service.js";
 import crypto from 'crypto';
 import { sendMessageToSocketId } from "../socket.js";
-
+import { User } from "../models/user.model.js"
 async function getFare(pickup, destination) {
     if (!pickup || !destination) {
         throw new Error("Pickup and destination are required");
@@ -47,23 +47,33 @@ function generateOTP(num) {
     return otp;
 }
 
-async function createRide({
-    user, pickup, destination, vehicleType
-}) {
-    if(!user || !pickup||!destination||!vehicleType){
+async function createRide({ user, pickup, destination, vehicleType }) {
+    if (!user || !pickup || !destination || !vehicleType) {
         throw new Error("userId, pickup, destination, vehicleType are required");
     }
-    const fare = await getFare(pickup,destination);
+
+    const fare = await getFare(pickup, destination);
+
+    // Fetch the user to check completed rides
+    const userData = await User.findById(user);
+    let finalFare = fare[vehicleType];
+
+    // Apply 20% discount if it's the 6th ride
+    if ((userData.completedRides + 1) % 6 === 0) {
+        finalFare = finalFare * 0.8; // Apply 20% discount
+    }
+
     const ride = new Ride({
         user,
         pickup,
         destination,
-        otp:generateOTP(5),
-        fare:fare[vehicleType],
+        otp: generateOTP(5),
+        fare: finalFare,
         vehicleType,
     });
-   await ride.save();
-   return ride
+
+    await ride.save();
+    return ride;
 }
 
 async function confirmRideService({rideId, captain}) {
@@ -131,23 +141,29 @@ async function startRideService({rideId, otp, captain}) {
     return updatedRide;
 }
 
-async function endRideService({rideId, captain}) {
-    if (!rideId ||!captain) {
+async function endRideService({ rideId, captain }) {
+    if (!rideId || !captain) {
         throw new Error('Ride ID and captain are required');
     }
+
     const ride = await Ride.findOne({
         _id: rideId,
-        captain: captain._id
-    }).populate('user').populate('captain').select('+otp')
+        captain: captain._id,
+    }).populate('user').populate('captain');
+
     if (!ride) {
         throw new Error('Ride not found or not authorized to end');
     }
-    console.log('Current ride status:', ride.status); // Debug log
-    await Ride.findOneAndUpdate({
-        _id: rideId
-    },{
-        status: 'completed'
-    })
+
+    // Mark the ride as completed
+    await Ride.findByIdAndUpdate(rideId, { status: 'completed' });
+
+    // Increment the user's completed rides count
+    await User.findByIdAndUpdate(ride.user._id, {
+        $inc: { completedRides: 1 },
+    });
+
     return ride;
 }
+
 export { createRide, getFare, generateOTP,confirmRideService,startRideService,endRideService };
