@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { CaptainDataContext } from "../context/CaptainContext";
 import axios from "axios";
-import Navbar from "./Navbar";
+
 
 const CaptainLogin = () => {
   const [email, setEmail] = useState("");
@@ -52,7 +52,7 @@ const CaptainLogin = () => {
 
   return (
     <>
-      <Navbar />
+     
       <div className="flex flex-col justify-center items-center p-7">
         <div className="mb-5">
           <form
@@ -90,12 +90,22 @@ const CaptainLogin = () => {
             )}
             <button
               type="submit"
-              className={`w-full bg-[#111] text-gray-200 font-semibold my-2 rounded px-4 py-3 hover:bg-[#292929] ${
+              className={`w-full bg-[#111111dd] text-gray-200 font-semibold my-2 rounded px-4 py-3 hover:bg-[#292929] ${
                 loading ? "cursor-not-allowed opacity-70" : ""
               }`}
               disabled={loading} // Disable button if loading
             >
               {loading ? "Logging in..." : "Login"}
+            </button>
+            <button
+              type="button"
+              className="w-full bg-[#10b461] text-gray-200 font-semibold my-2 rounded px-4 py-3 hover:bg-[#17cd72]"
+              onClick={() => {
+                setEmail("bike@gmail.com");
+                setPassword("12345");
+              }}
+            >
+              Use Demo Credentials
             </button>
           </form>
           <p className="text-center">
