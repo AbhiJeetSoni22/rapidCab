@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import axios from "axios";
 import { UserDataContext } from "../context/UserContext";
-import Navbar from "./Navbar";
+
 
 const UserLogin = () => {
   const [email, setEmail] = useState("");
@@ -46,7 +46,7 @@ const UserLogin = () => {
 
   return (
     <>
-      <Navbar />
+      
 
       <div className="flex flex-col justify-center items-center p-7">
         <div className="mb-5">
@@ -91,6 +91,16 @@ const UserLogin = () => {
               disabled={loading} // Disable button if loading
             >
               {loading ? "Logging in..." : "Login"}
+            </button>
+            <button
+              type="button"
+              className="w-full bg-[#ee8719] text-gray-200 font-semibold my-2 rounded px-4 py-3 hover:bg-[#c57621]"
+              onClick={() => {
+                setEmail("user@gmail.com");
+                setPassword("12345");
+              }}
+            >
+              Use Demo Credentials
             </button>
           </form>
           <p className="text-center">
