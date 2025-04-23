@@ -85,7 +85,7 @@ const UserLogin = () => {
             )}
             <button
               type="submit"
-              className={`w-full bg-[#111] text-gray-200 font-semibold my-2 rounded px-4 py-3 hover:bg-[#292929] ${
+              className={`w-full bg-[#111111dd] text-gray-200 font-semibold my-2 rounded px-4 py-3 hover:bg-[#292929] ${
                 loading ? "cursor-not-allowed opacity-70" : ""
               }`}
               disabled={loading} // Disable button if loading
