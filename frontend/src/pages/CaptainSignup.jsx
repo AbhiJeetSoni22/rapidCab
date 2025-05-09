@@ -84,7 +84,7 @@ const CaptainSignup = () => {
             }}
           >
             <h1 className="md:text-3xl text-2xl font-bold text-center mb-2 md:mb-6">
-              Create Captain Account
+              Create Saarthi Account
             </h1>
             <h3 className="text-sm font-medium mb-2">What&apos;s your name</h3>
             <div className="flex gap-4 mb-2 md:mb-5">

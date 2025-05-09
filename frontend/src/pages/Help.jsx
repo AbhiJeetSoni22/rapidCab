@@ -78,7 +78,7 @@ const Help = () => {
         ) : (
           // Captain Instructions
           <div className="space-y-6">
-            <h2 className="text-lg font-semibold mb-4">For Captains </h2>
+            <h2 className="text-lg font-semibold mb-4">For Saarthi </h2>
             
             <div className="bg-yellow-50 p-6 rounded-lg">
               <h3 className="text-xl font-medium mb-3">How to Accept Rides</h3>
