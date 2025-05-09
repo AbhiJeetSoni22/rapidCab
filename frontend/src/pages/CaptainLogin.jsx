@@ -101,7 +101,11 @@ const CaptainLogin = () => {
               type="button"
               className="w-full bg-[#10b461] text-gray-200 font-semibold my-2 rounded px-4 py-3 hover:bg-[#17cd72]"
               onClick={() => {
+<<<<<<< HEAD
                 setEmail("bike@gmail.com");
+=======
+                setEmail("pikke@gmail.com");
+>>>>>>> f767f899a3f69b367254718bd5962f45a396028b
                 setPassword("12345");
               }}
             >
